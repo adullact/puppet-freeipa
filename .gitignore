@@ -1,0 +1,8 @@
+.DS_Store
+*.swp
+*.bak
+*~
+pkg
+spec/fixtures/
+.idea/
+.vagrant/
