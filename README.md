@@ -225,11 +225,19 @@ Steps to get started:
  1. Open a browser and navigate to `https://localhost:8440`.
  Log in with username `admin` and password `vagrant123`.
 
+## Authors
+
+Original work from Harvard University Information Technology, mainly written by Rob Ruma (https://github.com/huit/puppet-ipa)
+then forked by John Puskar (https://github.com/jpuskar/puppet-easy_ipa)
+then forked by ADULLACT (https://gitlab.adullact.net/adullact/puppet-freeipa) currently written by :
+  * ADULLACT with Fabien Combernous
+  * PHOSPHORE.si with Scott Barthelemy and Bertrand RETIF
+
 ## License
-jpuskar/puppet-easy_ipa forked from:
-huit/puppet-ipa - Puppet module that can manage an IPA master, replicas and clients.
 
     Copyright (C) 2013 Harvard University Information Technology
+    Copyright (C) 2018 Association des Développeurs et Utilisateurs de Logiciels Libres
+                         pour les Administrations et Colléctivités Territoriales.
     
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
