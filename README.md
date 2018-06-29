@@ -228,7 +228,9 @@ Steps to get started:
 ## Authors
 
 Original work from Harvard University Information Technology, mainly written by Rob Ruma (https://github.com/huit/puppet-ipa)
+
 then forked by John Puskar (https://github.com/jpuskar/puppet-easy_ipa)
+
 then forked by ADULLACT (https://gitlab.adullact.net/adullact/puppet-freeipa) currently written by :
   * ADULLACT with Fabien Combernous
   * PHOSPHORE.si with Scott Barthelemy and Bertrand RETIF
