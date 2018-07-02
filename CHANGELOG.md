@@ -1,5 +1,7 @@
 
-# puppet-easy_ipa
+# puppet-freeipa
 
-## 1.0.0
-Initial release
+## 1.6.1 first release by ADULLACT :
+
+  * #1 : update README about fork
+
