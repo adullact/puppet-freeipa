@@ -2,8 +2,9 @@
 
 Vagrant.configure("2") do |config|
 
+# IPA-SERVER-MASTER
     config.vm.define "ipa-server-1" do |box|
-        box.vm.box = "bento/centos-7.3"
+        box.vm.box = "centos/7"
         box.vm.hostname = 'ipa-server-1.vagrant.example.lan'
         # Assign this VM to a host-only network IP, allowing you to access it
         # via the IP.
@@ -23,6 +24,7 @@ echo I am provisioning...
 export FACTER_is_vagrant='true'
 rpm -ivh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
 yum install -y puppet-agent
+timedatectl set-timezone Europe/Paris
 export PATH=$PATH:/opt/puppetlabs/bin
 puppet module install puppetlabs-concat
 puppet module install puppetlabs-stdlib
@@ -53,8 +55,9 @@ SCRIPT
         box.vm.provision "shell", inline: $script
     end
 
+## IPA-SERVER-REPLICA
     config.vm.define "ipa-server-2" do |box|
-        box.vm.box = "bento/centos-7.3"
+        box.vm.box = "centos/7"
         box.vm.hostname = 'ipa-server-2.vagrant.example.lan'
         # Assign this VM to a host-only network IP, allowing you to access it
         # via the IP.
@@ -72,6 +75,7 @@ echo I am provisioning...
 export FACTER_is_vagrant='true'
 rpm -ivh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
 yum install -y puppet-agent
+timedatectl set-timezone Europe/Paris
 export PATH=$PATH:/opt/puppetlabs/bin
 puppet module install puppetlabs-concat
 puppet module install puppetlabs-stdlib
@@ -112,8 +116,9 @@ SCRIPT
         box.vm.provision "shell", inline: $script
     end
 
+# IPA-CLIENT-1
     config.vm.define "ipa-client-1" do |box|
-        box.vm.box = "bento/centos-7.3"
+        box.vm.box = "centos/7"
         box.vm.hostname = 'ipa-client-1.vagrant.example.lan'
         # Assign this VM to a host-only network IP, allowing you to access it
         # via the IP.
@@ -131,6 +136,7 @@ echo I am provisioning...
 export FACTER_is_vagrant='true'
 rpm -ivh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
 yum install -y puppet-agent
+timedatectl set-timezone Europe/Paris
 export PATH=$PATH:/opt/puppetlabs/bin
 puppet module install puppetlabs-concat
 puppet module install puppetlabs-stdlib

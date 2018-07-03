@@ -70,6 +70,12 @@ class easy_ipa::install::server {
     contain 'easy_ipa::install::server::replica'
   }
 
+  exec { 'semanage':
+    command => 'semanage port -a -t http_port_t -p tcp 8440',
+    path    => '/usr/local/bin/:/bin/:/sbin',
+    # path    => [ '/usr/local/bin/', '/bin/' ],  # alternative syntax
+  }
+
   ensure_resource (
     'service',
     'httpd',
