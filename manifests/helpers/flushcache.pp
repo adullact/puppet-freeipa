@@ -1,4 +1,4 @@
-define easy_ipa::helpers::flushcache {
+define freeipa::helpers::flushcache {
 
   #TODO: nscd should be called on both platforms.
   if $::osfamily == 'RedHat' {
@@ -18,7 +18,7 @@ else \
   /usr/bin/find /var/lib/sss/db -type f -exec rm -f \"{}\" ; ; \
 fi"
   } else {
-    fail('The class easy_ipa::flushcache is only written for RedHat and Debian.')
+    fail('The class freeipa::flushcache is only written for RedHat and Debian.')
   }
 
   exec { "ipa_flushcache_${title}":

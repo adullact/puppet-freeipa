@@ -1,4 +1,4 @@
-# easy_ipa Puppet module
+# freeipa Puppet module
 [![Build Status](https://travis-ci.org/jpuskar/puppet-ipa.svg?branch=master)](https://travis-ci.org/jpuskar/puppet-ipa)
 
 ## Overview
@@ -28,7 +28,7 @@ This module requires [puppetlabs/stdlib](https://forge.puppetlabs.com/puppetlabs
 
 Creating an IPA master, with the WebUI proxied to `https://localhost:8440`.
 ```puppet
-class {'easy_ipa':
+class {'freeipa':
     ipa_role                    => 'master',
     domain                      => 'vagrant.example.lan',
     ipa_server_fqdn             => 'ipa-server-1.vagrant.example.lan',
@@ -48,7 +48,7 @@ class {'easy_ipa':
 
 Adding a replica:
 ```puppet
-class {'::easy_ipa':
+class {'::freeipa':
     ipa_role             => 'replica',
     domain               => 'vagrant.example.lan',
     ipa_server_fqdn      => 'ipa-server-2.vagrant.example.lan',
@@ -65,7 +65,7 @@ class {'::easy_ipa':
 
 Adding a client:
 ```puppet
-class {'::easy_ipa':
+class {'::freeipa':
 ipa_role             => 'client',
 domain               => 'vagrant.example.lan',
 domain_join_password => 'vagrant123',
@@ -229,7 +229,7 @@ Steps to get started:
 
 Original work from Harvard University Information Technology, mainly written by Rob Ruma (https://github.com/huit/puppet-ipa)
 
-then forked by John Puskar (https://github.com/jpuskar/puppet-easy_ipa)
+then forked by John Puskar (https://github.com/jpuskar/puppet-freeipa)
 
 then forked by ADULLACT (https://gitlab.adullact.net/adullact/puppet-freeipa) currently written by :
   * ADULLACT with Fabien Combernous

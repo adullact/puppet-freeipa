@@ -1,7 +1,7 @@
 #
-class easy_ipa::config::admin_user {
+class freeipa::config::admin_user {
 
-  $uid_number = $easy_ipa::idstart
+  $uid_number = $freeipa::idstart
   $home_dir_path = '/home/admin'
 
   # Ensure admin homedir and keytab files.
@@ -12,7 +12,7 @@ class easy_ipa::config::admin_user {
     group   => $uid_number,
     recurse => true,
     notify  => Exec['configure_admin_keytab'],
-    require => Exec["server_install_${easy_ipa::ipa_server_fqdn}"],
+    require => Exec["server_install_${freeipa::ipa_server_fqdn}"],
   }
 
   file { "${home_dir_path}/.k5login":
@@ -31,7 +31,7 @@ class easy_ipa::config::admin_user {
 
   # Gives admin user the host/fqdn principal.
   k5login { "${home_dir_path}/.k5login":
-    principals => $easy_ipa::master_principals,
+    principals => $freeipa::master_principals,
     notify     => File["${home_dir_path}/.k5login"],
     require    => File[$home_dir_path]
   }
@@ -41,7 +41,7 @@ class easy_ipa::config::admin_user {
   exec { 'configure_admin_keytab':
     command     => $configure_admin_keytab_cmd,
     cwd         => $home_dir_path,
-    unless      => shellquote('/usr/bin/kvno','-k',"${home_dir_path}/admin.keytab","admin@${easy_ipa::final_realm}"),
+    unless      => shellquote('/usr/bin/kvno','-k',"${home_dir_path}/admin.keytab","admin@${freeipa::final_realm}"),
     notify      => Exec['chown_admin_keytab'],
     refreshonly => true,
     require     => Cron['k5start_admin'],
@@ -57,7 +57,7 @@ class easy_ipa::config::admin_user {
   }
 
   $k5start_admin_keytab_cmd = "/sbin/runuser -l admin -c \"/usr/bin/k5start -f ${home_dir_path}/admin.keytab -U\""
-  $k5start_admin_keytab_cmd_unless = "/sbin/runuser -l admin -c /usr/bin/klist | grep -i krbtgt\\/${easy_ipa::final_realm}\\@"
+  $k5start_admin_keytab_cmd_unless = "/sbin/runuser -l admin -c /usr/bin/klist | grep -i krbtgt\\/${freeipa::final_realm}\\@"
   exec { 'k5start_admin_keytab':
     command => $k5start_admin_keytab_cmd,
     cwd     => $home_dir_path,
@@ -75,7 +75,7 @@ class easy_ipa::config::admin_user {
     minute  => '*/1',
     notify  => Exec['chown_admin_keytab'],
     require => [
-      Package[$easy_ipa::kstart_package_name],
+      Package[$freeipa::kstart_package_name],
       K5login["${home_dir_path}/.k5login"],
       File[$home_dir_path]
     ],

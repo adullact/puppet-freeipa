@@ -1,3 +1,3 @@
 #
-class easy_ipa::config {
+class freeipa::config {
 }
