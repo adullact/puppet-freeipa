@@ -143,7 +143,7 @@
 # TODO: Params.pp.
 # TODO: configurable admin username.
 #
-class easy_ipa (
+class freeipa (
   String        $domain,
   String        $ipa_role,
   String        $admin_password                     = '',
@@ -229,7 +229,7 @@ class easy_ipa (
     $final_configure_dns_server = $configure_dns_server
   }
 
-  class {'::easy_ipa::validate_params':}
-  -> class {'::easy_ipa::install':}
+  class {'::freeipa::validate_params':}
+  -> class {'::freeipa::install':}
 
 }

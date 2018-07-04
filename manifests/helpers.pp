@@ -1,3 +1,3 @@
 #
-class easy_ipa::helpers {
+class freeipa::helpers {
 }

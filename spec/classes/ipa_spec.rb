@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'easy_ipa', :type => :class do
+describe 'freeipa', :type => :class do
   context 'on Windows' do
     let(:facts) {
       { :osfamily => 'Windows' }
@@ -46,16 +46,16 @@ describe 'easy_ipa', :type => :class do
           }
         }
 
-        it { is_expected.to contain_class('easy_ipa::install') }
-        it { is_expected.to contain_class('easy_ipa::install::server') }
-        it { is_expected.to contain_class('easy_ipa::install::sssd') }
-        it { is_expected.to contain_class('easy_ipa::install::server::master') }
-        it { is_expected.to contain_class('easy_ipa::config::webui') }
-        it { is_expected.to contain_class('easy_ipa::validate_params') }
+        it { is_expected.to contain_class('freeipa::install') }
+        it { is_expected.to contain_class('freeipa::install::server') }
+        it { is_expected.to contain_class('freeipa::install::sssd') }
+        it { is_expected.to contain_class('freeipa::install::server::master') }
+        it { is_expected.to contain_class('freeipa::config::webui') }
+        it { is_expected.to contain_class('freeipa::validate_params') }
 
-        it { is_expected.not_to contain_class('easy_ipa::install::autofs') }
-        it { is_expected.not_to contain_class('easy_ipa::install::server::replica') }
-        it { is_expected.not_to contain_class('easy_ipa::install::client') }
+        it { is_expected.not_to contain_class('freeipa::install::autofs') }
+        it { is_expected.not_to contain_class('freeipa::install::server::replica') }
+        it { is_expected.not_to contain_class('freeipa::install::client') }
 
         it { is_expected.to contain_package('ipa-server-dns') }
         it { is_expected.to contain_package('bind-dyndb-ldap') }
@@ -169,16 +169,16 @@ describe 'easy_ipa', :type => :class do
           }
         }
 
-        it { is_expected.to contain_class('easy_ipa::install') }
-        it { is_expected.to contain_class('easy_ipa::install::server') }
-        it { is_expected.to contain_class('easy_ipa::install::sssd') }
-        it { is_expected.to contain_class('easy_ipa::install::server::replica') }
-        it { is_expected.to contain_class('easy_ipa::config::webui') }
-        it { is_expected.to contain_class('easy_ipa::validate_params') }
+        it { is_expected.to contain_class('freeipa::install') }
+        it { is_expected.to contain_class('freeipa::install::server') }
+        it { is_expected.to contain_class('freeipa::install::sssd') }
+        it { is_expected.to contain_class('freeipa::install::server::replica') }
+        it { is_expected.to contain_class('freeipa::config::webui') }
+        it { is_expected.to contain_class('freeipa::validate_params') }
 
-        it { is_expected.not_to contain_class('easy_ipa::install::autofs') }
-        it { is_expected.not_to contain_class('easy_ipa::install::server::master') }
-        it { is_expected.not_to contain_class('easy_ipa::install::client') }
+        it { is_expected.not_to contain_class('freeipa::install::autofs') }
+        it { is_expected.not_to contain_class('freeipa::install::server::master') }
+        it { is_expected.not_to contain_class('freeipa::install::client') }
 
         it { is_expected.to contain_package('ipa-server-dns') }
         it { is_expected.to contain_package('bind-dyndb-ldap') }
@@ -243,16 +243,16 @@ describe 'easy_ipa', :type => :class do
           }
         }
 
-        it { is_expected.to contain_class('easy_ipa::install') }
-        it { is_expected.to contain_class('easy_ipa::install::sssd') }
-        it { is_expected.to contain_class('easy_ipa::install::client') }
-        it { is_expected.to contain_class('easy_ipa::validate_params') }
+        it { is_expected.to contain_class('freeipa::install') }
+        it { is_expected.to contain_class('freeipa::install::sssd') }
+        it { is_expected.to contain_class('freeipa::install::client') }
+        it { is_expected.to contain_class('freeipa::validate_params') }
 
-        it { is_expected.not_to contain_class('easy_ipa::install::autofs') }
-        it { is_expected.not_to contain_class('easy_ipa::install::server') }
-        it { is_expected.not_to contain_class('easy_ipa::install::server::master') }
-        it { is_expected.not_to contain_class('easy_ipa::install::server::replica') }
-        it { is_expected.not_to contain_class('easy_ipa::config::webui') }
+        it { is_expected.not_to contain_class('freeipa::install::autofs') }
+        it { is_expected.not_to contain_class('freeipa::install::server') }
+        it { is_expected.not_to contain_class('freeipa::install::server::master') }
+        it { is_expected.not_to contain_class('freeipa::install::server::replica') }
+        it { is_expected.not_to contain_class('freeipa::config::webui') }
 
         it { is_expected.to contain_package('ipa-client') }
         it { is_expected.to contain_package('sssd-common') }
