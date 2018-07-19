@@ -30,11 +30,11 @@ puppet module install puppetlabs-concat
 puppet module install puppetlabs-stdlib
 puppet module install crayfishx-firewalld
 puppet module install puppet-selinux
-if [ -d /tmp/modules/easy_ipa ]; then rm -rf /tmp/modules/easy_ipa; fi
-mkdir -p /tmp/modules/easy_ipa
-cp -r /vagrant/* /tmp/modules/easy_ipa
+if [ -d /tmp/modules/freeipa ]; then rm -rf /tmp/modules/freeipa; fi
+mkdir -p /tmp/modules/freeipa
+cp -r /vagrant/* /tmp/modules/freeipa
 puppet apply --modulepath '/tmp/modules:/etc/puppetlabs/code/environments/production/modules' -e "\
-  class {'::easy_ipa':\
+  class {'::freeipa':\
     ipa_role => 'master',\
     domain => 'vagrant.example.lan',\
     ipa_server_fqdn => 'ipa-server-1.vagrant.example.lan',\
@@ -82,9 +82,9 @@ puppet module install puppetlabs-stdlib
 puppet module install crayfishx-firewalld
 puppet module install puppet-selinux
 puppet module install saz-resolv_conf
-if [ -d /tmp/modules/easy_ipa ]; then rm -rf /tmp/modules/easy_ipa; fi
-mkdir -p /tmp/modules/easy_ipa
-cp -r /vagrant/* /tmp/modules/easy_ipa
+if [ -d /tmp/modules/freeipa ]; then rm -rf /tmp/modules/freeipa; fi
+mkdir -p /tmp/modules/freeipa
+cp -r /vagrant/* /tmp/modules/freeipa
 puppet apply --modulepath '/tmp/modules:/etc/puppetlabs/code/environments/production/modules' -e "\
   class { 'resolv_conf':\
     nameservers => ['192.168.44.35'],\
@@ -95,7 +95,7 @@ puppet apply --modulepath '/tmp/modules:/etc/puppetlabs/code/environments/produc
     ip => '192.168.44.35',\
   }"
 puppet apply --modulepath '/tmp/modules:/etc/puppetlabs/code/environments/production/modules' -e "\
-  class {'::easy_ipa':\
+  class {'::freeipa':\
     ipa_role => 'replica',\
     domain => 'vagrant.example.lan',\
     ipa_server_fqdn => 'ipa-server-2.vagrant.example.lan',\
@@ -143,15 +143,15 @@ puppet module install puppetlabs-stdlib
 puppet module install crayfishx-firewalld
 puppet module install puppet-selinux
 puppet module install saz-resolv_conf
-if [ -d /tmp/modules/easy_ipa ]; then rm -rf /tmp/modules/easy_ipa; fi
-mkdir -p /tmp/modules/easy_ipa
-cp -r /vagrant/* /tmp/modules/easy_ipa
+if [ -d /tmp/modules/freeipa ]; then rm -rf /tmp/modules/freeipa; fi
+mkdir -p /tmp/modules/freeipa
+cp -r /vagrant/* /tmp/modules/freeipa
 puppet apply --modulepath '/tmp/modules:/etc/puppetlabs/code/environments/production/modules' -e "\
   class { 'resolv_conf':\
     nameservers => ['192.168.44.35'],\
   }"
 puppet apply --modulepath '/tmp/modules:/etc/puppetlabs/code/environments/production/modules' -e "\
-  class {'::easy_ipa':\
+  class {'::freeipa':\
     ipa_role => 'client',\
     domain => 'vagrant.example.lan',\
     domain_join_password => 'vagrant123',\

@@ -1,7 +1,7 @@
 #
-class easy_ipa::install::sssd {
+class freeipa::install::sssd {
 
-  package { $easy_ipa::sssd_package_name:
+  package { $freeipa::sssd_package_name:
     ensure => present,
   }
 

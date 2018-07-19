@@ -1,1 +1,1 @@
-include ::easy_ipa
+include ::freeipa
