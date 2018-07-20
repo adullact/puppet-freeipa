@@ -25,7 +25,7 @@ class freeipa::install::server::master {
     unless    => '/usr/sbin/ipactl status >/dev/null 2>&1',
     creates   => '/etc/ipa/default.conf',
     logoutput => 'on_failure',
-    notify    => Easy_ipa::Helpers::Flushcache["server_${freeipa::ipa_server_fqdn}"],
+    notify    => Freeipa::Helpers::Flushcache["server_${freeipa::ipa_server_fqdn}"],
     before    => Service['sssd'],
   }
   -> cron { 'k5start_root': #allows scp to replicas as root
