@@ -1,0 +1,10 @@
+---
+HOSTS:
+  centos7-64:
+    roles:
+    - agent
+    platform: el-7-x86_64
+    hypervisor: vagrant
+    box: geerlingguy/centos7
+CONFIG:
+  type: foss
