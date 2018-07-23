@@ -1,6 +1,13 @@
 #
 class freeipa::install::client {
 
+#require resolv_conf
+#include resolv_conf::
+#    nameservers => ['${freeipa::nameserver}'],
+#  }
+#  contain resolv_conf
+
+
   package{$freeipa::ipa_client_package_name:
     ensure => present,
   }

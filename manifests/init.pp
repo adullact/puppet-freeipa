@@ -148,6 +148,7 @@ class freeipa (
   String        $ipa_role,
   String        $admin_password                     = '',
   String        $directory_services_password        = '',
+#  Array[String] $nameservers                        = "${freeipa::nameservers}",
   String        $autofs_package_name                = 'autofs',
   Boolean       $client_install_ldaputils           = false,
   Boolean       $configure_dns_server               = true,
@@ -224,6 +225,11 @@ class freeipa (
   }
 
   if $ipa_role == 'client' {
+#    class { 'resolv_conf':
+#      nameservers => ['ipa-server-1.vagrant.example.lan'],
+#    }
+#    contain 'resolv_conf'
+
     $final_configure_dns_server = false
   } else {
     $final_configure_dns_server = $configure_dns_server

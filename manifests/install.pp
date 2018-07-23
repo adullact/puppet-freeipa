@@ -45,9 +45,9 @@ class freeipa::install {
       contain 'freeipa::install::server'
     }
   } elsif $freeipa::ipa_role == 'client' {
-    if $freeipa::install_ipa_client {
-      contain 'freeipa::install::client'
-    }
+      if $freeipa::install_ipa_client {
+        contain 'freeipa::install::client'
+      }
   }
 
 }
