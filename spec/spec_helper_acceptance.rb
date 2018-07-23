@@ -18,9 +18,35 @@ RSpec.configure do |c|
       on host, puppet('module', 'install', 'puppetlabs-accounts')
     end
 
-    #we need :
-    # * an already existing system user to test backup without root privileges
-    # * a restic wrapper with old path used before 0.10
+### Doit installer les modules suivants pour master:
+### * puppet module install puppetlabs-concat
+### * puppet module install puppetlabs-stdlib
+### * puppet module install crayfishx-firewalld
+### * puppet module install puppet-selinux
+### * IPV6 activée
+### * hostname/hostname -f
+
+### Doit installer les modules suivants pour replicas:
+### * puppet module install puppetlabs-concat
+### * puppet module install puppetlabs-stdlib
+### * puppet module install crayfishx-firewalld
+### * puppet module install puppet-selinux
+### * puppet module install saz-resolv_conf
+### * IPV6 activée
+### * hostname/hostname -f
+
+### Doit installer les modules suivants pour clients:
+### * puppet module install puppetlabs-concat
+### * puppet module install puppetlabs-stdlib
+### * puppet module install crayfishx-firewalld
+### * puppet module install puppet-selinux
+### * puppet module install saz-resolv_conf
+### * IPV6 activée
+
+
+#    #we need :
+#    # * an already existing system user to test backup without root privileges
+#    # * a restic wrapper with old path used before 0.10
 #    pp = <<-EOS
 #      accounts::user { 'bar': 
 #      }
