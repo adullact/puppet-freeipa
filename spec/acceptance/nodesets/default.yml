@@ -1,6 +1,6 @@
 ---
 HOSTS:
-  centos7-64:
+  ipa-server-1:
     roles:
     - agent
     platform: el-7-x86_64
