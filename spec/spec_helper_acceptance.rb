@@ -15,7 +15,10 @@ RSpec.configure do |c|
   c.before :suite do
 
     hosts.each do |host|
-      on host, puppet('module', 'install', 'puppetlabs-accounts')
+      on host, puppet('module', 'install', 'puppetlabs-concat')
+      on host, puppet('module', 'install', 'puppetlabs-stdlib')
+      on host, puppet('module', 'install', 'crayfishx-firewalld')
+      on host, puppet('module', 'install', 'puppet-selinux')
     end
 
 ### Doit installer les modules suivants pour master:
