@@ -2,7 +2,6 @@ require 'beaker-rspec/spec_helper'
 require 'beaker-rspec/helpers/serverspec'
 require 'beaker/puppet_install_helper'
 require 'beaker/module_install_helper'
-require 'beaker/task_helper'
 
 PUPPET_INSTALL_VERSION = 5.5
 
