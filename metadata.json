@@ -1,12 +1,12 @@
 {
-  "name": "jpuskar-easy_ipa",
-  "version": "1.0.0",
-  "author": "jpuskar",
+  "name": "puppet-freeipa",
+  "version": "1.6.1",
+  "author": "adullcat",
   "summary": "Manages IPA servers and clients.",
   "license": "Apache-2.0",
-  "source": "https://github.com/jpuskar/puppet-ipa",
-  "project_page": "https://github.com/jpuskar/puppet-ipa",
-  "issues_url": "https://github.com/jpuskar/puppet-ipa",
+  "source": "https://gitlab.adullact.net/adullact/puppet-freeipa/tree/3-fix-install-master-client",
+  "project_page": "https://gitlab.adullact.net/adullact/puppet-freeipa/",
+  "issues_url": "https://gitlab.adullact.net/adullact/puppet-freeipa/",
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
