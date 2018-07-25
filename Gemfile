@@ -12,7 +12,7 @@ group :development do
 end
 
 group :test, :development do
-  gem 'puppet', '4.9.4'
+  gem 'puppet', '5.5'
   # should be 3.7.2 but not available on rubygems
   gem 'facter'
   gem 'hiera', '3.3.1'
@@ -21,10 +21,21 @@ group :test, :development do
   # other testing gems we want
   gem 'rspec-puppet'
   gem 'puppetlabs_spec_helper'
+  gem 'beaker'
+  gem 'beaker-rspec'
+  gem 'beaker-puppet_install_helper'
+  gem 'beaker-module_install_helper'
+  gem 'metadata-json-lint'
   gem 'rake-notes'
-
-  # pinning specific versions
   gem 'puppet-lint', '~> 2.1'
 
-end
+  # rspec must be v2 for ruby 1.8.7
+  if RUBY_VERSION >= '1.8.7' && RUBY_VERSION < '1.9'
+    gem 'rspec', '~> 2.0'
+    gem 'rake', '~> 10.0'
+  else
+    # rubocop requires ruby >= 1.9
+    gem 'rubocop'
+  end
 
+end
