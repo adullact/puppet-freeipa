@@ -64,6 +64,11 @@ class freeipa::install::server {
     $server_install_cmd_opts_no_ui_redirect = '--no-ui-redirect'
   }
 
+  exec { 'set /etc/hosts':
+    command => "echo -e \"127.0.0.1       localhost\n::1	localhost ip6-localhost ip6-loopback\nfe00::0	ip6-localnet\nff00::0	ip6-mcastprefix\nff02::1	ip6-allnodes\nff02::2	ip6-allrouters\n${freeipa::ip_address}    ${freeipa::hostname}.${freeipa::domain} ${freeipa::hostname}\" > /etc/hosts",
+    path    => '/usr/local/bin/:/bin/:/sbin',
+  }
+
   if $freeipa::ipa_role == 'master' {
     contain 'freeipa::install::server::master'
   } elsif $freeipa::ipa_role == 'replica' {
@@ -73,7 +78,6 @@ class freeipa::install::server {
   exec { 'semanage':
     command => 'semanage port -a -t http_port_t -p tcp 8440',
     path    => '/usr/local/bin/:/bin/:/sbin',
-    # path    => [ '/usr/local/bin/', '/bin/' ],  # alternative syntax
   }
 
   ensure_resource (
