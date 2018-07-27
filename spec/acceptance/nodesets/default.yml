@@ -16,3 +16,4 @@ HOSTS:
         to: 8440
 CONFIG:
   type: foss
+  loglevel: debug
