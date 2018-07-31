@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe ' freeipa class' do
+describe 'freeipa class' do
 
   context 'master' do
     context 'with default parameters' do
@@ -25,13 +25,15 @@ class { 'freeipa':
 }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes  => true)
+        apply_manifest(pp, :catch_failures => true, :debug => true)
+        apply_manifest(pp, :catch_changes  => true, :debug => true)
       end
 
-#      step 'test ipactl status with beaker exec' do
-#        on(host, "ipactl status")
-#      end
+
+      describe command('ipactl status') do
+        its(:exit_status) { should eq 0 }
+      end
+
     end
   end
 
