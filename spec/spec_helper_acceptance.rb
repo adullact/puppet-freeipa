@@ -3,7 +3,7 @@ require 'beaker-rspec/helpers/serverspec'
 require 'beaker/puppet_install_helper'
 require 'beaker/module_install_helper'
 
-PUPPET_INSTALL_VERSION = 5.5
+#PUPPET_INSTALL_VERSION = 5+
 
 run_puppet_install_helper
 install_module_on(hosts)
