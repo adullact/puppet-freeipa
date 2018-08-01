@@ -69,15 +69,20 @@ Exec {
     $server_install_cmd_opts_no_ui_redirect = '--no-ui-redirect'
   }
 
-#  exec { 'set /etc/hosts':
-#    command => "echo -e \"127.0.0.1       localhost\n::1	localhost ip6-localhost ip6-loopback\nfe00::0	ip6-localnet\nff00::0	ip6-mcastprefix\nff02::1	ip6-allnodes\nff02::2	ip6-allrouters\n${freeipa::ip_address}    ${freeipa::hostname}.${freeipa::domain} ${freeipa::hostname}\" > /etc/hosts",
-#    unless  => "[ $facts['networking']['fqdn'] = '${freeipa::ipa_server_fqdn}' ]",
-#  }
+  exec { 'set /etc/hosts':
+    command => "echo -e \"127.0.0.1       localhost\n::1	localhost ip6-localhost ip6-loopback\nfe00::0	ip6-localnet\nff00::0	ip6-mcastprefix\nff02::1	ip6-allnodes\nff02::2	ip6-allrouters\n${freeipa::ip_address}    ${freeipa::hostname}.${freeipa::domain} ${freeipa::hostname}\" > /etc/hosts",
+    unless  => "/usr/bin/test `hostname -f` = `${freeipa::fqdn}`",
+  }
 
-#  exec { 'set /etc/hostname':
-#    command => "echo -e \"${freeipa::hostname}\" > /etc/hostname",
-#    unless  => "[ $facts['networking']['hostname'] = '${freeipa::hostname}' ]",
-#  }
+  exec { 'set /etc/hostname':
+    command => "echo -e \"${freeipa::hostname}\" > /etc/hostname",
+    unless  => "/usr/bin/test `hostname` = `/bin/cat /etc/hostname`",
+  }
+
+  exec { "apply_hostname":
+    command => "/bin/hostname -F /etc/hostname",
+    unless  => "/usr/bin/test `hostname` = `/bin/cat /etc/hostname`",
+  }
 
   if $freeipa::ipa_role == 'master' {
     contain 'freeipa::install::server::master'
