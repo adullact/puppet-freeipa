@@ -16,9 +16,13 @@ class freeipa::config::admin_user {
   }
 
   file { "${home_dir_path}/.k5login":
-    owner   => $uid_number,
-    group   => $uid_number,
-    require => File[$home_dir_path],
+    owner      => $uid_number,
+    group      => $uid_number,
+    require    => File[$home_dir_path],
+    seluser    => 'user_u',
+    selrole    => 'object_r',
+    seltype    => 'krb5_home_t',
+    selrange   => 's0',
   }
 
   file { "${home_dir_path}/admin.keytab":
