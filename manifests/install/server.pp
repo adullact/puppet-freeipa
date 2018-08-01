@@ -1,6 +1,11 @@
 #
 class freeipa::install::server {
 
+
+Exec {
+    path    => '/usr/local/bin/:/bin/:/sbin',
+}
+
   package{$freeipa::ipa_server_package_name:
     ensure => present,
   }
@@ -64,10 +69,15 @@ class freeipa::install::server {
     $server_install_cmd_opts_no_ui_redirect = '--no-ui-redirect'
   }
 
-  exec { 'set /etc/hosts':
-    command => "echo -e \"127.0.0.1       localhost\n::1	localhost ip6-localhost ip6-loopback\nfe00::0	ip6-localnet\nff00::0	ip6-mcastprefix\nff02::1	ip6-allnodes\nff02::2	ip6-allrouters\n${freeipa::ip_address}    ${freeipa::hostname}.${freeipa::domain} ${freeipa::hostname}\" > /etc/hosts",
-    path    => '/usr/local/bin/:/bin/:/sbin',
-  }
+#  exec { 'set /etc/hosts':
+#    command => "echo -e \"127.0.0.1       localhost\n::1	localhost ip6-localhost ip6-loopback\nfe00::0	ip6-localnet\nff00::0	ip6-mcastprefix\nff02::1	ip6-allnodes\nff02::2	ip6-allrouters\n${freeipa::ip_address}    ${freeipa::hostname}.${freeipa::domain} ${freeipa::hostname}\" > /etc/hosts",
+#    unless  => "[ $facts['networking']['fqdn'] = '${freeipa::ipa_server_fqdn}' ]",
+#  }
+
+#  exec { 'set /etc/hostname':
+#    command => "echo -e \"${freeipa::hostname}\" > /etc/hostname",
+#    unless  => "[ $facts['networking']['hostname'] = '${freeipa::hostname}' ]",
+#  }
 
   if $freeipa::ipa_role == 'master' {
     contain 'freeipa::install::server::master'
@@ -77,7 +87,8 @@ class freeipa::install::server {
 
   exec { 'semanage':
     command => 'semanage port -a -t http_port_t -p tcp 8440',
-    path    => '/usr/local/bin/:/bin/:/sbin',
+    unless  => 'semanage port --list |grep 8440',
+    user    => root,
   }
 
   ensure_resource (
