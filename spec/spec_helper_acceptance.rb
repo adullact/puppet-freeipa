@@ -18,34 +18,18 @@ RSpec.configure do |c|
       on host, puppet('module', 'install', 'puppetlabs-stdlib')
       on host, puppet('module', 'install', 'crayfishx-firewalld')
       on host, puppet('module', 'install', 'puppet-selinux')
+
+## Preconfigure master
+      pp = <<-EOS
+         exec { 'set master /etc/hosts':
+           path     => '/bin/',
+           command  => 'echo -e "127.0.0.1       ipa-server-1.vagrant.example.lan ipa-server-1\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n 192.168.44.35 ipa-server-1.vagrant.example.lan ipa-server-1\n" > /etc/hosts',
+         }
+         EOS
+
+      apply_manifest(pp, :catch_failures => true, :debug => true)
+
+
     end
-
-### Doit installer les modules suivants pour master:
-### * puppet module install puppetlabs-concat
-### * puppet module install puppetlabs-stdlib
-### * puppet module install crayfishx-firewalld
-### * puppet module install puppet-selinux
-### * IPV6 activée
-### * hostname/hostname -f
-
-### Doit installer les modules suivants pour replicas:
-### * puppet module install puppetlabs-concat
-### * puppet module install puppetlabs-stdlib
-### * puppet module install crayfishx-firewalld
-### * puppet module install puppet-selinux
-### * puppet module install saz-resolv_conf
-### * IPV6 activée
-### * hostname/hostname -f
-
-### Doit installer les modules suivants pour clients:
-### * puppet module install puppetlabs-concat
-### * puppet module install puppetlabs-stdlib
-### * puppet module install crayfishx-firewalld
-### * puppet module install puppet-selinux
-### * puppet module install saz-resolv_conf
-### * IPV6 activée
-
-
   end
-
 end

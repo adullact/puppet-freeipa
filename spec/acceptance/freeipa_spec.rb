@@ -33,35 +33,8 @@ class { 'freeipa':
       describe command('ipactl status') do
         its(:exit_status) { should eq 0 }
       end
-
     end
   end
-
-#  context 'replica' do
-#    context 'with default parameters' do
-#      pp = "class { 'freeipa': }"
-#      apply_manifest(pp, :catch_failures => true)
-#      apply_manifest(pp, :catch_changes  => true)
-#
-#    end
-#
-#
-#    step 'test ipactl status with beaker exec' do
-#      on(host, "ipactl status")
-#    end
-#
-#  end
-#
-#  context 'client' do
-#    context 'with default parameters' do
-#      pp = "class { 'freeipa': }"
-#      apply_manifest(pp, :catch_failures => true)
-#      apply_manifest(pp, :catch_changes  => true)
-#
-#    end
-#
-#
-#  end
 
 
 end
