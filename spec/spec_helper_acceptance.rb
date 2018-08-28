@@ -18,8 +18,21 @@ RSpec.configure do |c|
       on host, puppet('module', 'install', 'puppetlabs-stdlib')
       on host, puppet('module', 'install', 'crayfishx-firewalld')
       on host, puppet('module', 'install', 'puppet-selinux')
+      
+      pp = <<-EOS
+        exec { 'stop network manager':
+          command => 'systemctl stop NetworkManager',
+          onlyif  => 'systemctl status NetworkManager',
+          path    => '/usr/bin:/sbin:/bin'
+        }
+        EOS
+
+      apply_manifest_on(host, pp, :catch_failures => true)
+
 
 ## Preconfigure master
+      
+
       pp = <<-EOS
          exec { 'set master /etc/hosts':
            path     => '/bin/',

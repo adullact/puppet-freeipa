@@ -13,6 +13,7 @@ class freeipa::install::server::master {
   ${freeipa::install::server::server_install_cmd_opts_no_ntp} \
   ${freeipa::install::server::server_install_cmd_opts_idstart} \
   ${freeipa::install::server::server_install_cmd_opts_no_ui_redirect} \
+  --auto-reverse \
   --unattended"
 
   file { '/etc/ipa/primary':
