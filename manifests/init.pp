@@ -226,11 +226,6 @@ class freeipa (
   }
 
   if $ipa_role == 'client' {
-#    class { 'resolv_conf':
-#      nameservers => ['ipa-server-1.vagrant.example.lan'],
-#    }
-#    contain 'resolv_conf'
-
     $final_configure_dns_server = false
   } else {
     $final_configure_dns_server = $configure_dns_server
