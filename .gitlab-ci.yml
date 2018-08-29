@@ -1,0 +1,20 @@
+---
+stages:
+  - acceptance-puppet4
+  - acceptance-puppet5
+
+acceptance_with_puppet4:
+  stage: 'acceptance-puppet4'
+  variables:
+    BEAKER_PUPPET_COLLECTION: 'pc1'
+  script:
+    - bundle exec rspec spec/acceptance
+
+acceptance_with_puppet5_ubuntu:
+  stage: 'acceptance-puppet5'
+  variables:
+    BEAKER_PUPPET_COLLECTION: 'puppet5'
+  script:
+    - bundle exec rspec spec/acceptance
+  tags:
+    - puppet-tests
