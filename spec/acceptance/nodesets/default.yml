@@ -5,7 +5,7 @@ HOSTS:
     - default
     - master
     platform: el-7-x86_64
-    hypervisor: vagrant
+    hypervisor: docker
     box: geerlingguy/centos7
     vagrant_memsize: 2048
     ip: 192.168.44.35
