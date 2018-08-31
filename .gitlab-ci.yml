@@ -9,7 +9,7 @@ cache:
 
 before_script:
   - bundle -v
-  - bundle install --path vendore/bundle
+  - bundle install --path vendor/bundle
 
 acceptance_with_puppet4:
   stage: 'acceptance-puppet4'
