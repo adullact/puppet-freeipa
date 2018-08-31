@@ -3,18 +3,27 @@ stages:
   - acceptance-puppet4
   - acceptance-puppet5
 
+cache:
+  paths:
+    - vendor/bundle
+
+before_script:
+  - bundle -v
+
 acceptance_with_puppet4:
   stage: 'acceptance-puppet4'
+  image: ruby:2.1.9
   variables:
     BEAKER_PUPPET_COLLECTION: 'pc1'
+    PUPPET_GEM_VERSION: '~> 4.10'
   script:
     - bundle exec rspec spec/acceptance
 
 acceptance_with_puppet5_ubuntu:
   stage: 'acceptance-puppet5'
+  image: ruby:2.4.4
   variables:
     BEAKER_PUPPET_COLLECTION: 'puppet5'
+    PUPPET_GEM_VERSION: '~> 5.5'
   script:
     - bundle exec rspec spec/acceptance
-  tags:
-    - puppet-tests
