@@ -12,21 +12,20 @@ group :development do
 end
 
 group :test, :development do
-  gem 'puppet', '5.5'
-  # should be 3.7.2 but not available on rubygems
   gem 'facter'
-  gem 'hiera', '3.3.1'
+  gem 'hiera'
   gem 'parallel_tests'
 
   # other testing gems we want
   gem 'rspec-puppet'
   gem 'puppetlabs_spec_helper'
+  gem 'beaker-puppet'
+  gem 'beaeker-docker'
   gem 'beaker'
   gem 'beaker-rspec'
   gem 'beaker-puppet_install_helper'
   gem 'beaker-module_install_helper'
   gem 'metadata-json-lint'
-  gem 'rake-notes'
   gem 'puppet-lint', '~> 2.1'
 
   # rspec must be v2 for ruby 1.8.7
