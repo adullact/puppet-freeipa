@@ -31,11 +31,11 @@ group :test, :development do
   gem 'rake'
   gem 'rubocop'
 
-  # 
+  # net-telnet 0.2.0 requires Ruby version >= 2.3.0
   if RUBY_VERSION == '2.1.9'
-    gem 'net-telnet' '< 0.2.0'
+    gem 'net-telnet', '< 0.2.0'
   elsif RUBY_VERSION == '2.4.4'
-    gem 'net-telnet' '>= 0.2.0'
+    gem 'net-telnet', '>= 0.2.0'
   end
 
 end
