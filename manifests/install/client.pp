@@ -1,6 +1,7 @@
 #
 class freeipa::install::client {
 
+
   package{$freeipa::ipa_client_package_name:
     ensure => present,
   }

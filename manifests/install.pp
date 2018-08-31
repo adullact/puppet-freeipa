@@ -30,23 +30,29 @@ class freeipa::install {
     }
   }
 
-  if $freeipa::ipa_role == 'master' or $freeipa::ipa_role == 'replica' {
-    if $freeipa::final_configure_dns_server {
-      $dns_packages = [
-        'ipa-server-dns',
-        'bind-dyndb-ldap',
-      ]
-      package{$dns_packages:
-        ensure => present,
+  case $freeipa::ipa_role {
+    'client': {
+       if $freeipa::install_ipa_client {
+         contain 'freeipa::install::client'
+       }
+    }
+    'master', 'replica': {
+      if $freeipa::final_configure_dns_server {
+        $dns_packages = [
+          'ipa-server-dns',
+          'bind-dyndb-ldap',
+        ]
+        package{$dns_packages:
+          ensure => present,
+        }
+      }
+
+      if $freeipa::install_ipa_server {
+        contain 'freeipa::install::server'
       }
     }
-
-    if $freeipa::install_ipa_server {
-      contain 'freeipa::install::server'
-    }
-  } elsif $freeipa::ipa_role == 'client' {
-    if $freeipa::install_ipa_client {
-      contain 'freeipa::install::client'
+    default: {
+      fail ("unexpected role ${freeipa::ipa_role}")
     }
   }
 

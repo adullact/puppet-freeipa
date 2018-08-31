@@ -1,5 +1,9 @@
-#
 class freeipa::install::server {
+
+
+Exec {
+    path    => '/usr/local/bin/:/bin/:/sbin',
+}
 
   package{$freeipa::ipa_server_package_name:
     ensure => present,
@@ -68,6 +72,12 @@ class freeipa::install::server {
     contain 'freeipa::install::server::master'
   } elsif $freeipa::ipa_role == 'replica' {
     contain 'freeipa::install::server::replica'
+  }
+
+  exec { 'semanage':
+    command => 'semanage port -a -t http_port_t -p tcp 8440',
+    unless  => 'semanage port --list |grep 8440',
+    user    => root,
   }
 
   ensure_resource (

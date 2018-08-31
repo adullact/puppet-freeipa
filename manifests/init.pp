@@ -144,10 +144,12 @@
 # TODO: configurable admin username.
 #
 class freeipa (
+  String        $hostname                           = 'default',
   String        $domain,
   String        $ipa_role,
   String        $admin_password                     = '',
   String        $directory_services_password        = '',
+#  Array[String] $nameservers                        = "${freeipa::nameservers}",
   String        $autofs_package_name                = 'autofs',
   Boolean       $client_install_ldaputils           = false,
   Boolean       $configure_dns_server               = true,
@@ -158,7 +160,7 @@ class freeipa (
   Boolean       $enable_hostname                    = true,
   Boolean       $enable_ip_address                  = false,
   Boolean       $fixed_primary                      = false,
-  Integer       $idstart                            = (fqdn_rand('10737') + 10000),
+  Integer       $idstart                            = 10000,
   Boolean       $install_autofs                     = false,
   Boolean       $install_epel                       = true,
   Boolean       $install_kstart                     = true,

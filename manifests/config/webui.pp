@@ -48,7 +48,7 @@ class freeipa::config::webui {
       path   => '/etc/httpd/conf.d/ipa.conf',
       line   => "  <If \"%{HTTP_HOST} != '${proxy_server_external_fqdn_and_port}'\">",
       notify => Service['httpd'],
-      after  => '<Location\ "/ipa">',
+      after  => '^<Location\ "/ipa">$',
     }
 
     file_line{'disable_kerberos_via_if_2':
