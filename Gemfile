@@ -26,15 +26,16 @@ group :test, :development do
   gem 'beaker-puppet_install_helper'
   gem 'beaker-module_install_helper'
   gem 'metadata-json-lint'
-  gem 'puppet-lint', '~> 2.1'
+  gem 'puppet-lint'
+  gem 'rspec'
+  gem 'rake'
+  gem 'rubocop'
 
-  # rspec must be v2 for ruby 1.8.7
-  if RUBY_VERSION >= '1.8.7' && RUBY_VERSION < '1.9'
-    gem 'rspec', '~> 2.0'
-    gem 'rake', '~> 10.0'
-  else
-    # rubocop requires ruby >= 1.9
-    gem 'rubocop'
+  # 
+  if RUBY_VERSION == '2.1.9'
+    gem 'net-telnet' '< 0.2.0'
+  elsif RUBY_VERSION == '2.4.4'
+    gem 'net-telnet' '>= 0.2.0'
   end
 
 end
