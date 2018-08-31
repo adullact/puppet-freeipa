@@ -20,7 +20,7 @@ group :test, :development do
   gem 'rspec-puppet'
   gem 'puppetlabs_spec_helper'
   gem 'beaker-puppet'
-  gem 'beaeker-docker'
+  gem 'beaker-docker'
   gem 'beaker'
   gem 'beaker-rspec'
   gem 'beaker-puppet_install_helper'
