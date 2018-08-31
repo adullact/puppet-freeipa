@@ -29,13 +29,15 @@ group :test, :development do
   gem 'puppet-lint'
   gem 'rspec'
   gem 'rake'
-  gem 'rubocop'
 
   # net-telnet 0.2.0 requires Ruby version >= 2.3.0
+  # rubocop 0.58.0 requires Ruby version >= 2.2.0
   if RUBY_VERSION == '2.1.9'
     gem 'net-telnet', '< 0.2.0'
+    gem 'rubocop', '< 0.58.0'
   elsif RUBY_VERSION == '2.4.4'
     gem 'net-telnet', '>= 0.2.0'
+    gem 'rubocop', '>= 0.58.0'
   end
 
 end
