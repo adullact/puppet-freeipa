@@ -1,4 +1,9 @@
+# A description of what this class does
+# Install freeipa client
+# @summary A short summary of the purpose of this class
 #
+# @example
+#   include freeipa::install::client
 class freeipa::install::client {
 
 

@@ -1,25 +1,37 @@
-# freeipa Puppet module
-[![Build Status](https://travis-ci.org/jpuskar/puppet-ipa.svg?branch=master)](https://travis-ci.org/jpuskar/puppet-ipa)
+# Freeipa Puppet module
 
-## Overview
 
-This module will install and configure IPA servers, replicas, and clients. This module was forked from huit-ipa, 
-and refactored with a focus on simplicity and ease of use.
+#### Table of Contents
 
-The following features work great:
-- Creating a domain.
-- Adding IPA server replicas.
-- Joining clients.
-- WebUI proxy to https://localhost:8440 (for vagrant testing).
+1. [Description](#description)
+2. [Setup - The basics of getting started with Freeipa Puppet Module](#setup)
+    * [What Freeipa Puppet module affects](#what-freeipa-pupppet-module-affects)
+    * [Setup requirements](#setup-requirements)
+3. [Usage - Configuration options and additional functionality](#usage)
+4. [Limitations - OS compatibility, etc.](#limitations)
+5. [Authors](#authors)
+6. [License](#license)
 
-The following features were stripped out and are currently unavailable:
-- Autofs configuration.
-- Sudo rule management.
-- Host management (beyond simple clinet domain joins).
-- Host joins via one time passwords.
-- Dns zone management (beyond creating an initial zone).
+## Description
 
-## Dependencies
+This module will install and configure IPA servers, replicas, and clients. This module was forked from jpuskar/puppet-ipa, implementing few features like gitlab-ci, pdk and beaker.
+
+## Setup
+
+### What Freeipa Pupppet module affects
+The module doesn't affect a previous installation of FreeIPA, it will fail trying.
+
+Below are all the things affected:
+
+- Modifiy /etc/hosts
+- Install the following packages if not present: autofs, bind-dyndb-ldap, epel-release, sssd-common, sssdtools, ipa-client, ipa-server, ipa-server-dns, kstart, openldap-clients
+- Modify /etc/resolv.conf
+- Add to selinux port 8440
+
+Installation of Freeipa server will obviously install a ntp server, a DNS server, a LDAP Directory, a Kerberos server, apache, Certmonger and PKI Tomcat.
+
+### Setup Requirements
+
 This module requires [puppetlabs/stdlib](https://forge.puppetlabs.com/puppetlabs/stdlib) >= 4.13.0.
 
 ## Usage
@@ -74,156 +86,12 @@ ipa_master_fqdn      => 'ipa-server-1.vagrant.example.lan',
 }
 ```
 
-### Mandatory Parameters
-
-#### `domain`
-Mandatory. The name of the IPA domain to create or join.
-
-#### `ipa_role`
-Mandatory. What role the node will be. Options are 'master', 'replica', and 'client'.
-
-#### `admin_password`
-Mandatory if `ipa_role` is set as 'Master' or 'Replica'.
-Password which will be assigned to the IPA account named 'admin'.
-
-#### `directory_services_password`
-Mandatory if `ipa_role` is set as 'Master'.
-Password which will be passed into the ipa setup's parameter named "--ds-password".
-
-### Optional Parameters
-
-#### `autofs_package_name`
-Name of the autofs package to install if enabled.
-
-#### `configure_dns_server`
-If true, then the parameter '--setup-dns' is passed to the IPA server installer.
-Also, triggers the install of the required dns server packages.
-
-#### `configure_ntp`
-If false, then the parameter '--no-ntp' is passed to the IPA server installer.
-
-#### `custom_dns_forwarders`
-Each element in this array is prefixed with '--forwarder ' and passed to the IPA server installer.
-
-#### `domain_join_principal`
-The principal (usually username) used to join a client or replica to the IPA domain.
-
-#### `domain_join_password`
-The password for the domain_join_principal.
-
-#### `enable_hostname`
-If true, then the parameter '--hostname' is populated with the parameter 'ipa_server_fqdn'
-and passed to the IPA installer.
-
-#### `enable_ip_address`
-If true, then the parameter '--ip-address' is populated with the parameter 'ip_address'
-and passed to the IPA installer.
-
-#### `fixed_primary`
-If true, then the parameter '--fixed-primary' is passed to the IPA installer.
-
-#### `idstart`
-From the IPA man pages: "The starting user and group id number".
-
-#### `install_autofs`
-If true, then the autofs packages are installed.
-
-#### `install_epel`
-If true, then the epel repo is installed. The epel repo is usually required for sssd packages.
-
-#### `install_kstart`
-If true, then the kstart packages are installed.
-
-#### `install_ldaputils`
-If true, then the ldaputils packages are installed.
-
-#### `install_sssdtools`
-If true, then the sssdtools packages are installed.
-
-#### `ipa_client_package_name`
-Name of the IPA client package.
-
-#### `ipa_server_package_name`
-Name of the IPA server package.
-
-#### `install_ipa_client`
-If true, then the IPA client packages are installed if the parameter 'ipa_role' is set to 'client'.
-
-#### `install_ipa_server`
-If true, then the IPA server packages are installed if the parameter 'ipa_role' is not set to 'client'.
-
-#### `install_sssd`
-If true, then the sssd packages are installed.
-
-#### `ip_address`
-IP address to pass to the IPA installer.
-
-#### `ipa_server_fqdn`
-Actual fqdn of the IPA server or client.
-
-#### `kstart_package_name`
-Name of the kstart package.
-
-#### `ldaputils_package_name`
-Name of the ldaputils package.
-
-#### `ipa_master_fqdn`
-FQDN of the server to use for a client or replica domain join.
-
-#### `manage_host_entry`
-If true, then a host entry is created using the parameters 'ipa_server_fqdn' and 'ip_address'.
-
-#### `mkhomedir`
-If true, then the parameter '--mkhomedir' is passed to the IPA client installer.
-
-#### `no_ui_redirect`
-If true, then the parameter '--no-ui-redirect' is passed to the IPA server installer.
-
-#### `realm`
-The name of the IPA realm to create or join.
-
-#### `sssd_package_name`
-Name of the sssd package.
-
-#### `sssdtools_package_name`
-Name of the sssdtools package.
-
-#### `webui_disable_kerberos`
-If true, then /etc/httpd/conf.d/ipa.conf is written to exclude kerberos support for
-incoming requests whose HTTP_HOST variable match the parameter 'webio_proxy_external_fqdn'.
-This allows the IPA Web UI to work on a proxied port, while allowing IPA client access to
-function as normal.
-
-#### `webui_enable_proxy`
-If true, then httpd is configured to act as a reverse proxy for the IPA Web UI. This allows
-for the Web UI to be accessed from different ports and hostnames than the default.
-
-#### `webui_force_https`
-If true, then /etc/httpd/conf.d/ipa-rewrite.conf is modified to force all connections to https.
-This is necessary to allow the WebUI to be accessed behind a reverse proxy when using nonstandard
-ports.
-
-#### `webui_proxy_external_fqdn`
-The public or external FQDN used to access the IPA Web UI behind the reverse proxy.
-
-#### `webui_proxy_https_port`
-The HTTPS port to use for the reverse proxy. Cannot be 443.
-
+### Parameters
+A description of all the parameterrs can be found in `REFERENCE.md`.
 
 ## Limitations
 
-This module has only been tested on Centos 7.
-
-## Testing
-A vagrantfile is provided for easy testing.
-
-Steps to get started:
- 1. Install vagrant.
- 1. Install virtualbox.
- 1. Clone this repo.
- 1. Run `vagrant up` in a terminal window from the root of the repo.
- 1. Open a browser and navigate to `https://localhost:8440`.
- Log in with username `admin` and password `vagrant123`.
+IPA masters and replicas works only on Centos >= 7.5
 
 ## Authors
 
@@ -240,16 +108,17 @@ then forked by ADULLACT (https://gitlab.adullact.net/adullact/puppet-freeipa) cu
     Copyright (C) 2013 Harvard University Information Technology
     Copyright (C) 2018 Association des Développeurs et Utilisateurs de Logiciels Libres
                          pour les Administrations et Colléctivités Territoriales.
-    
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-    
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-    
+
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+

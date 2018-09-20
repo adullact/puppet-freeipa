@@ -1,9 +1,15 @@
+# A description of what this class does
+# This class mainly defines options for the ipa install command, then install master or replica regarding the role set.
+# @summary Defines options for the ipa install command
+#
+# @example
+#   include freeipa::install::server
 class freeipa::install::server {
 
 
-Exec {
-    path    => '/usr/local/bin/:/bin/:/sbin',
-}
+  Exec {
+      path    => '/usr/local/bin/:/bin/:/sbin',
+  }
 
   package{$freeipa::ipa_server_package_name:
     ensure => present,
@@ -23,6 +29,7 @@ Exec {
 
   if $freeipa::enable_hostname {
     $server_install_cmd_opts_hostname = "--hostname=${freeipa::ipa_server_fqdn}"
+      end
   } else {
     $server_install_cmd_opts_hostname = ''
   }

@@ -1,4 +1,10 @@
+# A description of what this class does
 # Configures port and redirect overrides for the IPA server web UI.
+#
+# @summary Configures port and redirect overrides for the IPA server web UI.
+# 
+# @example
+#   include freeipa::config::webui
 class freeipa::config::webui {
 
   if $freeipa::webui_enable_proxy {

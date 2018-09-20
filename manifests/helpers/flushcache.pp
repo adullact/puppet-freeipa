@@ -1,3 +1,9 @@
+# A description of what this defined type does
+# Flushcache sss for Debian and RedHat only
+# @summary A short summary of the purpose of this defined type.
+#
+# @example
+#   freeipa::helpers::flushcache { 'namevar': }
 define freeipa::helpers::flushcache {
 
   #TODO: nscd should be called on both platforms.
