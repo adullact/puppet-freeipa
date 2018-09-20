@@ -1,3 +1,10 @@
+# A description of what this class does
+# Installs the packages needed for servers and clients
+#
+# @summary Installs the packages needed for servers and clients
+#
+# @example
+#   include freeipa::install
 #
 class freeipa::install {
 
@@ -32,9 +39,9 @@ class freeipa::install {
 
   case $freeipa::ipa_role {
     'client': {
-       if $freeipa::install_ipa_client {
-         contain 'freeipa::install::client'
-       }
+      if $freeipa::install_ipa_client {
+        contain 'freeipa::install::client'
+      }
     }
     'master', 'replica': {
       if $freeipa::final_configure_dns_server {

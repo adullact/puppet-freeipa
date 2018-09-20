@@ -1,4 +1,9 @@
+# A description of what this class does
+# Installs freeipa server as replica
+# @summary Installs freeipa server as replica
 #
+# @example
+#   include freeipa::install::server::replica
 class freeipa::install::server::replica {
   $replica_install_cmd = "\
 /usr/sbin/ipa-replica-install \

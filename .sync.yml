@@ -1,0 +1,41 @@
+.gitlab-ci.yml:
+  unmanaged: true
+
+.travis.yml:
+  delete: true
+
+.rubocop.yml:
+  unmanaged: true
+
+Gemfile:
+  required:
+    ':development':
+      - gem: 'facter'
+      - gem: 'hiera'
+      - gem: 'parallel_tests'
+      - gem: 'rspec-puppet'
+      - gem: 'puppetlabs_spec_helper'
+      - gem: 'beaker'
+      - gem: 'beaker-puppet'
+      - gem: 'beaker-rspec'
+      - gem: 'beaker-puppet_install_helper'
+      - gem: 'beaker-module_install_helper'
+      - gem: 'metadata-json-lint'
+      - gem: 'puppet-lint'
+      - gem: 'rspec'
+      - gem: 'rake'
+      - gem: 'beaker-vagrant'
+      - gem: 'net-telnet'
+        gem: 'net-telnet'
+        condition: "Gem::Version.new(RUBY_VERSION.dup) == Gem::Version.new('2.1.9')"
+        version: '< 0.2.0'
+      - gem: 'rubocop'
+        condition: "Gem::Version.new(RUBY_VERSION.dup) == Gem::Version.new('2.1.9')"
+        version: '< 0.58.0'
+      - gem: 'net-telnet'
+        condition: "Gem::Version.new(RUBY_VERSION.dup) == Gem::Version.new('2.4.4')"
+        version: '>= 0.2.0'
+      - gem: 'rubocop'
+        condition: "Gem::Version.new(RUBY_VERSION.dup) == Gem::Version.new('2.4.4')"
+        version: '>= 0.58.0'
+

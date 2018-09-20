@@ -1,152 +1,60 @@
-# == Class: ipa
-#
+# A description of what this class does
 # Manages IPA masters, replicas and clients.
+#
+# @summary Manages IPA masters, replicas and clients.
+# @example
+#   include freeipa
 #
 # Parameters
 # ----------
-# `domain`
-#      (string) The name of the IPA domain to create or join.
-# `ipa_role`
-#      (string) What role the node will be. Options are 'master', 'replica', and 'client'.
+# @param hostname hostname of the machine (used to set /etc/hosts).
+# @param domain The name of the IPA domain to create or join.
+# @param ipa_role What role the node will be. Options are 'master', 'replica', and 'client'.
+# @param admin_password Password which will be assigned to the IPA account named 'admin'.
+# @param directory_services_password Password which will be passed into the ipa setup's parameter named "--ds-password".
+# @param autofs_package_name Name of the autofs package to install if enabled.
+# @param client_install_ldaputils If true, then the ldaputils packages are installed if ipa_role is set to client.
+# @param configure_dns_server If true, then the parameter '--setup-dns' is passed to the IPA server installer. Also, triggers the install of the required dns server packages.
+# @param configure_ntp If false, then the parameter '--no-ntp' is passed to the IPA server installer.
+# @param custom_dns_forwarders Each element in this array is prefixed with '--forwarder' and passed to the IPA server installer.
+# @param domain_join_principal The principal (usually username) used to join a client or replica to the IPA domain.
+# @param domain_join_password The password for the domain_join_principal.
+# @param enable_hostname If true, then the parameter '--hostname' is populated with the parameter 'ipa_server_fqdn' and passed to the IPA installer.
+# @param enable_ip_address If true, then the parameter '--ip-address' is populated with the parameter 'ip_address' and passed to the IPA installer.
+# @param fixed_primary If true, then the parameter '--fixed-primary' is passed to the IPA installer.
+# @param idstart From the IPA man pages: "The starting user and group id number".
+# @param install_autofs If true, then the autofs packages are installed.
+# @param install_epel If true, then the epel repo is installed. The epel repo is usually required for sssd packages.
+# @param install_kstart If true, then the kstart packages are installed.
+# @param install_sssdtools If true, then the sssdtools packages are installed.
+# @param ipa_client_package_name Name of the IPA client package.
+# @param ipa_server_package_name Name of the IPA server package.
+# @param install_ipa_client If true, then the IPA client packages are installed if the parameter 'ipa_role' is set to 'client'.
+# @param install_ipa_server If true, then the IPA server packages are installed if the parameter 'ipa_role' is not set to 'client'.
+# @param install_sssd If true, then the sssd packages are installed.
+# @param ip_address IP address to pass to the IPA installer.
+# @param ipa_server_fqdn Actual fqdn of the IPA server or client.
+# @param kstart_package_name Name of the kstart package.
+# @param ldaputils_package_name Name of the ldaputils package.
+# @param ipa_master_fqdn FQDN of the server to use for a client or replica domain join.
+# @param manage_host_entry If true, then a host entry is created using the parameters 'ipa_server_fqdn' and 'ip_address'.
+# @param mkhomedir If true, then the parameter '--mkhomedir' is passed to the IPA client installer.
+# @param no_ui_redirect If true, then the parameter '--no-ui-redirect' is passed to the IPA server installer.
+# @param realm The name of the IPA realm to create or join.
+# @param server_install_ldaputils If true, then the ldaputils packages are installed if ipa_role is not set to client.
+# @param sssd_package_name Name of the sssd package.
+# @param sssdtools_package_name Name of the sssdtools package.
+# @param webui_disable_kerberos If true, then /etc/httpd/conf.d/ipa.conf is written to exclude kerberos support for incoming requests whose HTTP_HOST variable match the parameter 'webio_proxy_external_fqdn'. This allows the IPA Web UI to work on a proxied port, while allowing IPA client access to  function as normal.
+# @param webui_enable_proxy If true, then httpd is configured to act as a reverse proxy for the IPA Web UI. This allows for the Web UI to be accessed from different ports and hostnames than the default.
+# @param webui_force_https If true, then /etc/httpd/conf.d/ipa-rewrite.conf is modified to force all connections to https. This is necessary to allow the WebUI to be accessed behind a reverse proxy when using nonstandard ports.
+# @param webui_proxy_external_fqdn The public or external FQDN used to access the IPA Web UI behind the reverse proxy.
+# @param webui_proxy_https_port The HTTPS port to use for the reverse proxy. Cannot be 443.
 #
-# `admin_password`
-#      (string) Password which will be assigned to the IPA account named 'admin'.
-#
-# `directory_services_password`
-#      (string) Password which will be passed into the ipa setup's parameter named "--ds-password".
-#
-# `autofs_package_name`
-#      (string) Name of the autofs package to install if enabled.
-#
-# `client_install_ldaputils`
-#      (boolean) If true, then the ldaputils packages are installed if ipa_role is set to client.
-#
-# `configure_dns_server`
-#      (boolean) If true, then the parameter '--setup-dns' is passed to the IPA server installer.
-#                Also, triggers the install of the required dns server packages.
-#
-# `configure_ntp`
-#      (boolean) If false, then the parameter '--no-ntp' is passed to the IPA server installer.
-#
-# `custom_dns_forwarders`
-#      (array[string]) Each element in this array is prefixed with '--forwarder '
-#                      and passed to the IPA server installer.
-#
-# `domain_join_principal`
-#      (string) The principal (usually username) used to join a client or replica to the IPA domain.
-#
-# `domain_join_password`
-#      (string) The password for the domain_join_principal.
-#
-# `enable_hostname`
-#      (boolean) If true, then the parameter '--hostname' is populated with the parameter 'ipa_server_fqdn'
-#                and passed to the IPA installer.
-#
-# `enable_ip_address`
-#      (boolean) If true, then the parameter '--ip-address' is populated with the parameter 'ip_address'
-#                and passed to the IPA installer.
-#
-# `fixed_primary`
-#      (boolean) If true, then the parameter '--fixed-primary' is passed to the IPA installer.
-#
-# `idstart`
-#      (integer) From the IPA man pages: "The starting user and group id number".
-#
-# `install_autofs`
-#      (boolean) If true, then the autofs packages are installed.
-#
-# `install_epel`
-#      (boolean) If true, then the epel repo is installed. The epel repo is usually required for sssd packages.
-#
-# `install_kstart`
-#      (boolean) If true, then the kstart packages are installed.
-#
-# `install_sssdtools`
-#      (boolean) If true, then the sssdtools packages are installed.
-#
-# `ipa_client_package_name`
-#      (string) Name of the IPA client package.
-#
-# `ipa_server_package_name`
-#      (string) Name of the IPA server package.
-#
-# `install_ipa_client`
-#      (boolean) If true, then the IPA client packages are installed if the parameter 'ipa_role' is set to 'client'.
-#
-# `install_ipa_server`
-#      (boolean) If true, then the IPA server packages are installed if the parameter 'ipa_role' is not set to 'client'.
-#
-# `install_sssd`
-#      (boolean) If true, then the sssd packages are installed.
-#
-# `ip_address`
-#      (string) IP address to pass to the IPA installer.
-#
-# `ipa_server_fqdn`
-#      (string) Actual fqdn of the IPA server or client.
-#
-# `kstart_package_name`
-#      (string) Name of the kstart package.
-#
-# `ldaputils_package_name`
-#      (string) Name of the ldaputils package.
-#
-# `ipa_master_fqdn`
-#      (string) FQDN of the server to use for a client or replica domain join.
-#
-# `manage_host_entry`
-#      (boolean) If true, then a host entry is created using the parameters 'ipa_server_fqdn' and 'ip_address'.
-#
-# `mkhomedir`
-#      (boolean) If true, then the parameter '--mkhomedir' is passed to the IPA client installer.
-#
-# `no_ui_redirect`
-#      (boolean) If true, then the parameter '--no-ui-redirect' is passed to the IPA server installer.
-#
-# `realm`
-#      (string) The name of the IPA realm to create or join.
-#
-# `server_install_ldaputils`
-#      (boolean) If true, then the ldaputils packages are installed if ipa_role is not set to client.
-#
-# `sssd_package_name`
-#      (string) Name of the sssd package.
-#
-# `sssdtools_package_name`
-#      (string) Name of the sssdtools package.
-#
-# `webui_disable_kerberos`
-#      (boolean) If true, then /etc/httpd/conf.d/ipa.conf is written to exclude kerberos support for
-#                incoming requests whose HTTP_HOST variable match the parameter 'webio_proxy_external_fqdn'.
-#                This allows the IPA Web UI to work on a proxied port, while allowing IPA client access to
-#                function as normal.
-#
-# `webui_enable_proxy`
-#      (boolean) If true, then httpd is configured to act as a reverse proxy for the IPA Web UI. This allows
-#                for the Web UI to be accessed from different ports and hostnames than the default.
-#
-# `webui_force_https`
-#      (boolean) If true, then /etc/httpd/conf.d/ipa-rewrite.conf is modified to force all connections to https.
-#                This is necessary to allow the WebUI to be accessed behind a reverse proxy when using nonstandard
-#                ports.
-#
-# `webui_proxy_external_fqdn`
-#      (string) The public or external FQDN used to access the IPA Web UI behind the reverse proxy.
-#
-# `webui_proxy_https_port`
-#      (integer) The HTTPS port to use for the reverse proxy. Cannot be 443.
-#
-# TODO: Allow creation of root zone for isolated networks -- https://www.freeipa.org/page/Howto/DNS_in_isolated_networks
-# TODO: Class comments.
-# TODO: Dependencies and metadata updates.
-# TODO: Variable scope and passing.
-# TODO: Params.pp.
-# TODO: configurable admin username.
 #
 class freeipa (
   String        $hostname                           = 'default',
-  String        $domain,
-  String        $ipa_role,
+  String        $domain                             = 'default',
+  String        $ipa_role                           = 'default',
   String        $admin_password                     = '',
   String        $directory_services_password        = '',
 #  Array[String] $nameservers                        = "${freeipa::nameservers}",
@@ -235,3 +143,4 @@ class freeipa (
   -> class {'::freeipa::install':}
 
 }
+

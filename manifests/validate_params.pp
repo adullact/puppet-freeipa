@@ -1,4 +1,10 @@
+# A description of what this class does
 # Validates input configs from init.pp.
+#
+# @summary Validates input configs from init.pp.
+#
+# @example
+#   include freeipa::validate_params
 class freeipa::validate_params {
 
   case $freeipa::ipa_role {

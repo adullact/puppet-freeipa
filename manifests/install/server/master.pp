@@ -1,4 +1,10 @@
+# A description of what this class does
+# Installs freeipa server as master
 #
+# @summary Installs freeipa server as master
+#
+# @example
+#   include freeipa::install::server::master
 class freeipa::install::server::master {
   $server_install_cmd = "\
 /usr/sbin/ipa-server-install \

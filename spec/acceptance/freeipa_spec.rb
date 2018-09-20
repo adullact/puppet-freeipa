@@ -5,7 +5,6 @@ describe 'freeipa class' do
     ### Test Install Master
     context 'master' do
       context 'with default parameters' do
-   
         hosts_as('master').each do |master|
           it 'applies idempotently' do
             pp = <<-EOS
@@ -27,13 +26,13 @@ describe 'freeipa class' do
               webui_force_https => true,
             }
             EOS
-    
-            apply_manifest_on(master, pp, :catch_failures => true)
-            apply_manifest_on(master, pp, :catch_changes  => true)
+
+            apply_manifest_on(master, pp, catch_failures: true)
+            apply_manifest_on(master, pp, catch_changes: true)
           end
-   
+
           describe command('ipactl status') do
-            its(:exit_status) { should eq 0 }
+            its(:exit_status) { is_expected.to be 0 }
           end
         end
       end
