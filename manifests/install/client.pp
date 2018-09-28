@@ -39,8 +39,7 @@ class freeipa::install::client {
     $client_install_cmd_opts_no_ntp = '--no-ntp'
   }
 
-    $client_install_cmd = "\
-/usr/sbin/ipa-client-install \
+    $client_install_cmd = "/usr/sbin/ipa-client-install \
   --server=${freeipa::ipa_master_fqdn} \
   --realm=${freeipa::final_realm} \
   --domain=${freeipa::domain} \
