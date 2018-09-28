@@ -37,7 +37,7 @@ describe 'freeipa class' do
         end
       end
     end
-    
+
     ### Test Install Replica
     context 'replica' do
       context 'with default parameters' do
@@ -65,6 +65,28 @@ describe 'freeipa class' do
 
           describe command('ipactl status') do
             its(:exit_status) { is_expected.to be 0 }
+          end
+        end
+      end
+    end
+    
+    ### Test Install Client
+    context 'when clients' do
+      context 'with default parameters' do
+        hosts_as('client').each do |client|
+          it 'applies idempotently' do
+            pp = <<-EOS
+            class {'freeipa':
+             ipa_role => 'client',
+             domain => 'vagrant.example.lan',
+             domain_join_password => 'vagrant123',
+             install_epel => true,
+             ipa_master_fqdn => 'ipa-server-1.vagrant.example.lan',
+            }
+            EOS
+
+            apply_manifest_on(client, pp, catch_failures: true, debug: true)
+            apply_manifest_on(client, pp, catch_changes: true, debug: true)
           end
         end
       end
