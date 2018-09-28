@@ -31,6 +31,8 @@ acceptance_with_puppet4:
     - pdk bundle exec rake beaker:default
   tags:
     - puppet-tests
+  except:
+    - master
 
 acceptance_with_puppet5:
   stage: 'acceptance-puppet5'
@@ -41,3 +43,5 @@ acceptance_with_puppet5:
     - pdk bundle exec rake beaker:default
   tags:
     - puppet-tests
+  except:
+    - master
