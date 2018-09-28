@@ -7,6 +7,7 @@ HOSTS:
     platform: el-7-x86_64
     hypervisor: vagrant
     box: geerlingguy/centos7
+    vagrant_memsize: 2048
     ip: 192.168.44.35
     forwarded_ports:
       httpd1:
@@ -15,6 +16,15 @@ HOSTS:
       httpd2:
         from: 8440
         to: 8440
+  ipa-server-2:
+    roles:
+    - replica
+    platform: el-7-x86_64
+    hypervisor: vagrant
+    box: geerlingguy/centos7
+    vagrant_memsize: 2048
+    ip: 192.168.44.36
+
 CONFIG:
   type: foss
   loglevel: debug

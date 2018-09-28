@@ -5,8 +5,7 @@
 # @example
 #   include freeipa::install::server::replica
 class freeipa::install::server::replica {
-  $replica_install_cmd = "\
-/usr/sbin/ipa-replica-install \
+  $replica_install_cmd = "/usr/sbin/ipa-replica-install \
   --principal=${freeipa::final_domain_join_principal} \
   --admin-password='${freeipa::final_domain_join_password}' \
   ${freeipa::install::server::server_install_cmd_opts_hostname} \
