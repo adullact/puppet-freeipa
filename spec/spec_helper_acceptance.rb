@@ -17,6 +17,7 @@ RSpec.configure do |c|
       on host, puppet('module', 'install', 'puppetlabs-stdlib')
       on host, puppet('module', 'install', 'crayfishx-firewalld')
       on host, puppet('module', 'install', 'puppet-selinux')
+      on host, puppet('module', 'install', 'saz-resolv_conf')
 
       pp = <<-EOS
         exec { 'stop network manager':
@@ -27,8 +28,10 @@ RSpec.configure do |c|
         EOS
 
       apply_manifest_on(host, pp, catch_failures: true)
+    end
 
-      ## Preconfigure master
+    ## Preconfigure master
+    hosts_as('master').each do |master|
       pp = <<-EOS
         exec { 'set master /etc/hosts':
           path     => '/bin/',
@@ -36,7 +39,37 @@ RSpec.configure do |c|
         }
         EOS
 
-      apply_manifest(pp, catch_failures: true, debug: true)
+      apply_manifest_on(master, pp, catch_failures: true, debug: true)
+    end
+
+    ## Preconfigure replica
+    hosts_as('replica').each do |replica|
+      pp = <<-EOS
+         exec { 'set replica /etc/hosts':
+           path     => '/bin/',
+           command  => 'echo -e "127.0.0.1       ipa-server-2.vagrant.example.lan ipa-server-2\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n 192.168.44.36 ipa-server-2.vagrant.example.lan ipa-server-2\n" > /etc/hosts',
+         }
+         EOS
+
+      apply_manifest_on(replica, pp, :catch_failures => true, :debug => true)
+
+      pp = <<-EOS
+         class { 'resolv_conf':
+           nameservers => ['192.168.44.35'],
+         }
+         EOS
+
+      apply_manifest_on(replica, pp, :catch_failures => true, :debug => true)
+
+      puppet('module', 'install', 'saz-resolv_conf')
+      pp = <<-EOS
+         host {'ipa-server-1.vagrant.example.lan':
+           ensure => present,
+           ip => '192.168.44.35',
+         }
+         EOS
+
+      apply_manifest_on(replica, pp, :catch_failures => true, :debug => true)
     end
   end
 end
