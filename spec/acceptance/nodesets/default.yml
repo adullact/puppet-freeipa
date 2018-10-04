@@ -4,6 +4,7 @@ HOSTS:
     roles:
     - default
     - master
+    - centos
     platform: el-7-x86_64
     hypervisor: vagrant
     box: centos/7
@@ -14,6 +15,7 @@ HOSTS:
   ipa-server-2:
     roles:
     - replica
+    - centos
     platform: el-7-x86_64
     hypervisor: vagrant
     box: centos/7
@@ -24,13 +26,24 @@ HOSTS:
   ipa-client-centos:
     roles:
     - client
-    - centos7
+    - client-centos7
+    - centos
     platform: el-7-x86_64
     hypervisor: vagrant
     box: centos/7
     box_version: 1809.01
     box_check_update: false
+    vagrant_memsize: 1024
     ip: 192.168.44.37
+  ipa-client-ubuntu16:
+    roles:
+    - client
+    - client-ubuntu16
+    platform: ubuntu-1604-amd64
+    hypervisor: vagrant
+    box: geerlingguy/ubuntu1604
+    vagrant_memsize: 1024
+    ip: 192.168.44.38
 
 CONFIG:
   type: foss
