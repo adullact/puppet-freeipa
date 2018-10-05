@@ -59,10 +59,6 @@ Style/TrailingCommaInArguments:
   Description: Prefer always trailing comma on multiline argument lists. This makes
     diffs, and re-ordering nicer.
   EnforcedStyleForMultiline: comma
-Style/TrailingCommaInArrayLiteral:
-  Description: Prefer always trailing comma on multiline literals. This makes diffs,
-    and re-ordering nicer.
-  EnforcedStyleForMultiline: comma
 Style/SymbolArray:
   Description: Using percent style obscures symbolic intent of array's contents.
   EnforcedStyle: brackets
@@ -116,3 +112,303 @@ Style/IfUnlessModifier:
   Enabled: false
 Style/SymbolProc:
   Enabled: false
+Style/HashSyntax:
+  Enabled: True
+Style/RedundantReturn:
+  Enabled: True
+Style/AndOr:
+  Enabled: True
+Style/RedundantSelf:
+  Enabled: True
+Style/WhileUntilModifier:
+  Enabled: True
+Naming/AccessorMethodName:
+  Enabled: True
+Style/AsciiComments:
+  Enabled: True
+Style/Attr:
+  Enabled: True
+Style/BracesAroundHashParameters:
+  Enabled: True
+Style/CaseEquality:
+  Enabled: True
+Style/CharacterLiteral:
+  Enabled: True
+Naming/ClassAndModuleCamelCase:
+  Enabled: True
+Style/ClassAndModuleChildren:
+  Enabled: False
+Style/ClassCheck:
+  Enabled: True
+Style/ClassVars:
+  Enabled: True
+Style/ClassMethods:
+  Enabled: True
+Style/WhenThen:
+  Enabled: True
+Style/WordArray:
+  Enabled: True
+Style/UnneededPercentQ:
+  Enabled: True
+Style/CollectionMethods:
+  Enabled: True
+Style/ColonMethodCall:
+  Enabled: True
+Style/CommentAnnotation:
+  Enabled: True
+Naming/ConstantName:
+  Enabled: True
+Style/Documentation:
+  Enabled: False
+Style/DefWithParentheses:
+  Enabled: True
+Style/PreferredHashMethods:
+  Enabled: True
+Style/DoubleNegation:
+  Enabled: True
+Style/EachWithObject:
+  Enabled: True
+Style/EmptyLiteral:
+  Enabled: True
+Style/MethodCallWithoutArgsParentheses:
+  Enabled: True
+Style/MethodDefParentheses:
+  Enabled: True
+Style/LineEndConcatenation:
+  Enabled: True
+Style/StringLiterals:
+  Enabled: True
+Style/TrailingCommaInArguments:
+  Enabled: True
+Style/TrailingCommaInArrayLiteral:
+  Enabled: True
+Style/TrailingCommaInHashLiteral:
+  Enabled: True
+Style/GlobalVars:
+  Enabled: True
+Style/GuardClause:
+  Enabled: True
+Style/IfUnlessModifier:
+  Enabled: True
+Style/MultilineIfThen:
+  Enabled: True
+Style/NegatedIf:
+  Enabled: True
+Style/NegatedWhile:
+  Enabled: True
+Style/Next:
+  Enabled: True
+Style/SingleLineBlockParams:
+  Enabled: True
+Style/SingleLineMethods:
+  Enabled: True
+Style/SpecialGlobalVars:
+  Enabled: True
+Style/TrivialAccessors:
+  Enabled: True
+Style/UnlessElse:
+  Enabled: True
+Style/VariableInterpolation:
+  Enabled: True
+Naming/VariableName:
+  Enabled: True
+Style/WhileUntilDo:
+  Enabled: True
+Style/EvenOdd:
+  Enabled: True
+Naming/FileName:
+  Enabled: True
+Style/For:
+  Enabled: True
+Style/Lambda:
+  Enabled: True
+Naming/MethodName:
+  Enabled: True
+Style/MultilineTernaryOperator:
+  Enabled: True
+Style/NestedTernaryOperator:
+  Enabled: True
+Style/NilComparison:
+  Enabled: True
+Style/FormatString:
+  Enabled: True
+Style/MultilineBlockChain:
+  Enabled: True
+Style/Semicolon:
+  Enabled: True
+Style/SignalException:
+  Enabled: True
+Style/NonNilCheck:
+  Enabled: True
+Style/Not:
+  Enabled: True
+Style/NumericLiterals:
+  Enabled: True
+Style/OneLineConditional:
+  Enabled: True
+Naming/BinaryOperatorParameterName:
+  Enabled: True
+Style/ParenthesesAroundCondition:
+  Enabled: True
+Style/PercentLiteralDelimiters:
+  Enabled: True
+Style/PerlBackrefs:
+  Enabled: True
+Naming/PredicateName:
+  Enabled: True
+Style/RedundantException:
+  Enabled: True
+Style/SelfAssignment:
+  Enabled: True
+Style/Proc:
+  Enabled: True
+Style/RaiseArgs:
+  Enabled: True
+Style/RedundantBegin:
+  Enabled: True
+Style/RescueModifier:
+  Enabled: True
+Style/RegexpLiteral:
+  EnforcedStyle: percent_r
+  Enabled: True
+Style/ModuleFunction:
+  Enabled: True
+Style/IfWithSemicolon:
+  Enabled: True
+Style/Encoding:
+  Enabled: True
+Style/BlockDelimiters:
+  Enabled: True
+Layout/ConditionPosition:
+  Enabled: True
+Lint/ElseLayout:
+  Enabled: True
+Lint/UnreachableCode:
+  Enabled: True
+Lint/UselessComparison:
+  Enabled: True
+Lint/EnsureReturn:
+  Enabled: True
+Lint/HandleExceptions:
+  Enabled: True
+Lint/ShadowingOuterLocalVariable:
+  Enabled: True
+Lint/LiteralInInterpolation:
+  Enabled: True
+Lint/AmbiguousOperator:
+  Enabled: True
+Lint/AssignmentInCondition:
+  Enabled: True
+Lint/AmbiguousRegexpLiteral:
+  Enabled: True
+Layout/BlockAlignment:
+  Enabled: True
+Layout/DefEndAlignment:
+  Enabled: True
+Layout/EndAlignment:
+  Enabled: True
+Lint/DeprecatedClassMethods:
+  Enabled: True
+Lint/Loop:
+  Enabled: True
+Lint/ParenthesesAsGroupedExpression:
+  Enabled: True
+Lint/RescueException:
+  Enabled: True
+Lint/StringConversionInInterpolation:
+  Enabled: True
+Lint/UnusedBlockArgument:
+  Enabled: True
+Lint/UnusedMethodArgument:
+  Enabled: True
+Lint/UselessAccessModifier:
+  Enabled: True
+Lint/UselessAssignment:
+  Enabled: True
+Lint/Void:
+  Enabled: True
+Lint/UnderscorePrefixedVariableName:
+  Enabled: True
+Lint/UselessAssignment:
+  Enabled: True
+Lint/Debugger:
+  Enabled: True
+Layout/SpaceBeforeComment:
+  Enabled: True
+Layout/EndOfLine:
+  Enabled: False
+Layout/AccessModifierIndentation:
+  Enabled: True
+Layout/CaseIndentation:
+  Enabled: True
+Layout/AlignArray:
+  Enabled: True
+Layout/AlignHash:
+  Enabled: True
+Layout/AlignParameters:
+  Enabled: True
+Layout/Tab:
+  Enabled: True
+Layout/SpaceBeforeSemicolon:
+  Enabled: True
+Layout/TrailingBlankLines:
+  Enabled: True
+Layout/SpaceInsideBlockBraces:
+  Enabled: True
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: True
+Layout/SpaceInsideParens:
+  Enabled: True
+Layout/LeadingCommentSpace:
+  Enabled: True
+Layout/SpaceBeforeFirstArg:
+  Enabled: True
+Layout/SpaceAfterColon:
+  Enabled: True
+Layout/SpaceAfterComma:
+  Enabled: True
+Layout/SpaceAfterMethodName:
+  Enabled: True
+Layout/SpaceAfterNot:
+  Enabled: True
+Layout/SpaceAfterSemicolon:
+  Enabled: True
+Layout/SpaceAroundEqualsInParameterDefault:
+  Enabled: True
+Layout/SpaceAroundOperators:
+  Enabled: True
+Layout/SpaceBeforeBlockBraces:
+  Enabled: True
+Layout/SpaceBeforeComma:
+  Enabled: True
+Layout/CommentIndentation:
+  Enabled: True
+Layout/DotPosition:
+  EnforcedStyle: trailing
+Layout/EmptyLineBetweenDefs:
+  Enabled: True
+Layout/IndentArray:
+  Enabled: True
+Layout/IndentHash:
+  Enabled: True
+Layout/IndentationConsistency:
+  Enabled: True
+Layout/IndentationWidth:
+  Enabled: True
+Layout/EmptyLines:
+  Enabled: True
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: True
+Layout/TrailingWhitespace:
+  Enabled: True
+Layout/MultilineBlockLayout:
+  Enabled: True
+Layout/ClosingParenthesisIndentation:
+  Enabled: True
+Security/Eval:
+  Enabled: True
+Style/Alias:
+  Enabled: True
+Metrics/BlockNesting:
+  Enabled: True
+

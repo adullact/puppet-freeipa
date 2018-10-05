@@ -14,13 +14,16 @@
 # @param directory_services_password Password which will be passed into the ipa setup's parameter named "--ds-password".
 # @param autofs_package_name Name of the autofs package to install if enabled.
 # @param client_install_ldaputils If true, then the ldaputils packages are installed if ipa_role is set to client.
-# @param configure_dns_server If true, then the parameter '--setup-dns' is passed to the IPA server installer. Also, triggers the install of the required dns server packages.
+# @param configure_dns_server If true, then the parameter '--setup-dns' is passed to the IPA server installer. 
+# Also, triggers the install of the required dns server packages.
 # @param configure_ntp If false, then the parameter '--no-ntp' is passed to the IPA server installer.
 # @param custom_dns_forwarders Each element in this array is prefixed with '--forwarder' and passed to the IPA server installer.
 # @param domain_join_principal The principal (usually username) used to join a client or replica to the IPA domain.
 # @param domain_join_password The password for the domain_join_principal.
-# @param enable_hostname If true, then the parameter '--hostname' is populated with the parameter 'ipa_server_fqdn' and passed to the IPA installer.
-# @param enable_ip_address If true, then the parameter '--ip-address' is populated with the parameter 'ip_address' and passed to the IPA installer.
+# @param enable_hostname If true, then the parameter '--hostname' is populated with the parameter 'ipa_server_fqdn' 
+# and passed to the IPA installer.
+# @param enable_ip_address If true, then the parameter '--ip-address' is populated with the parameter 'ip_address' 
+# and passed to the IPA installer.
 # @param fixed_primary If true, then the parameter '--fixed-primary' is passed to the IPA installer.
 # @param idstart From the IPA man pages: "The starting user and group id number".
 # @param install_autofs If true, then the autofs packages are installed.
@@ -44,9 +47,13 @@
 # @param server_install_ldaputils If true, then the ldaputils packages are installed if ipa_role is not set to client.
 # @param sssd_package_name Name of the sssd package.
 # @param sssdtools_package_name Name of the sssdtools package.
-# @param webui_disable_kerberos If true, then /etc/httpd/conf.d/ipa.conf is written to exclude kerberos support for incoming requests whose HTTP_HOST variable match the parameter 'webio_proxy_external_fqdn'. This allows the IPA Web UI to work on a proxied port, while allowing IPA client access to  function as normal.
-# @param webui_enable_proxy If true, then httpd is configured to act as a reverse proxy for the IPA Web UI. This allows for the Web UI to be accessed from different ports and hostnames than the default.
-# @param webui_force_https If true, then /etc/httpd/conf.d/ipa-rewrite.conf is modified to force all connections to https. This is necessary to allow the WebUI to be accessed behind a reverse proxy when using nonstandard ports.
+# @param webui_disable_kerberos If true, then /etc/httpd/conf.d/ipa.conf is written to exclude kerberos support for incoming 
+# requests whose HTTP_HOST variable match the parameter 'webio_proxy_external_fqdn'. This allows the IPA Web UI to work on a 
+# proxied port, while allowing IPA client access to  function as normal.
+# @param webui_enable_proxy If true, then httpd is configured to act as a reverse proxy for the IPA Web UI. This allows 
+# the Web UI to be accessed from different ports and hostnames than the default.
+# @param webui_force_https If true, then /etc/httpd/conf.d/ipa-rewrite.conf is modified to force all connections to https. 
+# This is necessary to allow the WebUI to be accessed behind a reverse proxy when using nonstandard ports.
 # @param webui_proxy_external_fqdn The public or external FQDN used to access the IPA Web UI behind the reverse proxy.
 # @param webui_proxy_https_port The HTTPS port to use for the reverse proxy. Cannot be 443.
 #
