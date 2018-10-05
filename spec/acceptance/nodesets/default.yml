@@ -9,13 +9,6 @@ HOSTS:
     box: geerlingguy/centos7
     vagrant_memsize: 2048
     ip: 192.168.44.35
-    forwarded_ports:
-      httpd1:
-        from: 8000
-        to: 8000
-      httpd2:
-        from: 8440
-        to: 8440
   ipa-server-2:
     roles:
     - replica
