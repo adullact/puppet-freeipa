@@ -1,3 +1,6 @@
 fixtures:
   repositories:
-    stdlib: "git://github.com/puppetlabs/puppetlabs-stdlib"
+    stdlib: 'https://github.com/puppetlabs/puppetlabs-stdlib.git'
+    epel: 'https://github.com/stahnma/puppet-module-epel.git'
+  symlinks:
+    freeipa: "#{source_dir}"

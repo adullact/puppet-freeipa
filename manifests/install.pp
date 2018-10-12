@@ -9,11 +9,7 @@
 class freeipa::install {
 
   if $freeipa::install_epel {
-    ensure_resource(
-      'package',
-      'epel-release',
-      {'ensure' => 'present'},
-    )
+    include epel
   }
 
   if $freeipa::manage_host_entry {
