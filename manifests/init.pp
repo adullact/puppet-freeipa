@@ -7,7 +7,6 @@
 #
 # Parameters
 # ----------
-# @param hostname hostname of the machine (used to set /etc/hosts).
 # @param domain The name of the IPA domain to create or join.
 # @param ipa_role What role the node will be. Options are 'master', 'replica', and 'client'.
 # @param admin_password Password which will be assigned to the IPA account named 'admin'.
@@ -59,12 +58,10 @@
 #
 #
 class freeipa (
-  String        $hostname                           = 'default',
   String        $domain                             = 'default',
   String        $ipa_role                           = 'default',
   String        $admin_password                     = '',
   String        $directory_services_password        = '',
-#  Array[String] $nameservers                        = "${freeipa::nameservers}",
   String        $autofs_package_name                = 'autofs',
   Boolean       $client_install_ldaputils           = false,
   Boolean       $configure_dns_server               = true,

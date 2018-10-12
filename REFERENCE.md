@@ -32,6 +32,13 @@ Manages IPA masters, replicas and clients.
 
 Parameters
 ----------
+Also, triggers the install of the required dns server packages.
+and passed to the IPA installer.
+and passed to the IPA installer.
+requests whose HTTP_HOST variable match the parameter 'webio_proxy_external_fqdn'. This allows the IPA Web UI to work on a
+proxied port, while allowing IPA client access to  function as normal.
+the Web UI to be accessed from different ports and hostnames than the default.
+This is necessary to allow the WebUI to be accessed behind a reverse proxy when using nonstandard ports.
 
 #### Examples
 
@@ -44,14 +51,6 @@ include freeipa
 #### Parameters
 
 The following parameters are available in the `freeipa` class.
-
-##### `hostname`
-
-Data type: `String`
-
-hostname of the machine (used to set /etc/hosts).
-
-Default value: 'default'
 
 ##### `domain`
 
@@ -105,7 +104,7 @@ Default value: `false`
 
 Data type: `Boolean`
 
-If true, then the parameter '--setup-dns' is passed to the IPA server installer. Also, triggers the install of the required dns server packages.
+If true, then the parameter '--setup-dns' is passed to the IPA server installer.
 
 Default value: `true`
 
@@ -145,7 +144,7 @@ Default value: ''
 
 Data type: `Boolean`
 
-If true, then the parameter '--hostname' is populated with the parameter 'ipa_server_fqdn' and passed to the IPA installer.
+If true, then the parameter '--hostname' is populated with the parameter 'ipa_server_fqdn'
 
 Default value: `true`
 
@@ -153,7 +152,7 @@ Default value: `true`
 
 Data type: `Boolean`
 
-If true, then the parameter '--ip-address' is populated with the parameter 'ip_address' and passed to the IPA installer.
+If true, then the parameter '--ip-address' is populated with the parameter 'ip_address'
 
 Default value: `false`
 
@@ -345,7 +344,7 @@ Default value: 'sssd-tools'
 
 Data type: `Boolean`
 
-If true, then /etc/httpd/conf.d/ipa.conf is written to exclude kerberos support for incoming requests whose HTTP_HOST variable match the parameter 'webio_proxy_external_fqdn'. This allows the IPA Web UI to work on a proxied port, while allowing IPA client access to  function as normal.
+If true, then /etc/httpd/conf.d/ipa.conf is written to exclude kerberos support for incoming
 
 Default value: `false`
 
@@ -353,7 +352,7 @@ Default value: `false`
 
 Data type: `Boolean`
 
-If true, then httpd is configured to act as a reverse proxy for the IPA Web UI. This allows for the Web UI to be accessed from different ports and hostnames than the default.
+If true, then httpd is configured to act as a reverse proxy for the IPA Web UI. This allows
 
 Default value: `false`
 
@@ -361,7 +360,7 @@ Default value: `false`
 
 Data type: `Boolean`
 
-If true, then /etc/httpd/conf.d/ipa-rewrite.conf is modified to force all connections to https. This is necessary to allow the WebUI to be accessed behind a reverse proxy when using nonstandard ports.
+If true, then /etc/httpd/conf.d/ipa-rewrite.conf is modified to force all connections to https.
 
 Default value: `false`
 

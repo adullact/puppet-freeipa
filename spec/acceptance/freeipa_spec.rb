@@ -10,7 +10,6 @@ describe 'freeipa class' do
             pp = <<-EOS
             class { 'freeipa':
               ipa_role => 'master',
-              hostname => 'ipa-server-1',
               domain => 'vagrant.example.lan',
               ipa_server_fqdn => 'ipa-server-1.vagrant.example.lan',
               admin_password => 'vagrant123',
