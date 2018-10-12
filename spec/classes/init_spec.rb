@@ -43,14 +43,13 @@ describe 'freeipa', type: :class do
               it { is_expected.to contain_package('ipa-server-dns') }
               it { is_expected.to contain_package('bind-dyndb-ldap') }
               it { is_expected.to contain_package('kstart') }
-              it { is_expected.to contain_package('epel-release') }
               it { is_expected.to contain_package('ipa-server') }
               it { is_expected.to contain_package('openldap-clients') }
               it { is_expected.to contain_package('sssd-common') }
       
               it { is_expected.not_to contain_package('ipa-client') }
       
-              it { is_expected.to compile }
+              it { is_expected.to compile.with_all_deps }
             end
       
             context 'with idstart out of range' do
@@ -86,7 +85,6 @@ describe 'freeipa', type: :class do
                 {
                   ipa_role:                    'master',
                   domain:                      'rspec.example.lan',
-                  # admin_password:              'rspecrspec123',
                   directory_services_password: 'rspecrspec123',
                 }
               end
@@ -100,7 +98,6 @@ describe 'freeipa', type: :class do
                   ipa_role:                     'master',
                   domain:                       'rspec.example.lan',
                   admin_password:               'rspecrspec123',
-                  # directory_services_password:  'rspecrspec123',
                 }
               end
       
@@ -174,14 +171,13 @@ describe 'freeipa', type: :class do
               it { is_expected.to contain_package('ipa-server-dns') }
               it { is_expected.to contain_package('bind-dyndb-ldap') }
               it { is_expected.to contain_package('kstart') }
-              it { is_expected.to contain_package('epel-release') }
               it { is_expected.to contain_package('ipa-server') }
               it { is_expected.to contain_package('openldap-clients') }
               it { is_expected.to contain_package('sssd-common') }
       
               it { is_expected.not_to contain_package('ipa-client') }
       
-              it { is_expected.to compile }
+              it { is_expected.to compile.with_all_deps }
             end
       
             context 'missing ipa_master_fqdn' do
@@ -189,7 +185,6 @@ describe 'freeipa', type: :class do
                 {
                   ipa_role:             'replica',
                   domain:               'rspec.example.lan',
-                  # ipa_master_fqdn:      'ipa-server-1.rspec.example.lan',
                   domain_join_password: 'rspecrspec123',
                 }
               end
@@ -216,7 +211,6 @@ describe 'freeipa', type: :class do
                   ipa_role:               'replica',
                   domain:                 'rspec.example.lan',
                   ipa_master_fqdn:        'ipa-server-1.rspec.example.lan',
-                  # domain_join_password:   'rspecrspec123',
                 }
               end
       
@@ -256,7 +250,6 @@ describe 'freeipa', type: :class do
 
           it { is_expected.to contain_package('sssd-common') }
           it { is_expected.to contain_package('kstart') }
-          it { is_expected.to contain_package('epel-release') }
 
           it { is_expected.not_to contain_package('ipa-server-dns') }
           it { is_expected.not_to contain_package('bind-dyndb-ldap') }
@@ -264,7 +257,7 @@ describe 'freeipa', type: :class do
           it { is_expected.not_to contain_package('openldap-clients') }
           it { is_expected.not_to contain_package('ldap-utils') }
 
-          it { is_expected.to compile }
+          it { is_expected.to compile.with_all_deps }
         end
 
         context 'missing ipa_master_fqdn' do
@@ -272,7 +265,6 @@ describe 'freeipa', type: :class do
             {
               ipa_role:             'client',
               domain:               'rspec.example.lan',
-              # ipa_master_fqdn:      'ipa-server-1.rspec.example.lan',
               domain_join_password: 'rspecrspec123',
             }
           end
@@ -286,7 +278,6 @@ describe 'freeipa', type: :class do
               ipa_role:               'client',
               domain:                 'rspec.example.lan',
               ipa_master_fqdn:        'ipa-server-1.rspec.example.lan',
-              # domain_join_password:   'rspecrspec123',
             }
           end
 

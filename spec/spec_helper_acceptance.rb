@@ -18,6 +18,7 @@ RSpec.configure do |c|
       on host, puppet('module', 'install', 'crayfishx-firewalld')
       on host, puppet('module', 'install', 'puppet-selinux')
       on host, puppet('module', 'install', 'saz-resolv_conf')
+      on host, puppet('module', 'install', 'stahnma-epel')
 
       pp = <<-EOS
         exec { 'stop network manager':
