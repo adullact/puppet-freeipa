@@ -1,36 +1,64 @@
 ---
 stages:
-  - validate-syntax
-  - test-unit
-  - acceptance-puppet4
-  - acceptance-puppet5
+  - syntax
+  - unit
+  - acceptance
+
+cache:
+  paths:
+    - vendor/bundle
 
 before_script:
-  - pdk --version
+  - bundle -v
+  - rm Gemfile.lock || true
+  - gem update --system
+  - gem --version
+  - bundle -v
+  - bundle install --without system_tests --path vendor/bundle --jobs $(nproc)
 
-pdk_validate:
-  stage: 'validate-syntax'
+syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop-Ruby 2.4.4-Puppet ~> 5.5:
+  stage: syntax
   script:
-    - pdk validate
-  tags:
-    - puppet-tests
-    - fast
-
-pdk_test_unit:
-  stage: 'test-unit'
-  script:
-    - pdk test unit
-  tags:
-    - puppet-tests
-    - fast
-
-acceptance_with_puppet5:
-  stage: 'acceptance-puppet5'
+    - bundle exec rake syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop
   variables:
-    BEAKER_PUPPET_COLLECTION: 'puppet5'
-    BEAKER_debug: 'true'
+    PUPPET_GEM_VERSION: '~> 5.5'
+    RBENV_VERSION: '2.4.4'
+  tags:
+    - puppet-tests
+    - fast
+
+parallel_spec-Ruby 2.1.9-Puppet ~> 4.0:
+  stage: unit
   script:
-    - pdk bundle exec rake beaker:default
+    - bundle exec rake parallel_spec
+  variables:
+    PUPPET_GEM_VERSION: '~> 4.0'
+    RBENV_VERSION: '2.4.4'
+  tags:
+    - puppet-tests
+    - fast
+
+parallel_spec-Ruby 2.4.4-Puppet ~> 5.5:
+  stage: unit
+  script:
+    - bundle exec rake parallel_spec
+  variables:
+    PUPPET_GEM_VERSION: '~> 5.5'
+    RBENV_VERSION: '2.5.1'
+  tags:
+    - puppet-tests
+    - fast
+
+acceptance with puppet5:
+  stage: acceptance
+  variables:
+    PUPPET_INSTALL_TYPE: 'agent'
+    BEAKER_IS_PE: 'no'
+    BEAKER_PUPPET_COLLECTION: 'puppet5'
+    BEAKER_debug: 'true '
+    RBENV_VERSION: '2.5.1'
+  script:
+    - bundle exec rake beaker:default
   tags:
     - puppet-tests
     - fast
