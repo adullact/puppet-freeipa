@@ -54,7 +54,7 @@ The following parameters are available in the `freeipa` class.
 
 ##### `domain`
 
-Data type: `String`
+Data type: `Stdlib::Fqdn`
 
 The name of the IPA domain to create or join.
 
@@ -246,15 +246,15 @@ Default value: `true`
 
 ##### `ip_address`
 
-Data type: `String`
+Data type: `Stdlib::IP::Address::V4`
 
 IP address to pass to the IPA installer.
 
-Default value: ''
+Default value: '0.0.0.0'
 
 ##### `ipa_server_fqdn`
 
-Data type: `String`
+Data type: `Stdlib::Fqdn`
 
 Actual fqdn of the IPA server or client.
 
@@ -278,11 +278,11 @@ Default value: $::osfamily
 
 ##### `ipa_master_fqdn`
 
-Data type: `String`
+Data type: `Stdlib::Fqdn`
 
 FQDN of the server to use for a client or replica domain join.
 
-Default value: ''
+Default value: 'default'
 
 ##### `manage_host_entry`
 
@@ -310,11 +310,11 @@ Default value: `false`
 
 ##### `realm`
 
-Data type: `String`
+Data type: `Stdlib::Fqdn`
 
 The name of the IPA realm to create or join.
 
-Default value: ''
+Default value: 'default'
 
 ##### `server_install_ldaputils`
 
@@ -366,7 +366,7 @@ Default value: `false`
 
 ##### `webui_proxy_external_fqdn`
 
-Data type: `String`
+Data type: `Stdlib::Fqdn`
 
 The public or external FQDN used to access the IPA Web UI behind the reverse proxy.
 

@@ -105,47 +105,6 @@ describe 'freeipa', type: :class do
 
               it { is_expected.to raise_error(Puppet::Error, %r{populated and at least of length 8}) }
             end
-
-            context 'with bad ip_address' do
-              let :params do
-                {
-                  ipa_role:                    'master',
-                  domain:                      'rspec.example.lan',
-                  admin_password:              'rspecrspec123',
-                  directory_services_password: 'rspecrspec123',
-                  ip_address:                  'not_an_ip'
-                }
-              end
-
-              it { is_expected.to raise_error(Puppet::Error, %r{parameter ip_address must pass validation}) }
-            end
-
-            context 'with bad domain' do
-              let :params do
-                {
-                  ipa_role:                    'master',
-                  domain:                      'not_a_domain',
-                  admin_password:              'rspecrspec123',
-                  directory_services_password: 'rspecrspec123'
-                }
-              end
-
-              it { is_expected.to raise_error(Puppet::Error, %r{must pass validation as a domain name}) }
-            end
-
-            context 'with bad realm' do
-              let :params do
-                {
-                  ipa_role:                    'master',
-                  domain:                      'rspec.example.lan',
-                  realm:                       'not_a_realm',
-                  admin_password:              'rspecrspec123',
-                  directory_services_password: 'rspecrspec123'
-                }
-              end
-
-              it { is_expected.to raise_error(Puppet::Error, %r{must pass validation as a domain name}) }
-            end
           end
 
           context 'as replica' do
@@ -191,20 +150,7 @@ describe 'freeipa', type: :class do
                 }
               end
 
-              it { is_expected.to raise_error(Puppet::Error, %r{parameter named ipa_master_fqdn cannot be empty}) }
-            end
-
-            context 'with bad ipa_master_fqdn' do
-              let :params do
-                {
-                  ipa_role:             'replica',
-                  domain:               'rspec.example.lan',
-                  ipa_master_fqdn:      'not_an_fqdn',
-                  domain_join_password: 'rspecrspec123'
-                }
-              end
-
-              it { is_expected.to raise_error(Puppet::Error, %r{pass validation as a domain name}) }
+              it { is_expected.to raise_error(Puppet::Error, %r{parameter named ipa_master_fqdn must be set}) }
             end
 
             context 'missing domain_join_password' do
@@ -271,7 +217,7 @@ describe 'freeipa', type: :class do
             }
           end
 
-          it { is_expected.to raise_error(Puppet::Error, %r{parameter named ipa_master_fqdn cannot be empty}) }
+          it { is_expected.to raise_error(Puppet::Error, %r{parameter named ipa_master_fqdn must be set}) }
         end
 
         context 'missing domain_join_password' do
