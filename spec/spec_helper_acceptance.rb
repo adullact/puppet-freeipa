@@ -24,11 +24,20 @@ RSpec.configure do |c|
         exec { 'stop network manager':
           command => 'systemctl stop NetworkManager',
           onlyif  => 'systemctl status NetworkManager',
-          path    => '/usr/bin:/sbin:/bin'
+          path    => '/usr/bin:/sbin:/bin',
         }
-        EOS
+      EOS
 
       apply_manifest_on(host, pp, catch_failures: true)
+
+      yumipv4 = <<-EOS
+        exec {'echo "ip_resolve=4" >> /etc/yum.conf':
+          onlyif => 'grep -v "^ip_resolve=4" /etc/yum.conf',
+          path   => '/usr/bin:/sbin:/bin',
+        }
+      EOS
+      apply_manifest_on(host, yumipv4, catch_failures: true) if fact('os.family') == 'RedHat'
+
     end
 
     ## Preconfigure master
