@@ -26,7 +26,11 @@ RSpec.configure do |c|
           onlyif  => 'systemctl status NetworkManager',
           path    => '/usr/bin:/sbin:/bin'
         }
-        EOS
+        exec {'/sbin/sysctl -w net.ipv6.conf.default.disable_ipv6=1':
+        }
+        exec {'/sbin/sysctl -w net.ipv6.conf.all.disable_ipv6=1':
+        }
+      EOS
 
       apply_manifest_on(host, pp, catch_failures: true)
     end
