@@ -59,25 +59,14 @@ RSpec.configure do |c|
            path     => '/bin/',
            command  => 'echo -e "127.0.0.1       ipa-server-2.vagrant.example.lan ipa-server-2\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n 192.168.44.36 ipa-server-2.vagrant.example.lan ipa-server-2\n" > /etc/hosts',
          }
-         EOS
-
-      apply_manifest_on(replica, pp, :catch_failures => true, :debug => true)
-
-      pp = <<-EOS
          class { 'resolv_conf':
            nameservers => ['192.168.44.35'],
          }
-         EOS
-
-      apply_manifest_on(replica, pp, :catch_failures => true, :debug => true)
-
-      puppet('module', 'install', 'saz-resolv_conf')
-      pp = <<-EOS
          host {'ipa-server-1.vagrant.example.lan':
            ensure => present,
            ip => '192.168.44.35',
          }
-         EOS
+      EOS
 
       apply_manifest_on(replica, pp, :catch_failures => true, :debug => true)
     end
@@ -89,30 +78,16 @@ RSpec.configure do |c|
           path     => '/bin/',
           command  => 'echo -e "127.0.0.1       ipa-client-centos.vagrant.example.lan ipa-server-2\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n 192.168.44.37 ipa-client-centos.vagrant.example.lan ipa-client-centos\n" > /etc/hosts',
         }
-        EOS
+        class { 'resolv_conf':
+          nameservers => ['192.168.44.35'],
+        }
+        host {'ipa-server-1.vagrant.example.lan':
+          ensure => present,
+          ip => '192.168.44.35',
+        }
+      EOS
 
       apply_manifest_on(centos7, pp, catch_failures: true)
-    end
-
-    hosts_as('client').each do |client|
-      pp = <<-EOS
-         class { 'resolv_conf':
-           nameservers => ['192.168.44.35'],
-         }
-         EOS
-
-      apply_manifest_on(client, pp, catch_failures: true)
-
-
-      puppet('module', 'install', 'saz-resolv_conf')
-      pp = <<-EOS
-         host {'ipa-server-1.vagrant.example.lan':
-           ensure => present,
-           ip => '192.168.44.35',
-         }
-         EOS
-
-      apply_manifest_on(client, pp, catch_failures: true)
     end
   end
 end
