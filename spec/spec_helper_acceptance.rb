@@ -24,11 +24,19 @@ RSpec.configure do |c|
         exec { 'stop network manager':
           command => 'systemctl stop NetworkManager',
           onlyif  => 'systemctl status NetworkManager',
-          path    => '/usr/bin:/sbin:/bin'
+          path    => '/usr/bin:/sbin:/bin',
         }
-        exec {'/sbin/sysctl -w net.ipv6.conf.default.disable_ipv6=1':
+        exec {'sysctl -w net.ipv6.conf.default.disable_ipv6=1':
+          onlyif  => 'sysctl net.ipv6.conf.default.disable_ipv6|grep "^net.ipv6.conf.default.disable_ipv6 = 0$"',
+          path    => '/usr/bin:/sbin:/bin',
         }
-        exec {'/sbin/sysctl -w net.ipv6.conf.all.disable_ipv6=1':
+        exec {'sysctl -w net.ipv6.conf.all.disable_ipv6=1':
+          onlyif  => 'sysctl net.ipv6.conf.all.disable_ipv6|grep "^net.ipv6.conf.all.disable_ipv6 = 0$"',
+          path    => '/usr/bin:/sbin:/bin',
+        }
+        exec {'echo "ip_resolve=4" >> /etc/yum.conf':
+          onlyif => 'grep -v "^ip_resolve=4" /etc/yum.conf',
+          path   => '/usr/bin:/sbin:/bin',
         }
       EOS
 
