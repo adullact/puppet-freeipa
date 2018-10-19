@@ -26,21 +26,18 @@ RSpec.configure do |c|
           onlyif  => 'systemctl status NetworkManager',
           path    => '/usr/bin:/sbin:/bin',
         }
-        exec {'sysctl -w net.ipv6.conf.default.disable_ipv6=1':
-          onlyif  => 'sysctl net.ipv6.conf.default.disable_ipv6|grep "^net.ipv6.conf.default.disable_ipv6 = 0$"',
-          path    => '/usr/bin:/sbin:/bin',
-        }
-        exec {'sysctl -w net.ipv6.conf.all.disable_ipv6=1':
-          onlyif  => 'sysctl net.ipv6.conf.all.disable_ipv6|grep "^net.ipv6.conf.all.disable_ipv6 = 0$"',
-          path    => '/usr/bin:/sbin:/bin',
-        }
+      EOS
+
+      apply_manifest_on(host, pp, catch_failures: true)
+
+      yumipv4 = <<-EOS
         exec {'echo "ip_resolve=4" >> /etc/yum.conf':
           onlyif => 'grep -v "^ip_resolve=4" /etc/yum.conf',
           path   => '/usr/bin:/sbin:/bin',
         }
       EOS
+      apply_manifest_on(host, yumipv4, catch_failures: true) if fact('os.family') == 'RedHat'
 
-      apply_manifest_on(host, pp, catch_failures: true)
     end
 
     ## Preconfigure master
