@@ -9,9 +9,11 @@ describe 'freeipa::helpers::flushcache' do
         ipa_role                    => 'master',
         ipa_master_fqdn             => 'master.example.com',
         ipa_server_fqdn             => 'foo.example.com',
-        domain_join_password        => 'foobartest',
+	domain                      => 'vagrant.lan',
+        password_usedto_joindomain  => 'foobartest',
         admin_password              => 'foobartest',
         directory_services_password => 'foobartest',
+	ip_address                  => '192.168.44.35',
       }
     EOS
     manifest
