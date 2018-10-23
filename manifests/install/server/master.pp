@@ -9,7 +9,7 @@ class freeipa::install::server::master {
   $server_install_cmd = "\
 /usr/sbin/ipa-server-install \
   ${freeipa::install::server::server_install_cmd_opts_hostname} \
-  --realm=${freeipa::final_realm} \
+  --realm=${freeipa::realm} \
   --domain=${freeipa::domain} \
   --admin-password='${freeipa::admin_password}' \
   --ds-password='${freeipa::directory_services_password}' \

@@ -6,10 +6,10 @@
 #   include freeipa::install::server::replica
 class freeipa::install::server::replica {
   $replica_install_cmd = "/usr/sbin/ipa-replica-install \
-  --principal=${freeipa::final_domain_join_principal} \
-  --admin-password='${freeipa::final_domain_join_password}' \
+  --principal=${freeipa::principal_usedto_joindomain} \
+  --admin-password='${freeipa::password_usedto_joindomain}' \
   ${freeipa::install::server::server_install_cmd_opts_hostname} \
-  --realm=${freeipa::final_realm} \
+  --realm=${freeipa::realm} \
   --domain=${freeipa::domain} \
   --server=${freeipa::ipa_master_fqdn} \
   ${freeipa::install::server::server_install_cmd_opts_setup_dns} \

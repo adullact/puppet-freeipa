@@ -41,10 +41,10 @@ class freeipa::install::client {
 
     $client_install_cmd = "/usr/sbin/ipa-client-install \
   --server=${freeipa::ipa_master_fqdn} \
-  --realm=${freeipa::final_realm} \
+  --realm=${freeipa::realm} \
   --domain=${freeipa::domain} \
-  --principal='${freeipa::final_domain_join_principal}' \
-  --password='${freeipa::final_domain_join_password}' \
+  --principal='${freeipa::principal_usedto_joindomain}' \
+  --password='${freeipa::password_usedto_joindomain}' \
   ${client_install_cmd_opts_mkhomedir} \
   ${client_install_cmd_opts_fixed_primary} \
   ${client_install_cmd_opts_no_ntp} \
