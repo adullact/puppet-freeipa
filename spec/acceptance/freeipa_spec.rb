@@ -24,7 +24,8 @@ describe 'freeipa class' do
               install_epel => true,
               webui_disable_kerberos => true,
               webui_enable_proxy => true,
-              webui_force_https => true
+              webui_force_https => true,
+              ipa_master_fqdn => 'ipa-server-1.vagrant.example.lan',
             }
             EOS
 
@@ -49,7 +50,8 @@ describe 'freeipa class' do
              ipa_role => 'replica',
              domain => 'vagrant.example.lan',
              ipa_server_fqdn => 'ipa-server-2.vagrant.example.lan',
-             domain_join_password => 'vagrant123',
+             admin_password => 'vagrant123',
+             password_usedto_joindomain => 'vagrant123',
              install_ipa_server => true,
              ip_address => '192.168.44.36',
              enable_ip_address => true,
@@ -80,7 +82,9 @@ describe 'freeipa class' do
             class {'freeipa':
              ipa_role => 'client',
              domain => 'vagrant.example.lan',
-             domain_join_password => 'vagrant123',
+             admin_password => 'vagrant123',
+             password_usedto_joindomain => 'vagrant123',
+             ip_address => '192.168.44.37',
              install_epel => true,
              ipa_master_fqdn => 'ipa-server-1.vagrant.example.lan'
             }
