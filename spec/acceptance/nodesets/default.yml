@@ -6,7 +6,7 @@ HOSTS:
     - master
     platform: el-7-x86_64
     hypervisor: vagrant
-    box: geerlingguy/centos7
+    box: centos/7
     vagrant_memsize: 2048
     ip: 192.168.44.35
   ipa-server-2:
@@ -14,7 +14,7 @@ HOSTS:
     - replica
     platform: el-7-x86_64
     hypervisor: vagrant
-    box: geerlingguy/centos7
+    box: centos/7
     vagrant_memsize: 2048
     ip: 192.168.44.36
   ipa-client-centos:
@@ -23,7 +23,7 @@ HOSTS:
     - centos7
     platform: el-7-x86_64
     hypervisor: vagrant
-    box: geerlingguy/centos7
+    box: centos/7
     ip: 192.168.44.37
 
 CONFIG:
