@@ -1,10 +1,22 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'freeipa::install::server' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:pre_condition) do
-        'class{"freeipa": ipa_role => "master", ipa_master_fqdn => "foo.example.com", domain_join_password => "foobartest", admin_password => "foobartest", directory_services_password => "foobartest", install_ipa_client => false, install_ipa_server => true}'
+        manifest = <<-EOS
+          class{ 'freeipa' :
+            ipa_role                    => 'replica',
+            ipa_master_fqdn             => 'master.example.com',
+            ipa_server_fqdn             => 'foo.example.com',
+            domain_join_password        => 'foobartest',
+            admin_password              => 'foobartest',
+            directory_services_password => 'foobartest',
+          }
+        EOS
+        manifest
       end
       let(:facts) { os_facts }
 

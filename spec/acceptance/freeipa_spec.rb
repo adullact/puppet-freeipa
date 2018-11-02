@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 describe 'freeipa class' do
@@ -22,7 +24,7 @@ describe 'freeipa class' do
               install_epel => true,
               webui_disable_kerberos => true,
               webui_enable_proxy => true,
-              webui_force_https => true,
+              webui_force_https => true
             }
             EOS
 
@@ -54,12 +56,12 @@ describe 'freeipa class' do
              enable_hostname => true,
              manage_host_entry => true,
              install_epel => true,
-             ipa_master_fqdn => 'ipa-server-1.vagrant.example.lan',
+             ipa_master_fqdn => 'ipa-server-1.vagrant.example.lan'
             }
             EOS
 
-            apply_manifest_on(replica, pp, :catch_failures => true, :debug => true)
-            apply_manifest_on(replica, pp, :catch_changes  => true, :debug => true)
+            apply_manifest_on(replica, pp, catch_failures: true, debug: true)
+            apply_manifest_on(replica, pp, catch_changes: true, debug: true)
           end
 
           describe command('ipactl status') do
@@ -68,7 +70,7 @@ describe 'freeipa class' do
         end
       end
     end
-    
+
     ### Test Install Client
     context 'when clients' do
       context 'with default parameters' do
@@ -80,7 +82,7 @@ describe 'freeipa class' do
              domain => 'vagrant.example.lan',
              domain_join_password => 'vagrant123',
              install_epel => true,
-             ipa_master_fqdn => 'ipa-server-1.vagrant.example.lan',
+             ipa_master_fqdn => 'ipa-server-1.vagrant.example.lan'
             }
             EOS
 
@@ -109,21 +111,21 @@ describe 'freeipa class' do
           end
 
           it 'adds the public key in freeipa to toto' do
-            on(master, "key=`cat /root/.ssh/id_rsa.pub`; ipa user-mod toto --sshpubkey=\"$key\"")
+            on(master, 'key=`cat /root/.ssh/id_rsa.pub`; ipa user-mod toto --sshpubkey=\"$key\"')
           end
 
           # Add HBAC Rule to give all ipa users access to ipa-client-centos
           it 'creates a HBAC rule for all users' do
-            on(master, "ipa hbacrule-add --usercat=all --servicecat=all allGroup")
+            on(master, 'ipa hbacrule-add --usercat=all --servicecat=all allGroup')
           end
 
           it 'adds centos client to allGroup rule' do
-            on(master, "ipa hbacrule-add-host --hosts=ipa-client-centos allGroup")
+            on(master, 'ipa hbacrule-add-host --hosts=ipa-client-centos allGroup')
           end
 
           # Remove allow_all HBAC
           it 'deletes the allow_all default rule' do
-            on(master, "ipa hbacrule-del allow_all")
+            on(master, 'ipa hbacrule-del allow_all')
           end
 
           it 'test ssh on allowed host with returns' do
@@ -131,7 +133,7 @@ describe 'freeipa class' do
               exec { 'test ssh':
               path     => '/bin/',
               command  => 'ssh -o "StrictHostKeyChecking no" toto@192.168.44.37 id',
-              returns  => "0",
+              returns  => "0"
               }
               EOS
 
@@ -143,7 +145,7 @@ describe 'freeipa class' do
               exec { 'test ssh':
               path     => '/bin/',
               command  => 'ssh -o "StrictHostKeyChecking no" toto@localhost id',
-              returns  => "255",
+              returns  => "255"
               }
               EOS
 

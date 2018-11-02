@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'freeipa' do
@@ -8,11 +10,11 @@ describe 'freeipa' do
         {
           ipa_role: 'client',
           ipa_master_fqdn: 'foo.example.com',
-          domain_join_password: 'foobartest',
+          domain_join_password: 'foobartest'
         }
       end
+
       it { is_expected.to compile }
     end
   end
 end
-
