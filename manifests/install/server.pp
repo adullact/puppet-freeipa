@@ -81,12 +81,6 @@ class freeipa::install::server {
     contain 'freeipa::install::server::replica'
   }
 
-  exec { 'semanage':
-    command => 'semanage port -a -t http_port_t -p tcp 8440',
-    unless  => 'semanage port --list |grep 8440',
-    user    => root,
-  }
-
   ensure_resource (
     'service',
     'httpd',

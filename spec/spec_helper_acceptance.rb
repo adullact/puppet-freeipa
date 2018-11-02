@@ -31,6 +31,10 @@ RSpec.configure do |c|
           onlyif  => 'systemctl status NetworkManager',
           path    => '/usr/bin:/sbin:/bin',
         }
+        exec { 'disable selinux':
+          command => 'setenforce 0',
+          path    => '/usr/bin:/sbin:/bin',
+        }
       EOS
 
       apply_manifest_on(host, pp, catch_failures: true)
