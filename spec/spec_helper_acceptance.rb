@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'beaker-rspec'
 require 'beaker-puppet'
 require 'beaker/puppet_install_helper'
@@ -13,7 +15,7 @@ install_module_on(hosts)
 #
 # By this way, users of puppet-freeipa can use puppetlabs-stdlibs version > 5.0.0.
 # and acceptance tests can use puppetlabs-stdlibs version < 5.0.0
-#install_module_dependencies_on(hosts)
+# install_module_dependencies_on(hosts)
 
 RSpec.configure do |c|
   # Configure all nodes in nodeset
@@ -40,7 +42,6 @@ RSpec.configure do |c|
         }
       EOS
       apply_manifest_on(host, yumipv4, catch_failures: true) if fact('os.family') == 'RedHat'
-
     end
 
     ## Preconfigure master
@@ -71,7 +72,7 @@ RSpec.configure do |c|
          }
       EOS
 
-      apply_manifest_on(replica, pp, :catch_failures => true, :debug => true)
+      apply_manifest_on(replica, pp, catch_failures: true, debug: true)
     end
 
     ## Preconfigure client

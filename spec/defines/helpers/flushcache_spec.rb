@@ -1,7 +1,21 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'freeipa::helpers::flushcache' do
-  let(:pre_condition) { 'class{"::freeipa": ipa_role => "client", ipa_master_fqdn => "foo.example.com", domain_join_password => "foobartest"}' }
+  let(:pre_condition) do
+    manifest = <<-EOS
+      class{ 'freeipa' :
+        ipa_role                    => 'master',
+        ipa_master_fqdn             => 'master.example.com',
+        ipa_server_fqdn             => 'foo.example.com',
+        domain_join_password        => 'foobartest',
+        admin_password              => 'foobartest',
+        directory_services_password => 'foobartest',
+      }
+    EOS
+    manifest
+  end
   let(:title) { 'namevar' }
   let(:params) do
     {}
