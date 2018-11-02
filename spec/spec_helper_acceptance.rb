@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+
 
 require 'beaker-rspec'
 require 'beaker-puppet'
@@ -29,6 +29,10 @@ RSpec.configure do |c|
         exec { 'stop network manager':
           command => 'systemctl stop NetworkManager',
           onlyif  => 'systemctl status NetworkManager',
+          path    => '/usr/bin:/sbin:/bin',
+        }
+        exec { 'disable selinux':
+          command => 'setenforce 0',
           path    => '/usr/bin:/sbin:/bin',
         }
       EOS
