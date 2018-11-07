@@ -10,11 +10,11 @@ describe 'freeipa' do
         {
           ipa_role: 'client',
           ipa_master_fqdn: 'foo.example.com',
-	  domain: 'vagrant.lan',
+          domain: 'vagrant.lan',
           password_usedto_joindomain: 'foobartest',
-	  admin_password: 'vagrant123',
-	  directory_services_password: 'vagrant123',
-	  ip_address: '192.168.44.35'
+          admin_password: 'vagrant123',
+          directory_services_password: 'vagrant123',
+          ip_address: '192.168.44.35'
         }
       end
 
