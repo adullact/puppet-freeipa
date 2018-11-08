@@ -64,7 +64,7 @@ class freeipa (
   String[8]                                $directory_services_password,
   Stdlib::IP::Address::V4                  $ip_address,
   Stdlib::Fqdn                             $ipa_master_fqdn,
-  Stdlib::Fqdn                             $realm                              = $domain,
+  Stdlib::Fqdn                             $realm                              = upcase($domain),
   String                                   $autofs_package_name                = 'autofs',
   Boolean                                  $client_install_ldaputils           = false,
   Boolean                                  $configure_dns_server               = true,
