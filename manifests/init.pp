@@ -17,8 +17,8 @@
 # Also, triggers the install of the required dns server packages.
 # @param configure_ntp If false, then the parameter '--no-ntp' is passed to the IPA server installer.
 # @param custom_dns_forwarders Each element in this array is prefixed with '--forwarder' and passed to the IPA server installer.
-# @param domain_join_principal The principal (usually username) used to join a client or replica to the IPA domain.
-# @param domain_join_password The password for the domain_join_principal.
+# @param principal_usedto_joindomain The principal (usually username) used to join a client or replica to the IPA domain.
+# @param password_usedto_joindomain The password for the domain_join_principal.
 # @param enable_hostname If true, then the parameter '--hostname' is populated with the parameter 'ipa_server_fqdn' 
 # and passed to the IPA installer.
 # @param enable_ip_address If true, then the parameter '--ip-address' is populated with the parameter 'ip_address' 
@@ -58,63 +58,57 @@
 #
 #
 class freeipa (
-  String        $domain                             = 'default',
-  String        $ipa_role                           = 'default',
-  String        $admin_password                     = '',
-  String        $directory_services_password        = '',
-  String        $autofs_package_name                = 'autofs',
-  Boolean       $client_install_ldaputils           = false,
-  Boolean       $configure_dns_server               = true,
-  Boolean       $configure_ntp                      = true,
-  Array[String] $custom_dns_forwarders              = [],
-  String        $domain_join_principal              = '',
-  String        $domain_join_password               = '',
-  Boolean       $enable_hostname                    = true,
-  Boolean       $enable_ip_address                  = false,
-  Boolean       $fixed_primary                      = false,
-  Integer       $idstart                            = 10000,
-  Boolean       $install_autofs                     = false,
-  Boolean       $install_epel                       = true,
-  Boolean       $install_kstart                     = true,
-  Boolean       $install_sssdtools                  = true,
-  String        $ipa_client_package_name            = $::osfamily ? {
+  Stdlib::Fqdn                             $domain,
+  Enum['master','replica','client']        $ipa_role,
+  String[8]                                $admin_password,
+  String[8]                                $directory_services_password,
+  Stdlib::IP::Address::V4                  $ip_address,
+  Stdlib::Fqdn                             $ipa_master_fqdn,
+  Stdlib::Fqdn                             $realm                              = upcase($domain),
+  String                                   $autofs_package_name                = 'autofs',
+  Boolean                                  $client_install_ldaputils           = false,
+  Boolean                                  $configure_dns_server               = true,
+  Boolean                                  $configure_ntp                      = true,
+  Array[String]                            $custom_dns_forwarders              = [],
+  String                                   $principal_usedto_joindomain        = 'admin',
+  String                                   $password_usedto_joindomain         = $directory_services_password,
+  Boolean                                  $enable_hostname                    = true,
+  Boolean                                  $enable_ip_address                  = false,
+  Boolean                                  $fixed_primary                      = false,
+  Integer[10000]                           $idstart                            = 10000,
+  Boolean                                  $install_autofs                     = false,
+  Boolean                                  $install_epel                       = true,
+  Boolean                                  $install_kstart                     = true,
+  Boolean                                  $install_sssdtools                  = true,
+  String                                   $ipa_client_package_name            = $facts['os']['family'] ? {
     'Debian' => 'freeipa-client',
     default  => 'ipa-client',
   },
-  String        $ipa_server_package_name            = 'ipa-server',
-  Boolean       $install_ipa_client                 = true,
-  Boolean       $install_ipa_server                 = true,
-  Boolean       $install_sssd                       = true,
-  String        $ip_address                         = '',
-  String        $ipa_server_fqdn                    = $::fqdn,
-  String        $kstart_package_name                = 'kstart',
-  String        $ldaputils_package_name             = $::osfamily ? {
+  String                                   $ipa_server_package_name            = 'ipa-server',
+  Boolean                                  $install_ipa_client                 = true,
+  Boolean                                  $install_ipa_server                 = true,
+  Boolean                                  $install_sssd                       = true,
+  Stdlib::Fqdn                             $ipa_server_fqdn                    = $facts['fqdn'],
+  String                                   $kstart_package_name                = 'kstart',
+  String                                   $ldaputils_package_name             = $facts['os']['family'] ? {
     'Debian' => 'ldap-utils',
     default  => 'openldap-clients',
   },
-  String        $ipa_master_fqdn                    = '',
-  Boolean       $manage_host_entry                  = false,
-  Boolean       $mkhomedir                          = true,
-  Boolean       $no_ui_redirect                     = false,
-  String        $realm                              = '',
-  Boolean       $server_install_ldaputils           = true,
-  String        $sssd_package_name                  = 'sssd-common',
-  String        $sssdtools_package_name             = 'sssd-tools',
-  Boolean       $webui_disable_kerberos             = false,
-  Boolean       $webui_enable_proxy                 = false,
-  Boolean       $webui_force_https                  = false,
-  String        $webui_proxy_external_fqdn          = 'localhost',
-  String        $webui_proxy_https_port             = '8440',
+  Boolean                                  $manage_host_entry                  = false,
+  Boolean                                  $mkhomedir                          = true,
+  Boolean                                  $no_ui_redirect                     = false,
+  Boolean                                  $server_install_ldaputils           = true,
+  String                                   $sssd_package_name                  = 'sssd-common',
+  String                                   $sssdtools_package_name             = 'sssd-tools',
+  Boolean                                  $webui_disable_kerberos             = false,
+  Boolean                                  $webui_enable_proxy                 = false,
+  Boolean                                  $webui_force_https                  = false,
+  Stdlib::Fqdn                             $webui_proxy_external_fqdn          = 'localhost',
+  String                                   $webui_proxy_https_port             = '8440',
 ) {
 
   if $facts['kernel'] != 'Linux' or $facts['osfamily'] == 'Windows' {
     fail('This module is only supported on Linux.')
-  }
-
-  if $realm != '' {
-    $final_realm = $realm
-  } else {
-    $final_realm = upcase($domain)
   }
 
   $master_principals = suffix(
@@ -122,20 +116,8 @@ class freeipa (
       [$ipa_server_fqdn],
       'host/'
     ),
-    "@${final_realm}"
+    "@${realm}"
   )
-
-  if $domain_join_principal != '' {
-    $final_domain_join_principal = $domain_join_principal
-  } else {
-    $final_domain_join_principal = 'admin'
-  }
-
-  if $domain_join_password != '' {
-    $final_domain_join_password = $domain_join_password
-  } else {
-    $final_domain_join_password = $directory_services_password
-  }
 
   if $ipa_role == 'client' {
     $final_configure_dns_server = false
@@ -143,8 +125,7 @@ class freeipa (
     $final_configure_dns_server = $configure_dns_server
   }
 
-  class {'::freeipa::validate_params':}
-  -> class {'::freeipa::install':}
+  class {'::freeipa::install':}
 
 }
 

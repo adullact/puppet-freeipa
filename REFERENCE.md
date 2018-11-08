@@ -17,7 +17,6 @@
 * [`freeipa::install::server::master`](#freeipainstallservermaster): Installs freeipa server as master
 * [`freeipa::install::server::replica`](#freeipainstallserverreplica): Installs freeipa server as replica
 * [`freeipa::install::sssd`](#freeipainstallsssd): A short summary of the purpose of this class
-* [`freeipa::validate_params`](#freeipavalidate_params): Validates input configs from init.pp.
 
 **Defined types**
 
@@ -54,35 +53,27 @@ The following parameters are available in the `freeipa` class.
 
 ##### `domain`
 
-Data type: `String`
+Data type: `Stdlib::Fqdn`
 
 The name of the IPA domain to create or join.
 
-Default value: 'default'
-
 ##### `ipa_role`
 
-Data type: `String`
+Data type: `Enum['master','replica','client']`
 
 What role the node will be. Options are 'master', 'replica', and 'client'.
 
-Default value: 'default'
-
 ##### `admin_password`
 
-Data type: `String`
+Data type: `String[8]`
 
 Password which will be assigned to the IPA account named 'admin'.
 
-Default value: ''
-
 ##### `directory_services_password`
 
-Data type: `String`
+Data type: `String[8]`
 
 Password which will be passed into the ipa setup's parameter named "--ds-password".
-
-Default value: ''
 
 ##### `autofs_package_name`
 
@@ -124,21 +115,21 @@ Each element in this array is prefixed with '--forwarder' and passed to the IPA 
 
 Default value: []
 
-##### `domain_join_principal`
+##### `principal_usedto_joindomain`
 
 Data type: `String`
 
 The principal (usually username) used to join a client or replica to the IPA domain.
 
-Default value: ''
+Default value: 'admin'
 
-##### `domain_join_password`
+##### `password_usedto_joindomain`
 
 Data type: `String`
 
 The password for the domain_join_principal.
 
-Default value: ''
+Default value: $directory_services_password
 
 ##### `enable_hostname`
 
@@ -166,7 +157,7 @@ Default value: `false`
 
 ##### `idstart`
 
-Data type: `Integer`
+Data type: `Integer[10000]`
 
 From the IPA man pages: "The starting user and group id number".
 
@@ -210,7 +201,7 @@ Data type: `String`
 
 Name of the IPA client package.
 
-Default value: $::osfamily
+Default value: $facts['os']['family']
 
 ##### `ipa_server_package_name`
 
@@ -246,19 +237,17 @@ Default value: `true`
 
 ##### `ip_address`
 
-Data type: `String`
+Data type: `Stdlib::IP::Address::V4`
 
 IP address to pass to the IPA installer.
 
-Default value: ''
-
 ##### `ipa_server_fqdn`
 
-Data type: `String`
+Data type: `Stdlib::Fqdn`
 
 Actual fqdn of the IPA server or client.
 
-Default value: $::fqdn
+Default value: $facts['fqdn']
 
 ##### `kstart_package_name`
 
@@ -274,15 +263,13 @@ Data type: `String`
 
 Name of the ldaputils package.
 
-Default value: $::osfamily
+Default value: $facts['os']['family']
 
 ##### `ipa_master_fqdn`
 
-Data type: `String`
+Data type: `Stdlib::Fqdn`
 
 FQDN of the server to use for a client or replica domain join.
-
-Default value: ''
 
 ##### `manage_host_entry`
 
@@ -310,11 +297,11 @@ Default value: `false`
 
 ##### `realm`
 
-Data type: `String`
+Data type: `Stdlib::Fqdn`
 
 The name of the IPA realm to create or join.
 
-Default value: ''
+Default value: $domain
 
 ##### `server_install_ldaputils`
 
@@ -366,7 +353,7 @@ Default value: `false`
 
 ##### `webui_proxy_external_fqdn`
 
-Data type: `String`
+Data type: `Stdlib::Fqdn`
 
 The public or external FQDN used to access the IPA Web UI behind the reverse proxy.
 
@@ -519,19 +506,6 @@ Install sssd package
 
 ```puppet
 include freeipa::install::sssd
-```
-
-### freeipa::validate_params
-
-A description of what this class does
-Validates input configs from init.pp.
-
-#### Examples
-
-##### 
-
-```puppet
-include freeipa::validate_params
 ```
 
 ## Defined types

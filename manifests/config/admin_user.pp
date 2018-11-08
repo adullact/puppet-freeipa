@@ -51,7 +51,7 @@ class freeipa::config::admin_user {
   exec { 'configure_admin_keytab':
     command     => $configure_admin_keytab_cmd,
     cwd         => $home_dir_path,
-    unless      => shellquote('/usr/bin/kvno','-k',"${home_dir_path}/admin.keytab","admin@${freeipa::final_realm}"),
+    unless      => shellquote('/usr/bin/kvno','-k',"${home_dir_path}/admin.keytab","admin@${freeipa::realm}"),
     notify      => Exec['chown_admin_keytab'],
     refreshonly => true,
     require     => Cron['k5start_admin'],
@@ -67,7 +67,7 @@ class freeipa::config::admin_user {
   }
 
   $k5start_admin_keytab_cmd = "/sbin/runuser -l admin -c \"/usr/bin/k5start -f ${home_dir_path}/admin.keytab -U\""
-  $k5start_admin_keytab_cmd_unless = "/sbin/runuser -l admin -c /usr/bin/klist | grep -i krbtgt\\/${freeipa::final_realm}\\@"
+  $k5start_admin_keytab_cmd_unless = "/sbin/runuser -l admin -c /usr/bin/klist | grep -i krbtgt\\/${freeipa::realm}\\@"
   exec { 'k5start_admin_keytab':
     command => $k5start_admin_keytab_cmd,
     cwd     => $home_dir_path,
