@@ -117,7 +117,7 @@ describe 'freeipa class' do
           end
 
           it 'adds the public key in freeipa to toto' do
-            on(master, 'key=`cat /root/.ssh/id_rsa.pub`; ipa user-mod toto --sshpubkey=\"$key\"')
+            on(master, 'key=`cat /root/.ssh/id_rsa.pub`; ipa user-mod toto --sshpubkey="$key"')
           end
 
           # Add HBAC Rule to give all ipa users access to ipa-client-centos
