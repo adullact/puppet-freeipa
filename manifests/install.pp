@@ -8,7 +8,7 @@
 #
 class freeipa::install {
 
-  if $freeipa::install_epel {
+  if ($facts['os']['family'] == 'RedHat') and ($freeipa::install_epel) {
     include epel
   }
 
