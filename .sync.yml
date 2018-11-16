@@ -25,6 +25,7 @@ Gemfile:
       - gem: 'rspec'
       - gem: 'rake'
       - gem: 'beaker-vagrant'
+        version: '0.5.0'
       - gem: 'net-telnet'
         gem: 'net-telnet'
         condition: "Gem::Version.new(RUBY_VERSION.dup) == Gem::Version.new('2.1.9')"

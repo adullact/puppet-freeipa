@@ -11,6 +11,7 @@ HOSTS:
     box_version: 1809.01
     box_check_update: false
     vagrant_memsize: 4048
+    vagrant_cpus: 4
     ip: 192.168.44.35
   ipa-server-2:
     roles:
@@ -22,6 +23,7 @@ HOSTS:
     box_version: 1809.01
     box_check_update: false
     vagrant_memsize: 4048
+    vagrant_cpus: 2
     ip: 192.168.44.36
   ipa-client-centos:
     roles:

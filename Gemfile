@@ -47,7 +47,7 @@ group :development do
   gem "puppet-lint",                                   require: false
   gem "rspec",                                         require: false
   gem "rake",                                          require: false
-  gem "beaker-vagrant",                                require: false
+  gem "beaker-vagrant", '0.5.0',                       require: false
   gem "net-telnet", '< 0.2.0',                         require: false if Gem::Version.new(RUBY_VERSION.dup) == Gem::Version.new('2.1.9')
   gem "rubocop", '< 0.58.0',                           require: false if Gem::Version.new(RUBY_VERSION.dup) == Gem::Version.new('2.1.9')
   gem "net-telnet", '>= 0.2.0',                        require: false if Gem::Version.new(RUBY_VERSION.dup) == Gem::Version.new('2.4.4')
