@@ -14,19 +14,22 @@
 
 ## Description
 
-This module will install and configure IPA servers, replicas, and clients. This module was forked from jpuskar/puppet-ipa, implementing few features like gitlab-ci, pdk and beaker.
+This module will install and configure FreeIPA servers, replicas, and clients.
 
 ## Setup
 
 ### What Freeipa Pupppet module affects
-The module doesn't affect a previous installation of FreeIPA, it will fail trying.
 
-Below are all the things affected:
+The module should not affect a previous installation of FreeIPA, it should fail trying.
 
-- Modifiy /etc/hosts
-- Install the following packages if not present: autofs, bind-dyndb-ldap, epel-release, sssd-common, sssdtools, ipa-client, ipa-server, ipa-server-dns, kstart, openldap-clients
-- Modify /etc/resolv.conf
-- Add to selinux port 8440
+Below are all items that module can affect:
+
+ - Modifiy /etc/hosts
+
+ - Modify /etc/resolv.conf
+
+ - Install the following packages if not present: autofs, bind-dyndb-ldap, epel-release, sssd-common, sssdtools, ipa-client, ipa-server, ipa-server-dns, kstart, openldap-clients
+
 
 Installation of Freeipa server will obviously install a ntp server, a DNS server, a LDAP Directory, a Kerberos server, apache, Certmonger and PKI Tomcat.
 
@@ -86,12 +89,21 @@ ipa_master_fqdn      => 'ipa-server-1.vagrant.example.lan',
 }
 ```
 
-### Parameters
-A description of all the parameterrs can be found in `REFERENCE.md`.
+### REFERENCE
+
+A full description can be found in `REFERENCE.md`.
 
 ## Limitations
 
 IPA masters and replicas works only on Centos >= 7.5
+
+Acceptance tests are done :
+
+ * with puppet5 from puppetlabs packages.
+
+ * master and replica with centos7
+
+ * clients with centos7 and ubuntu1604
 
 ## Authors
 
