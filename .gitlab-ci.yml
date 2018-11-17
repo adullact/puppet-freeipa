@@ -54,12 +54,11 @@ module release:
     RBENV_VERSION: '2.5.1'
   script: 
     - pdk build
-    - mv pkg/puppet-freeipa*tar.gz pkg/puppet-freeipa-latest.tar.gz
   tags:
     - puppet-tests
   only:
     - master
   artifacts:
     paths:
-      - pkg/puppet-freeipa-latest.tar.gz
+      - pkg/
     expire_in: 6 weeks
