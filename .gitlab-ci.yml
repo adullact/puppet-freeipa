@@ -3,6 +3,7 @@ stages:
   - syntax
   - unit
   - acceptance
+  - release
 
 cache:
   paths:
@@ -46,3 +47,17 @@ acceptance with puppet5:
     - puppet-tests
   except:
     - master
+
+module release:
+  stage: release
+  variables:
+    RBENV_VERSION: '2.5.1'
+  script: 
+    - pdk build
+    - mv pkg/puppet-freeipa*tar.gz pkg/puppet-freeipa-latest.tar.gz
+  only:
+    - master
+  artifacts:
+    paths:
+      - pkg/puppet-freeipa-latest.tar.gz
+    expire_in: 6 weeks

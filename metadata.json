@@ -1,6 +1,6 @@
 {
   "name": "puppet-freeipa",
-  "version": "1.6.1",
+  "version": "2.0.0",
   "author": "adullcat",
   "summary": "Manages IPA servers and clients.",
   "license": "Apache-2.0",

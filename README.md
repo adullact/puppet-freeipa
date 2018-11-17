@@ -105,6 +105,8 @@ Acceptance tests are done :
 
  * clients with centos7 and ubuntu1604
 
+Even if puppet4 should work, it is not tested.
+
 ## Authors
 
 Original work from Harvard University Information Technology, mainly written by Rob Ruma (https://github.com/huit/puppet-ipa)
