@@ -1,4 +1,3 @@
-
 # puppet-freeipa
 
 ## 2.0.0 :

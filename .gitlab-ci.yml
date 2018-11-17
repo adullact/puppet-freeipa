@@ -50,12 +50,13 @@ acceptance with puppet5:
 
 module release:
   stage: release
+  variables:
+    RBENV_VERSION: '2.5.1'
   script: 
     - pdk build
     - mv pkg/puppet-freeipa*tar.gz pkg/puppet-freeipa-latest.tar.gz
   only:
-    changes:
-      - CHANGELOG.md
+    - master
   artifacts:
     paths:
       - pkg/puppet-freeipa-latest.tar.gz
