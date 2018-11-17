@@ -3,6 +3,7 @@ stages:
   - syntax
   - unit
   - acceptance
+  - release
 
 cache:
   paths:
@@ -46,3 +47,16 @@ acceptance with puppet5:
     - puppet-tests
   except:
     - master
+
+module release:
+  stage: release
+  script: 
+    - pdk build
+    - mv pkg/puppet-freeipa*tar.gz pkg/puppet-freeipa-latest.tar.gz
+  only:
+    changes:
+      - CHANGELOG.md
+  artifacts:
+    paths:
+      - pkg/puppet-freeipa-latest.tar.gz
+    expire_in: 6 weeks
