@@ -55,6 +55,8 @@ module release:
   script: 
     - pdk build
     - mv pkg/puppet-freeipa*tar.gz pkg/puppet-freeipa-latest.tar.gz
+  tags:
+    - puppet-tests
   only:
     - master
   artifacts:
