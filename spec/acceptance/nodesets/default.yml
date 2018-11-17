@@ -10,8 +10,8 @@ HOSTS:
     box: centos/7
     box_version: 1809.01
     box_check_update: false
-    vagrant_memsize: 4048
-    vagrant_cpus: 4
+    vagrant_memsize: 2048
+    vagrant_cpus: 2
     ip: 192.168.44.35
   ipa-server-2:
     roles:
@@ -22,7 +22,7 @@ HOSTS:
     box: centos/7
     box_version: 1809.01
     box_check_update: false
-    vagrant_memsize: 4048
+    vagrant_memsize: 2048
     vagrant_cpus: 2
     ip: 192.168.44.36
   ipa-client-centos:
@@ -35,7 +35,7 @@ HOSTS:
     box: centos/7
     box_version: 1809.01
     box_check_update: false
-    vagrant_memsize: 2024
+    vagrant_memsize: 1024
     ip: 192.168.44.37
   ipa-client-ubuntu16:
     roles:
@@ -46,7 +46,7 @@ HOSTS:
     box: ubuntu/xenial64
     box_version: 20181114.0.0
     box_check_update: false
-    vagrant_memsize: 2024
+    vagrant_memsize: 1024
     ip: 192.168.44.38
 
 CONFIG:
