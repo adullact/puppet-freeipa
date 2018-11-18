@@ -10,13 +10,13 @@ describe 'freeipa::install' do
         manifest = <<-EOS
           class{ 'freeipa' :
             ipa_role                    => 'master',
-            ipa_master_fqdn             => 'master.example.com',
-            ipa_server_fqdn             => 'foo.example.com',
-            domain                      => 'vagrant.lan',
+            ipa_master_fqdn             => 'master.example.lan',
+            ipa_server_fqdn             => 'foo.example.lan',
+            domain                      => 'example.lan',
             password_usedto_joindomain  => 'foobartest',
             admin_password              => 'foobartest',
             directory_services_password => 'foobartest',
-            ip_address                  => '192.168.44.35',
+            ip_address                  => '10.10.10.35',
           }
         EOS
         manifest

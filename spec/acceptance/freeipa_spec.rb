@@ -7,12 +7,12 @@ describe 'freeipa class' do
         pp = <<-EOS
         class { 'freeipa':
           ipa_role => 'master',
-          domain => 'vagrant.example.lan',
-          ipa_server_fqdn => 'ipa-server-1.vagrant.example.lan',
+          domain => 'example.lan',
+          ipa_server_fqdn => 'ipa-server-1.example.lan',
           admin_password => 'vagrant123',
           directory_services_password => 'vagrant123',
           install_ipa_server => true,
-          ip_address => '192.168.44.35',
+          ip_address => '10.10.10.35',
           enable_ip_address => true,
           enable_hostname => true,
           manage_host_entry => true,
@@ -20,7 +20,7 @@ describe 'freeipa class' do
           webui_disable_kerberos => true,
           webui_enable_proxy => true,
           webui_force_https => true,
-          ipa_master_fqdn => 'ipa-server-1.vagrant.example.lan',
+          ipa_master_fqdn => 'ipa-server-1.example.lan',
         }
         EOS
 
@@ -40,18 +40,18 @@ describe 'freeipa class' do
         pp = <<-EOS
         class {'freeipa':
          ipa_role => 'replica',
-         domain => 'vagrant.example.lan',
-         ipa_server_fqdn => 'ipa-server-2.vagrant.example.lan',
+         domain => 'example.lan',
+         ipa_server_fqdn => 'ipa-server-2.example.lan',
          admin_password => 'vagrant123',
          directory_services_password => 'vagrant123',
          password_usedto_joindomain => 'vagrant123',
          install_ipa_server => true,
-         ip_address => '192.168.44.36',
+         ip_address => '10.10.10.36',
          enable_ip_address => true,
          enable_hostname => true,
          manage_host_entry => true,
          install_epel => true,
-         ipa_master_fqdn => 'ipa-server-1.vagrant.example.lan'
+         ipa_master_fqdn => 'ipa-server-1.example.lan'
         }
         EOS
 
@@ -72,13 +72,13 @@ describe 'freeipa class' do
         pp = <<-EOS
         class {'freeipa':
          ipa_role => 'client',
-         domain => 'vagrant.example.lan',
+         domain => 'example.lan',
          admin_password => 'vagrant123',
          directory_services_password => 'vagrant123',
          password_usedto_joindomain => 'vagrant123',
-         ip_address => '192.168.44.37',
+         ip_address => '10.10.10.37',
          install_epel => true,
-         ipa_master_fqdn => 'ipa-server-1.vagrant.example.lan'
+         ipa_master_fqdn => 'ipa-server-1.example.lan'
         }
         EOS
 
@@ -125,7 +125,7 @@ describe 'freeipa class' do
         pp = <<-EOS
           exec { 'test ssh':
           path     => '/bin/',
-          command  => 'ssh -o "StrictHostKeyChecking no" toto@192.168.44.37 id',
+          command  => 'ssh -o "StrictHostKeyChecking no" toto@10.10.10.37 id',
           returns  => "0"
           }
           EOS

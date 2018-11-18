@@ -12,7 +12,7 @@ HOSTS:
     box_check_update: false
     vagrant_memsize: 2048
     vagrant_cpus: 2
-    ip: 192.168.44.35
+    ip: 10.10.10.35
   ipa-server-2:
     roles:
     - replica
@@ -24,7 +24,7 @@ HOSTS:
     box_check_update: false
     vagrant_memsize: 2048
     vagrant_cpus: 2
-    ip: 192.168.44.36
+    ip: 10.10.10.36
   ipa-client-centos:
     roles:
     - client
@@ -36,7 +36,7 @@ HOSTS:
     box_version: 1809.01
     box_check_update: false
     vagrant_memsize: 1024
-    ip: 192.168.44.37
+    ip: 10.10.10.37
   ipa-client-ubuntu16:
     roles:
     - client
@@ -47,7 +47,7 @@ HOSTS:
     box_version: 20181114.0.0
     box_check_update: false
     vagrant_memsize: 1024
-    ip: 192.168.44.38
+    ip: 10.10.10.38
 
 CONFIG:
   type: foss
