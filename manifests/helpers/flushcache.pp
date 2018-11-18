@@ -6,15 +6,17 @@
 define freeipa::helpers::flushcache {
 
   #TODO: nscd should be called on both platforms.
-  if $::osfamily == 'RedHat' {
-    $ipa_fluch_cache_cmd = "\
+  case $facts['os']['family'] {
+    'RedHat': {
+      $ipa_fluch_cache_cmd = "\
 if [ -x /usr/sbin/sss_cache ]; then \
   /usr/sbin/sss_cache -UGNA >/dev/null 2>&1 ; \
 else \
   /usr/bin/find /var/lib/sss/db -type f -exec rm -f \"{}\" ; ; \
 fi"
-  } elsif $::osfamily == 'Debian' {
-    $ipa_fluch_cache_cmd = "\
+    }
+    'Debian': {
+      $ipa_fluch_cache_cmd = "\
 if [ -x /usr/sbin/nscd ]; then \
   /usr/sbin/nscd -i passwd -i group -i netgroup -i automount >/dev/null 2>&1 ; \
 elif [ -x /usr/sbin/sss_cache ]; then \
@@ -22,8 +24,10 @@ elif [ -x /usr/sbin/sss_cache ]; then \
 else \
   /usr/bin/find /var/lib/sss/db -type f -exec rm -f \"{}\" ; ; \
 fi"
-  } else {
-    fail('The class freeipa::flushcache is only written for RedHat and Debian.')
+    }
+    default: {
+      fail('The class freeipa::flushcache is only written for RedHat and Debian.')
+    }
   }
 
   exec { "ipa_flushcache_${title}":
