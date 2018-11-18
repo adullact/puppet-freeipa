@@ -1,5 +1,11 @@
 # puppet-freeipa
 
+## 2.0.1 :
+
+  * clean up REFERENCES.md                        : #42
+  * clean up domain name in tests and README      : #41
+  * fix metadata.json                             : #39
+
 ## 2.0.0 :
 
   * pin beaker-vagrant to version 0.5.0           : #36
