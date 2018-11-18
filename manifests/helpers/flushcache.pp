@@ -1,6 +1,5 @@
-# A description of what this defined type does
-# Flushcache sss for Debian and RedHat only
-# @summary A short summary of the purpose of this defined type.
+#
+# @summary Flushcache sss for Debian and RedHat only
 #
 # @example
 #   freeipa::helpers::flushcache { 'namevar': }

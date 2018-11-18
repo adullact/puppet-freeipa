@@ -1,5 +1,4 @@
-# A description of what this class does
-# Installs freeipa server as replica
+# 
 # @summary Installs freeipa server as replica
 #
 # @example

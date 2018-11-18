@@ -1,11 +1,9 @@
-# A description of what this class does
-# This class mainly defines options for the ipa install command, then install master or replica regarding the role set.
-# @summary Defines options for the ipa install command
+# 
+# @summary This class mainly defines options for the ipa install command, then install master or replica regarding the role set.
 #
 # @example
 #   include freeipa::install::server
 class freeipa::install::server {
-
 
   Exec {
       path    => '/usr/local/bin/:/bin/:/sbin',

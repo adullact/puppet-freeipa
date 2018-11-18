@@ -6,28 +6,23 @@
 **Classes**
 
 * [`freeipa`](#freeipa): Manages IPA masters, replicas and clients.
-* [`freeipa::config`](#freeipaconfig): A short summary of the purpose of this class
 * [`freeipa::config::admin_user`](#freeipaconfigadmin_user): Configures admin user
 * [`freeipa::config::webui`](#freeipaconfigwebui): Configures port and redirect overrides for the IPA server web UI.
-* [`freeipa::helpers`](#freeipahelpers): A short summary of the purpose of this class
 * [`freeipa::install`](#freeipainstall): Installs the packages needed for servers and clients
-* [`freeipa::install::autofs`](#freeipainstallautofs): A short summary of the purpose of this class
-* [`freeipa::install::client`](#freeipainstallclient): A short summary of the purpose of this class
-* [`freeipa::install::server`](#freeipainstallserver): Defines options for the ipa install command
+* [`freeipa::install::autofs`](#freeipainstallautofs): Installs and start autofs
+* [`freeipa::install::client`](#freeipainstallclient): Install freeipa client
+* [`freeipa::install::server`](#freeipainstallserver): This class mainly defines options for the ipa install command, then install master or replica regarding the role set.
 * [`freeipa::install::server::master`](#freeipainstallservermaster): Installs freeipa server as master
 * [`freeipa::install::server::replica`](#freeipainstallserverreplica): Installs freeipa server as replica
-* [`freeipa::install::sssd`](#freeipainstallsssd): A short summary of the purpose of this class
+* [`freeipa::install::sssd`](#freeipainstallsssd): Install sssd package
 
 **Defined types**
 
-* [`freeipa::helpers::flushcache`](#freeipahelpersflushcache): A short summary of the purpose of this defined type.
+* [`freeipa::helpers::flushcache`](#freeipahelpersflushcache): Flushcache sss for Debian and RedHat only
 
 ## Classes
 
 ### freeipa
-
-A description of what this class does
-Manages IPA masters, replicas and clients.
 
 Parameters
 ----------
@@ -44,7 +39,22 @@ This is necessary to allow the WebUI to be accessed behind a reverse proxy when 
 ##### 
 
 ```puppet
-include freeipa
+class {'freeipa':
+    ipa_role                    => 'master',
+    domain                      => 'example.lan',
+    ipa_server_fqdn             => 'ipa-server-1.example.lan',
+    admin_password              => 'vagrant123',
+    directory_services_password => 'vagrant123',
+    install_ipa_server          => true,
+    ip_address                  => '10.10.10.35',
+    enable_ip_address           => true,
+    enable_hostname             => true,
+    manage_host_entry           => true,
+    install_epel                => true,
+    webui_disable_kerberos      => true,
+    webui_enable_proxy          => true,
+    webui_force_https           => true,
+}
 ```
 
 #### Parameters
@@ -301,7 +311,7 @@ Data type: `Stdlib::Fqdn`
 
 The name of the IPA realm to create or join.
 
-Default value: $domain
+Default value: upcase($domain)
 
 ##### `server_install_ldaputils`
 
@@ -367,21 +377,8 @@ The HTTPS port to use for the reverse proxy. Cannot be 443.
 
 Default value: '8440'
 
-### freeipa::config
-
-A description of what this class does
-
-#### Examples
-
-##### 
-
-```puppet
-include freeipa::config
-```
-
 ### freeipa::config::admin_user
 
-A description of what this class does
 Configures admin user
 
 #### Examples
@@ -394,7 +391,6 @@ include freeipa::config::admin_user
 
 ### freeipa::config::webui
 
-A description of what this class does
 Configures port and redirect overrides for the IPA server web UI.
 
 #### Examples
@@ -405,21 +401,8 @@ Configures port and redirect overrides for the IPA server web UI.
 include freeipa::config::webui
 ```
 
-### freeipa::helpers
-
-A description of what this class does
-
-#### Examples
-
-##### 
-
-```puppet
-include freeipa::helpers
-```
-
 ### freeipa::install
 
-A description of what this class does
 Installs the packages needed for servers and clients
 
 #### Examples
@@ -432,7 +415,6 @@ include freeipa::install
 
 ### freeipa::install::autofs
 
-A description of what this class does
 Installs and start autofs
 
 #### Examples
@@ -445,7 +427,6 @@ include freeipa::install::autofs
 
 ### freeipa::install::client
 
-A description of what this class does
 Install freeipa client
 
 #### Examples
@@ -458,7 +439,6 @@ include freeipa::install::client
 
 ### freeipa::install::server
 
-A description of what this class does
 This class mainly defines options for the ipa install command, then install master or replica regarding the role set.
 
 #### Examples
@@ -471,7 +451,6 @@ include freeipa::install::server
 
 ### freeipa::install::server::master
 
-A description of what this class does
 Installs freeipa server as master
 
 #### Examples
@@ -484,7 +463,6 @@ include freeipa::install::server::master
 
 ### freeipa::install::server::replica
 
-A description of what this class does
 Installs freeipa server as replica
 
 #### Examples
@@ -497,7 +475,6 @@ include freeipa::install::server::replica
 
 ### freeipa::install::sssd
 
-A description of what this class does
 Install sssd package
 
 #### Examples
@@ -512,7 +489,6 @@ include freeipa::install::sssd
 
 ### freeipa::helpers::flushcache
 
-A description of what this defined type does
 Flushcache sss for Debian and RedHat only
 
 #### Examples

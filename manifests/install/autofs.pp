@@ -1,6 +1,5 @@
-# A description of what this class does
-# Installs and start autofs
-# @summary A short summary of the purpose of this class
+# 
+# @summary Installs and start autofs
 #
 # @example
 #   include freeipa::install::autofs
