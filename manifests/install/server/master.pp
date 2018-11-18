@@ -1,5 +1,3 @@
-# A description of what this class does
-# Installs freeipa server as master
 #
 # @summary Installs freeipa server as master
 #

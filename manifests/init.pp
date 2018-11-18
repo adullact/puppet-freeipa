@@ -1,9 +1,23 @@
-# A description of what this class does
-# Manages IPA masters, replicas and clients.
 #
 # @summary Manages IPA masters, replicas and clients.
+#
 # @example
-#   include freeipa
+#    class {'freeipa':
+#        ipa_role                    => 'master',
+#        domain                      => 'example.lan',
+#        ipa_server_fqdn             => 'ipa-server-1.example.lan',
+#        admin_password              => 'vagrant123',
+#        directory_services_password => 'vagrant123',
+#        install_ipa_server          => true,
+#        ip_address                  => '10.10.10.35',
+#        enable_ip_address           => true,
+#        enable_hostname             => true,
+#        manage_host_entry           => true,
+#        install_epel                => true,
+#        webui_disable_kerberos      => true,
+#        webui_enable_proxy          => true,
+#        webui_force_https           => true,
+#    }
 #
 # Parameters
 # ----------

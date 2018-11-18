@@ -1,5 +1,3 @@
-# A description of what this class does
-# Installs the packages needed for servers and clients
 #
 # @summary Installs the packages needed for servers and clients
 #

@@ -1,6 +1,3 @@
-# A description of what this class does
-# Configures port and redirect overrides for the IPA server web UI.
-#
 # @summary Configures port and redirect overrides for the IPA server web UI.
 # 
 # @example

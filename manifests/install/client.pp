@@ -1,11 +1,10 @@
-# A description of what this class does
-# Install freeipa client
-# @summary A short summary of the purpose of this class
+#
+# @summary Install freeipa client
 #
 # @example
 #   include freeipa::install::client
+#
 class freeipa::install::client {
-
 
   package{$freeipa::ipa_client_package_name:
     ensure => present,

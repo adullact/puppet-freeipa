@@ -1,5 +1,3 @@
-# A description of what this class does
-# Configures admin user 
 #
 # @summary Configures admin user
 #
