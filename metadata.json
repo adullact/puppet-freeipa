@@ -1,12 +1,12 @@
 {
   "name": "adullact-freeipa",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "adullact",
   "summary": "Manages IPA servers and clients.",
   "license": "Apache-2.0",
-  "source": "https://gitlab.adullact.net/adullact/puppet-freeipa/tree/3-fix-install-master-client",
+  "source": "https://gitlab.adullact.net/adullact/puppet-freeipa.git",
   "project_page": "https://gitlab.adullact.net/adullact/puppet-freeipa/",
-  "issues_url": "https://gitlab.adullact.net/adullact/puppet-freeipa/",
+  "issues_url": "https://gitlab.adullact.net/adullact/puppet-freeipa/issues",
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
