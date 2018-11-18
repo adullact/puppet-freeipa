@@ -1,5 +1,3 @@
-
-
 require 'beaker-rspec'
 require 'beaker-puppet'
 require 'beaker/puppet_install_helper'
@@ -41,55 +39,55 @@ RSpec.configure do |c|
     # But here we use several roles dedicated, used only once time in nodeset.
     # This permit to use one different IP for each role : master, replica, client-centos7 and client-ubuntu16.
 
-    # Here master with ip address 192.168.44.35
+    # Here master with ip address 10.10.10.35
     hosts_as('master').each do |master|
       pp = <<-EOS
         exec { 'set master /etc/hosts':
           path     => '/bin/',
-          command  => 'echo -e "127.0.0.1       ipa-server-1.vagrant.example.lan ipa-server-1\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n 192.168.44.35 ipa-server-1.vagrant.example.lan ipa-server-1\n" > /etc/hosts',
+          command  => 'echo -e "127.0.0.1       ipa-server-1.example.lan ipa-server-1\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n 10.10.10.35 ipa-server-1.example.lan ipa-server-1\n" > /etc/hosts',
         }
         EOS
 
       apply_manifest_on(master, pp, catch_failures: true, debug: true)
     end
 
-    # Here replica with ip address 192.168.44.36
+    # Here replica with ip address 10.10.10.36
     hosts_as('replica').each do |replica|
       pp = <<-EOS
          exec { 'set replica /etc/hosts':
            path     => '/bin/',
-           command  => 'echo -e "127.0.0.1       ipa-server-2.vagrant.example.lan ipa-server-2\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n 192.168.44.36 ipa-server-2.vagrant.example.lan ipa-server-2\n" > /etc/hosts',
+           command  => 'echo -e "127.0.0.1       ipa-server-2.example.lan ipa-server-2\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n 10.10.10.36 ipa-server-2.example.lan ipa-server-2\n" > /etc/hosts',
          }
          class { 'resolv_conf':
-           nameservers => ['192.168.44.35'],
+           nameservers => ['10.10.10.35'],
          }
-         host {'ipa-server-1.vagrant.example.lan':
+         host {'ipa-server-1.example.lan':
            ensure => present,
-           ip => '192.168.44.35',
+           ip => '10.10.10.35',
          }
       EOS
 
       apply_manifest_on(replica, pp, catch_failures: true, debug: true)
     end
 
-    # Here a first client running CentOS7 with ip address 192.168.44.37
+    # Here a first client running CentOS7 with ip address 10.10.10.37
     hosts_as('client-centos7').each do |clientcentos7|
       pp = <<-EOS
         exec { 'set client centos /etc/hosts':
           path     => '/bin/',
-          command  => 'echo -e "127.0.0.1       ipa-client-centos.vagrant.example.lan ipa-server-2\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n 192.168.44.37 ipa-client-centos.vagrant.example.lan ipa-client-centos\n" > /etc/hosts',
+          command  => 'echo -e "127.0.0.1       ipa-client-centos.example.lan ipa-server-2\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n 10.10.10.37 ipa-client-centos.example.lan ipa-client-centos\n" > /etc/hosts',
         }
       EOS
 
       apply_manifest_on(clientcentos7, pp, catch_failures: true)
     end
 
-    # Here a second client running Ubuntu1604 with ip address 192.168.44.38
+    # Here a second client running Ubuntu1604 with ip address 10.10.10.38
     hosts_as('client-ubuntu16').each do |clientubuntu16|
       pp = <<-EOS
          exec { 'set client ubuntu /etc/hosts':
            path     => '/bin/',
-           command  => 'echo -e "127.0.0.1       ipa-client-ubuntu16.vagrant.example.lan ipa-server-2\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n 192.168.44.38 ipa-client-ubuntu16.vagrant.example.lan ipa-client-ubuntu16\n" > /etc/hosts',
+           command  => 'echo -e "127.0.0.1       ipa-client-ubuntu16.example.lan ipa-server-2\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n 10.10.10.38 ipa-client-ubuntu16.example.lan ipa-client-ubuntu16\n" > /etc/hosts',
          }
          EOS
 
@@ -104,11 +102,11 @@ RSpec.configure do |c|
     hosts_as('client').each do |client|
       pp = <<-EOS
         class { 'resolv_conf':
-          nameservers => ['192.168.44.35'],
+          nameservers => ['10.10.10.35'],
         }
-        host {'ipa-server-1.vagrant.example.lan':
+        host {'ipa-server-1.example.lan':
           ensure => present,
-          ip => '192.168.44.35',
+          ip => '10.10.10.35',
         }
         EOS
 

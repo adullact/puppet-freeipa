@@ -45,12 +45,12 @@ Creating an IPA master, with the WebUI proxied to `https://localhost:8440`.
 ```puppet
 class {'freeipa':
     ipa_role                    => 'master',
-    domain                      => 'vagrant.example.lan',
-    ipa_server_fqdn             => 'ipa-server-1.vagrant.example.lan',
+    domain                      => 'example.lan',
+    ipa_server_fqdn             => 'ipa-server-1.example.lan',
     admin_password              => 'vagrant123',
     directory_services_password => 'vagrant123',
     install_ipa_server          => true,
-    ip_address                  => '192.168.44.35',
+    ip_address                  => '10.10.10.35',
     enable_ip_address           => true,
     enable_hostname             => true,
     manage_host_entry           => true,
@@ -65,16 +65,16 @@ Adding a replica:
 ```puppet
 class {'::freeipa':
     ipa_role             => 'replica',
-    domain               => 'vagrant.example.lan',
-    ipa_server_fqdn      => 'ipa-server-2.vagrant.example.lan',
+    domain               => 'example.lan',
+    ipa_server_fqdn      => 'ipa-server-2.example.lan',
     domain_join_password => 'vagrant123',
     install_ipa_server   => true,
-    ip_address           => '192.168.44.36',
+    ip_address           => '10.10.10.36',
     enable_ip_address    => true,
     enable_hostname      => true,
     manage_host_entry    => true,
     install_epel         => true,
-    ipa_master_fqdn      => 'ipa-server-1.vagrant.example.lan',
+    ipa_master_fqdn      => 'ipa-server-1.example.lan',
 }
 ```
 
@@ -82,10 +82,10 @@ Adding a client:
 ```puppet
 class {'::freeipa':
 ipa_role             => 'client',
-domain               => 'vagrant.example.lan',
+domain               => 'example.lan',
 domain_join_password => 'vagrant123',
 install_epel         => true,
-ipa_master_fqdn      => 'ipa-server-1.vagrant.example.lan',
+ipa_master_fqdn      => 'ipa-server-1.example.lan',
 }
 ```
 

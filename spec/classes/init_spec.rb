@@ -1,5 +1,3 @@
-
-
 require 'spec_helper'
 
 describe 'freeipa', type: :class do
@@ -17,7 +15,7 @@ describe 'freeipa', type: :class do
                   domain:                      'rspec.example.lan',
                   admin_password:              'rspecrspec123',
                   directory_services_password: 'rspecrspec123',
-                  ip_address:                  '192.168.44.35',
+                  ip_address:                  '10.10.10.35',
                   ipa_master_fqdn:             'master.rspec.example.lan'
                 }
               end
@@ -53,7 +51,7 @@ describe 'freeipa', type: :class do
                   domain:                      'rspec.example.lan',
                   admin_password:              'rspecrspec123',
                   directory_services_password: 'rspecrspec123',
-                  ip_address:                  '192.168.44.36',
+                  ip_address:                  '10.10.10.36',
                   ipa_master_fqdn:             'replica.rspec.example.lan',
                   password_usedto_joindomain:  'rspecrspec123'
                 }
@@ -92,7 +90,7 @@ describe 'freeipa', type: :class do
               domain:                      'rspec.example.lan',
               admin_password:              'rspecrspec123',
               directory_services_password: 'rspecrspec123',
-              ip_address:                  '192.168.44.36',
+              ip_address:                  '10.10.10.36',
               ipa_master_fqdn:             'client.rspec.example.lan',
               password_usedto_joindomain:  'rspecrspec123'
             }

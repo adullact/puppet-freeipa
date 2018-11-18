@@ -9,12 +9,12 @@ describe 'freeipa' do
       let(:params) do
         {
           ipa_role: 'client',
-          ipa_master_fqdn: 'foo.example.com',
-          domain: 'vagrant.lan',
+          ipa_master_fqdn: 'foo.example.lan',
+          domain: 'example.lan',
           password_usedto_joindomain: 'foobartest',
           admin_password: 'vagrant123',
           directory_services_password: 'vagrant123',
-          ip_address: '192.168.44.35'
+          ip_address: '10.10.10.35'
         }
       end
 
