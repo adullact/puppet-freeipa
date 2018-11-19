@@ -1,5 +1,12 @@
 # puppet-freeipa
 
+## 2.1.0 :
+
+  * remove last string facts by structured facts  : #48, #43
+  * use datatype Stdlib::IP::Address              : #47
+  * clean up puppetlabs-stdlib requirement        : #44
+  * add custom fact giving configured ipa role    : #18
+
 ## 2.0.1 :
 
   * clean up REFERENCES.md                        : #42
