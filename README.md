@@ -1,6 +1,5 @@
 # Freeipa Puppet module
 
-
 #### Table of Contents
 
 1. [Description](#description)
@@ -24,18 +23,19 @@ The module should not affect a previous installation of FreeIPA, it should fail 
 
 Below are all items that module can affect:
 
- - Modifiy /etc/hosts
+ * Modifiy /etc/hosts (if `$freeipa::manage_host_entry` true)
 
- - Modify /etc/resolv.conf
-
- - Install the following packages if not present: autofs, bind-dyndb-ldap, epel-release, sssd-common, sssdtools, ipa-client, ipa-server, ipa-server-dns, kstart, openldap-clients
-
+ * Install the following packages if not present: autofs, bind-dyndb-ldap, epel-release, sssd-common, sssdtools, ipa-client, ipa-server, ipa-server-dns, kstart, openldap-clients
 
 Installation of Freeipa server will obviously install a ntp server, a DNS server, a LDAP Directory, a Kerberos server, apache, Certmonger and PKI Tomcat.
 
 ### Setup Requirements
 
-This module requires [puppetlabs/stdlib](https://forge.puppetlabs.com/puppetlabs/stdlib) >= 4.13.0.
+This module requires :
+
+  * puppetlabs-stdlib
+
+  * stahnma-epel
 
 ## Usage
 
