@@ -88,6 +88,55 @@ describe 'freeipa class' do
     end
   end
 
+  context 'with ipa_role replica on master' do
+    hosts_as('master').each do |master|
+      it 'fails' do
+        pp = <<-EOS
+        class { 'freeipa':
+          ipa_role => 'replica',
+          domain => 'example.lan',
+          ipa_server_fqdn => 'ipa-server-1.example.lan',
+          admin_password => 'vagrant123',
+          directory_services_password => 'vagrant123',
+          install_ipa_server => true,
+          ip_address => '10.10.10.35',
+          enable_ip_address => true,
+          enable_hostname => true,
+          manage_host_entry => true,
+          install_epel => true,
+          webui_disable_kerberos => true,
+          webui_enable_proxy => true,
+          webui_force_https => true,
+          ipa_master_fqdn => 'ipa-server-1.example.lan',
+        }
+        EOS
+
+        apply_manifest_on(master, pp, expect_failures: true)
+      end
+    end
+  end
+
+  context 'with ipa_role client on master' do
+    hosts_as('master').each do |master|
+      it 'fails' do
+        pp = <<-EOS
+        class { 'freeipa':
+          ipa_role => 'client',
+          domain => 'example.lan',
+          admin_password => 'vagrant123',
+          directory_services_password => 'vagrant123',
+          password_usedto_joindomain => 'vagrant123',
+          ip_address => '10.10.10.35',
+          install_epel => true,
+          ipa_master_fqdn => 'ipa-server-1.example.lan'
+        }
+        EOS
+
+        apply_manifest_on(master, pp, expect_failures: true)
+      end
+    end
+  end
+
   context 'Test ssh connnections for toto user with pre-defined ssh-key' do
     # Install ssh key on root on master
     hosts_as('master').each do |master|
