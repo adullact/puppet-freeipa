@@ -105,7 +105,7 @@ Acceptance tests are done :
 
  * clients with centos7 and ubuntu1604
 
-Even if puppet4 should work, it is not tested.
+Even if puppet 4.10 or IPv6 should work, they are not tested.
 
 ## Authors
 

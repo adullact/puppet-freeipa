@@ -247,7 +247,7 @@ Default value: `true`
 
 ##### `ip_address`
 
-Data type: `Stdlib::IP::Address::V4`
+Data type: `Stdlib::IP::Address`
 
 IP address to pass to the IPA installer.
 
@@ -257,7 +257,7 @@ Data type: `Stdlib::Fqdn`
 
 Actual fqdn of the IPA server or client.
 
-Default value: $facts['fqdn']
+Default value: $facts['networking']['fqdn']
 
 ##### `kstart_package_name`
 

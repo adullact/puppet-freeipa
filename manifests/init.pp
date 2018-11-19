@@ -102,7 +102,7 @@ class freeipa (
   Boolean                                  $install_ipa_client                 = true,
   Boolean                                  $install_ipa_server                 = true,
   Boolean                                  $install_sssd                       = true,
-  Stdlib::Fqdn                             $ipa_server_fqdn                    = $facts['fqdn'],
+  Stdlib::Fqdn                             $ipa_server_fqdn                    = $facts['networking']['fqdn'],
   String                                   $kstart_package_name                = 'kstart',
   String                                   $ldaputils_package_name             = $facts['os']['family'] ? {
     'Debian' => 'ldap-utils',
