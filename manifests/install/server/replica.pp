@@ -18,25 +18,28 @@ class freeipa::install::server::replica {
   ${freeipa::install::server::server_install_cmd_opts_no_ui_redirect} \
   --unattended"
 
-  # TODO: config-show and grep for IPA\ masters
-  file { '/etc/ipa/primary':
-    ensure  => 'file',
-    content => 'Added by IPA Puppet module. Designates primary master. Do not remove.',
+  if ! $facts['iparole'] or $facts['iparole'] == 'replica' {
+    # TODO: config-show and grep for IPA\ masters
+    file { '/etc/ipa/primary':
+      ensure  => 'file',
+      content => 'Added by IPA Puppet module. Designates primary master. Do not remove.',
+    }
+    -> exec { "server_install_${freeipa::ipa_server_fqdn}":
+      command   => $replica_install_cmd,
+      timeout   => 0,
+      unless    => '/usr/sbin/ipactl status >/dev/null 2>&1',
+      creates   => '/etc/ipa/default.conf',
+      logoutput => 'on_failure',
+      notify    => Freeipa::Helpers::Flushcache["server_${freeipa::ipa_server_fqdn}"],
+      before    => Service['sssd'],
+    }
+    -> cron { 'k5start_root':
+      command => '/usr/bin/k5start -f /etc/krb5.keytab -U -o root -k /tmp/krb5cc_0 > /dev/null 2>&1',
+      user    => 'root',
+      minute  => '*/1',
+      require => Package[$freeipa::kstart_package_name],
+    }
+  } else {
+    fail ("to change ipa_role from '${facts['iparole']}' to 'replica' is not supported.")
   }
-  -> exec { "server_install_${freeipa::ipa_server_fqdn}":
-    command   => $replica_install_cmd,
-    timeout   => 0,
-    unless    => '/usr/sbin/ipactl status >/dev/null 2>&1',
-    creates   => '/etc/ipa/default.conf',
-    logoutput => 'on_failure',
-    notify    => Freeipa::Helpers::Flushcache["server_${freeipa::ipa_server_fqdn}"],
-    before    => Service['sssd'],
-  }
-  -> cron { 'k5start_root':
-    command => '/usr/bin/k5start -f /etc/krb5.keytab -U -o root -k /tmp/krb5cc_0 > /dev/null 2>&1',
-    user    => 'root',
-    minute  => '*/1',
-    require => Package[$freeipa::kstart_package_name],
-  }
-
 }
