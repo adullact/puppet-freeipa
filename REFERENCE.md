@@ -6,7 +6,7 @@
 **Classes**
 
 * [`freeipa`](#freeipa): Manages IPA masters, replicas and clients.
-* [`freeipa::config::admin_user`](#freeipaconfigadmin_user): Configures admin user
+* [`freeipa::config::krbinit`](#freeipaconfigkrbinit): Configures admin user
 * [`freeipa::config::webui`](#freeipaconfigwebui): Configures port and redirect overrides for the IPA server web UI.
 * [`freeipa::install`](#freeipainstall): Installs the packages needed for servers and clients
 * [`freeipa::install::autofs`](#freeipainstallautofs): Installs and start autofs
@@ -377,7 +377,7 @@ The HTTPS port to use for the reverse proxy. Cannot be 443.
 
 Default value: '8440'
 
-### freeipa::config::admin_user
+### freeipa::config::krbinit
 
 Configures admin user
 
@@ -386,7 +386,7 @@ Configures admin user
 ##### 
 
 ```puppet
-include freeipa::config::admin_user
+include freeipa::config::krbinit
 ```
 
 ### freeipa::config::webui

@@ -103,7 +103,7 @@ class freeipa::install::server {
     }
 
     freeipa::helpers::flushcache { "server_${freeipa::ipa_server_fqdn}": }
-    class {'freeipa::config::admin_user': }
+    class {'freeipa::config::krbinit': }
 
     if $freeipa::ipa_role == 'master' and $freeipa::enable_manage_admins {
       class {'freeipa::config::humanadmins':}

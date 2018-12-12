@@ -2,8 +2,8 @@
 # @summary Configures admin user
 #
 # @example
-#   include freeipa::config::admin_user
-class freeipa::config::admin_user {
+#   include freeipa::config::krbinit
+class freeipa::config::krbinit {
 
   $uid_number = $freeipa::idstart
   $home_dir_path = '/home/admin'
