@@ -13,7 +13,7 @@ describe 'freeipa::config::webui' do
             ipa_server_fqdn             => 'foo.example.lan',
             domain                      => 'example.lan',
             password_usedto_joindomain  => 'foobartest',
-            admin_password              => 'foobartest',
+            puppet_admin_password       => 'foobartest',
             directory_services_password => 'foobartest',
             ip_address                  => '10.10.10.35',
           }

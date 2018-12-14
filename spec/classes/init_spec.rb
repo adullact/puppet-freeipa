@@ -12,11 +12,11 @@ describe 'freeipa', type: :class do
               let :params do
                 {
                   ipa_role:                    'master',
-                  domain:                      'rspec.example.lan',
-                  admin_password:              'rspecrspec123',
+                  domain:                      'example.lan',
+                  puppet_admin_password:       'rspecrspec123',
                   directory_services_password: 'rspecrspec123',
                   ip_address:                  '10.10.10.35',
-                  ipa_master_fqdn:             'master.rspec.example.lan'
+                  ipa_master_fqdn:             'master.example.lan'
                 }
               end
 
@@ -48,11 +48,11 @@ describe 'freeipa', type: :class do
               let :params do
                 {
                   ipa_role:                    'replica',
-                  domain:                      'rspec.example.lan',
-                  admin_password:              'rspecrspec123',
+                  domain:                      'example.lan',
+                  puppet_admin_password:       'rspecrspec123',
                   directory_services_password: 'rspecrspec123',
                   ip_address:                  '10.10.10.36',
-                  ipa_master_fqdn:             'replica.rspec.example.lan',
+                  ipa_master_fqdn:             'replica.example.lan',
                   password_usedto_joindomain:  'rspecrspec123'
                 }
               end
@@ -87,11 +87,11 @@ describe 'freeipa', type: :class do
           let :params do
             {
               ipa_role:                    'client',
-              domain:                      'rspec.example.lan',
-              admin_password:              'rspecrspec123',
+              domain:                      'example.lan',
+              puppet_admin_password:       'rspecrspec123',
               directory_services_password: 'rspecrspec123',
               ip_address:                  '10.10.10.36',
-              ipa_master_fqdn:             'client.rspec.example.lan',
+              ipa_master_fqdn:             'client.example.lan',
               password_usedto_joindomain:  'rspecrspec123'
             }
           end

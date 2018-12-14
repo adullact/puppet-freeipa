@@ -6,7 +6,7 @@
 #        ipa_role                    => 'master',
 #        domain                      => 'example.lan',
 #        ipa_server_fqdn             => 'ipa-server-1.example.lan',
-#        admin_password              => 'vagrant123',
+#        puppet_admin_password       => 'vagrant123',
 #        directory_services_password => 'vagrant123',
 #        install_ipa_server          => true,
 #        ip_address                  => '10.10.10.35',
@@ -17,6 +17,7 @@
 #        webui_disable_kerberos      => true,
 #        webui_enable_proxy          => true,
 #        webui_force_https           => true,
+#        admins                      => [ 'admin', 'admin2' ],
 #    }
 #
 # Parameters
@@ -69,56 +70,59 @@
 # This is necessary to allow the WebUI to be accessed behind a reverse proxy when using nonstandard ports.
 # @param webui_proxy_external_fqdn The public or external FQDN used to access the IPA Web UI behind the reverse proxy.
 # @param webui_proxy_https_port The HTTPS port to use for the reverse proxy. Cannot be 443.
+# @param $admins The list of admin accounts in freeipa. (The list of users who belong to admins group)
 #
 #
 class freeipa (
-  Stdlib::Fqdn                             $domain,
-  Enum['master','replica','client']        $ipa_role,
-  String[8]                                $admin_password,
-  String[8]                                $directory_services_password,
-  Stdlib::IP::Address                      $ip_address,
-  Stdlib::Fqdn                             $ipa_master_fqdn,
-  Stdlib::Fqdn                             $realm                              = upcase($domain),
-  String                                   $autofs_package_name                = 'autofs',
-  Boolean                                  $client_install_ldaputils           = false,
-  Boolean                                  $configure_dns_server               = true,
-  Boolean                                  $configure_ntp                      = true,
-  Array[String]                            $custom_dns_forwarders              = [],
-  String                                   $principal_usedto_joindomain        = 'admin',
-  String                                   $password_usedto_joindomain         = $directory_services_password,
-  Boolean                                  $enable_hostname                    = true,
-  Boolean                                  $enable_ip_address                  = false,
-  Boolean                                  $fixed_primary                      = false,
-  Integer[10000]                           $idstart                            = 10000,
-  Boolean                                  $install_autofs                     = false,
-  Boolean                                  $install_epel                       = true,
-  Boolean                                  $install_kstart                     = true,
-  Boolean                                  $install_sssdtools                  = true,
-  String                                   $ipa_client_package_name            = $facts['os']['family'] ? {
+  Stdlib::Fqdn                         $domain,
+  Enum['master','replica','client']    $ipa_role,
+  String[8]                            $puppet_admin_password,
+  String[8]                            $directory_services_password,
+  Stdlib::IP::Address                  $ip_address,
+  Stdlib::Fqdn                         $ipa_master_fqdn,
+  Stdlib::Fqdn                         $realm                          = upcase($domain),
+  Freeipa::Humanadmins                 $humanadmins                    = {},
+  String                               $autofs_package_name            = 'autofs',
+  Boolean                              $client_install_ldaputils       = false,
+  Boolean                              $configure_dns_server           = true,
+  Boolean                              $configure_ntp                  = true,
+  Array[String]                        $custom_dns_forwarders          = [],
+  String                               $principal_usedto_joindomain    = 'admin',
+  String                               $password_usedto_joindomain     = $puppet_admin_password,
+  Boolean                              $enable_manage_admins           = true,
+  Boolean                              $enable_hostname                = true,
+  Boolean                              $enable_ip_address              = false,
+  Boolean                              $fixed_primary                  = false,
+  Integer[10000]                       $idstart                        = 10000,
+  Boolean                              $install_autofs                 = false,
+  Boolean                              $install_epel                   = true,
+  Boolean                              $install_kstart                 = true,
+  Boolean                              $install_sssdtools              = true,
+  String                               $ipa_client_package_name        = $facts['os']['family'] ? {
     'Debian' => 'freeipa-client',
     default  => 'ipa-client',
   },
-  String                                   $ipa_server_package_name            = 'ipa-server',
-  Boolean                                  $install_ipa_client                 = true,
-  Boolean                                  $install_ipa_server                 = true,
-  Boolean                                  $install_sssd                       = true,
-  Stdlib::Fqdn                             $ipa_server_fqdn                    = $facts['networking']['fqdn'],
-  String                                   $kstart_package_name                = 'kstart',
-  String                                   $ldaputils_package_name             = $facts['os']['family'] ? {
+  String                               $ipa_server_package_name        = 'ipa-server',
+  Boolean                              $install_ipa_client             = true,
+  Boolean                              $install_ipa_server             = true,
+  Boolean                              $install_sssd                   = true,
+  Stdlib::Fqdn                         $ipa_server_fqdn                = $facts['networking']['fqdn'],
+  String                               $kstart_package_name            = 'kstart',
+  String                               $ldaputils_package_name         = $facts['os']['family'] ? {
     'Debian' => 'ldap-utils',
     default  => 'openldap-clients',
   },
-  Boolean                                  $manage_host_entry                  = false,
-  Boolean                                  $mkhomedir                          = true,
-  Boolean                                  $no_ui_redirect                     = false,
-  Boolean                                  $server_install_ldaputils           = true,
-  String                                   $sssd_package_name                  = 'sssd-common',
-  String                                   $sssdtools_package_name             = 'sssd-tools',
-  Boolean                                  $webui_disable_kerberos             = false,
-  Boolean                                  $webui_enable_proxy                 = false,
-  Boolean                                  $webui_force_https                  = false,
-  Stdlib::Fqdn                             $webui_proxy_external_fqdn          = 'localhost',
-  String                                   $webui_proxy_https_port             = '8440',
+  Boolean                              $manage_host_entry              = false,
+  Boolean                              $mkhomedir                      = true,
+  Boolean                              $no_ui_redirect                 = false,
+  Boolean                              $server_install_ldaputils       = true,
+  String                               $sssd_package_name              = 'sssd-common',
+  String                               $sssdtools_package_name         = 'sssd-tools',
+  Boolean                              $webui_disable_kerberos         = false,
+  Boolean                              $webui_enable_proxy             = false,
+  Boolean                              $webui_force_https              = false,
+  Stdlib::Fqdn                         $webui_proxy_external_fqdn      = 'localhost',
+  String                               $webui_proxy_https_port         = '8440',
 ) {
 
   if $facts['kernel'] != 'Linux' or $facts['osfamily'] == 'Windows' {
@@ -142,4 +146,3 @@ class freeipa (
   class {'::freeipa::install':}
 
 }
-

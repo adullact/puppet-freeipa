@@ -9,7 +9,7 @@ class freeipa::install::server::master {
   ${freeipa::install::server::server_install_cmd_opts_hostname} \
   --realm=${freeipa::realm} \
   --domain=${freeipa::domain} \
-  --admin-password='${freeipa::admin_password}' \
+  --admin-password='${freeipa::puppet_admin_password}' \
   --ds-password='${freeipa::directory_services_password}' \
   ${freeipa::install::server::server_install_cmd_opts_setup_dns} \
   ${freeipa::install::server::server_install_cmd_opts_forwarders} \
@@ -40,6 +40,7 @@ class freeipa::install::server::master {
       minute  => '*/1',
       require => Package[$freeipa::kstart_package_name],
     }
+
   } else {
     fail ("to change ipa_role from '${facts['iparole']}' to 'master' is not supported.")
   }
