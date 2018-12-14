@@ -104,6 +104,10 @@ class freeipa::install::server {
 
     freeipa::helpers::flushcache { "server_${freeipa::ipa_server_fqdn}": }
     class {'freeipa::config::admin_user': }
+
+    if $freeipa::ipa_role == 'master' and $freeipa::enable_manage_admins {
+      class {'freeipa::config::humanadmins':}
+    }
   } else {
     fail ("to change ipa_role from '${facts['iparole']}' to '${freeipa::ipa_role}' is not supported.")
   }

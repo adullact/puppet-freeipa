@@ -12,7 +12,7 @@ describe 'freeipa' do
           ipa_master_fqdn: 'foo.example.lan',
           domain: 'example.lan',
           password_usedto_joindomain: 'foobartest',
-          admin_password: 'vagrant123',
+          puppet_admin_password: 'vagrant123',
           directory_services_password: 'vagrant123',
           ip_address: '10.10.10.35'
         }

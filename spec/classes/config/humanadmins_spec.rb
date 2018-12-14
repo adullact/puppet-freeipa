@@ -1,11 +1,8 @@
-
-
 require 'spec_helper'
 
-describe 'freeipa::install::sssd' do
+describe 'freeipa::config::humanadmins' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { os_facts }
       let(:pre_condition) do
         manifest = <<-EOS
           class{ 'freeipa' :
@@ -21,6 +18,8 @@ describe 'freeipa::install::sssd' do
         EOS
         manifest
       end
+
+      let(:facts) { os_facts }
 
       it { is_expected.to compile }
     end

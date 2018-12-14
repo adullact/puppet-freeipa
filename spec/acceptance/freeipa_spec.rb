@@ -9,12 +9,14 @@ describe 'freeipa class' do
           ipa_role => 'master',
           domain => 'example.lan',
           ipa_server_fqdn => 'ipa-server-1.example.lan',
-          admin_password => 'vagrant123',
+          puppet_admin_password => 'vagrant123',
           directory_services_password => 'vagrant123',
+	  humanadmins => { foo => { password => 'vagrant123', ensure => 'present'}, bar => { password => 'vagrant123', ensure => 'present'} },
           install_ipa_server => true,
           ip_address => '10.10.10.35',
           enable_ip_address => true,
           enable_hostname => true,
+	  enable_manage_admins => false,
           manage_host_entry => true,
           install_epel => true,
           webui_disable_kerberos => true,
@@ -42,7 +44,7 @@ describe 'freeipa class' do
          ipa_role => 'replica',
          domain => 'example.lan',
          ipa_server_fqdn => 'ipa-server-2.example.lan',
-         admin_password => 'vagrant123',
+         puppet_admin_password => 'vagrant123',
          directory_services_password => 'vagrant123',
          password_usedto_joindomain => 'vagrant123',
          install_ipa_server => true,
@@ -73,7 +75,7 @@ describe 'freeipa class' do
         class {'freeipa':
          ipa_role => 'client',
          domain => 'example.lan',
-         admin_password => 'vagrant123',
+         puppet_admin_password => 'vagrant123',
          directory_services_password => 'vagrant123',
          password_usedto_joindomain => 'vagrant123',
          ip_address => '10.10.10.37',
@@ -96,7 +98,7 @@ describe 'freeipa class' do
           ipa_role => 'replica',
           domain => 'example.lan',
           ipa_server_fqdn => 'ipa-server-1.example.lan',
-          admin_password => 'vagrant123',
+          puppet_admin_password => 'vagrant123',
           directory_services_password => 'vagrant123',
           install_ipa_server => true,
           ip_address => '10.10.10.35',
@@ -123,7 +125,7 @@ describe 'freeipa class' do
         class { 'freeipa':
           ipa_role => 'client',
           domain => 'example.lan',
-          admin_password => 'vagrant123',
+          puppet_admin_password => 'vagrant123',
           directory_services_password => 'vagrant123',
           password_usedto_joindomain => 'vagrant123',
           ip_address => '10.10.10.35',
@@ -190,6 +192,64 @@ describe 'freeipa class' do
           returns  => "255"
           }
           EOS
+
+        apply_manifest_on(master, pp, catch_failures: true)
+      end
+    end
+  end
+
+  context 'Test creation of admin accounts' do
+    hosts_as('master').each do |master|
+      it 'updates admin password' do
+        pp = <<-EOS
+        class { 'freeipa':
+          ipa_role => 'master',
+          domain => 'example.lan',
+          ipa_server_fqdn => 'ipa-server-1.example.lan',
+          puppet_admin_password => 'vagrant123',
+          directory_services_password => 'vagrant123',
+	  humanadmins => { foo => { password => 'vagrant123', ensure => 'present'}, bar => { password => 'vagrant123'} },
+          install_ipa_server => true,
+          ip_address => '10.10.10.35',
+          enable_ip_address => true,
+          enable_hostname => true,
+          manage_host_entry => true,
+          install_epel => true,
+          webui_disable_kerberos => true,
+          webui_enable_proxy => true,
+          webui_force_https => true,
+          ipa_master_fqdn => 'ipa-server-1.example.lan',
+        }
+        EOS
+
+        apply_manifest_on(master, pp, catch_failures: true)
+      end
+    end
+  end
+
+  context 'Test update and delete on admin accounts' do
+    hosts_as('master').each do |master|
+      it 'updates admin password' do
+        pp = <<-EOS
+        class { 'freeipa':
+          ipa_role => 'master',
+          domain => 'example.lan',
+          ipa_server_fqdn => 'ipa-server-1.example.lan',
+          puppet_admin_password => 'vagrant123',
+          directory_services_password => 'vagrant123',
+	  humanadmins => { foo => { password => 'beaker456', ensure => 'present'}, bar => { password => 'vagrant123', ensure => 'absent'} },
+          install_ipa_server => true,
+          ip_address => '10.10.10.35',
+          enable_ip_address => true,
+          enable_hostname => true,
+          manage_host_entry => true,
+          install_epel => true,
+          webui_disable_kerberos => true,
+          webui_enable_proxy => true,
+          webui_force_https => true,
+          ipa_master_fqdn => 'ipa-server-1.example.lan',
+        }
+        EOS
 
         apply_manifest_on(master, pp, catch_failures: true)
       end
