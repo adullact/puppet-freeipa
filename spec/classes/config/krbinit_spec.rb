@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'freeipa::config::admin_user' do
+describe 'freeipa::config::krbinit' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:pre_condition) do
