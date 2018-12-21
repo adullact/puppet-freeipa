@@ -1,1 +1,7 @@
-type Freeipa::Humanadmins = Hash[String[1], Hash[Enum['username','password','ensure'], String[1]]]
+type Freeipa::Humanadmins = Hash[
+  String[1],
+  Struct[{
+    password         => String[1],
+    Optional[ensure] => Enum['present','absent'],
+  }],
+]

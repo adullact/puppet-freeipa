@@ -70,10 +70,7 @@
 # This is necessary to allow the WebUI to be accessed behind a reverse proxy when using nonstandard ports.
 # @param webui_proxy_external_fqdn The public or external FQDN used to access the IPA Web UI behind the reverse proxy.
 # @param webui_proxy_https_port The HTTPS port to use for the reverse proxy. Cannot be 443.
-# @param humanadmins Hash of admin accounts in freeipa (name, password, present/absent)
-# @option humanadmins Hash[Enum['username','password','ensure'], String[1]] :admin Hash containing infos for one admin
-# @option humanadmins String[1] :password Admin's password
-# @option humanadmins String[1] :ensure Parameter to know set if the admin should exists or not (used to delete admins). Values accepted in module are 'present'/'absent'
+# @param humanadmins Hash of admin accounts in freeipa. Uses the following schema : Hash[ String[1], Struct[{ password => String[1], Optional[ensure] => Enum['present','absent']}]]
 #
 class freeipa (
   Stdlib::Fqdn                         $domain,
