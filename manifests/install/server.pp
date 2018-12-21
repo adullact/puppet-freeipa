@@ -40,7 +40,7 @@ class freeipa::install::server {
     }
 
     if $freeipa::final_configure_dns_server {
-      $server_install_cmd_opts_setup_dns = '--setup-dns'
+      $server_install_cmd_opts_setup_dns = '--setup-dns --auto-reverse'
     } else {
       $server_install_cmd_opts_setup_dns = ''
     }
