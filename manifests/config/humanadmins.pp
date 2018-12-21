@@ -8,9 +8,6 @@ class freeipa::config::humanadmins {
   $dc_domain_split = regsubst($freeipa::domain, '([^.]+)\.*', 'dc=\1,', 'G')
   $dc = regsubst($dc_domain_split, ',$', '')
 
-  exec { 'kinit as puppet_admin':
-    command => 'kinit admin -k -t /home/admin/admin.keytab',
-  }
 
   # Loop through $human_admins
   $freeipa::humanadmins.each | String $adminname, Hash[Enum['password','ensure'], String] $adminsettings | {
@@ -21,20 +18,22 @@ class freeipa::config::humanadmins {
     case $_ensure_admin {
       'present': {
         exec { "Create ${adminname} account":
-          command => "ipa user-add ${adminname} --first=${adminname} --last=${adminname} ",
+          command => "kinit admin -k -t /home/admin/admin.keytab; ipa user-add ${adminname} --first=${adminname} --last=${adminname} ",
           unless  => "ipa user-show ${adminname} | grep login",
         }
         -> exec { "Add ${adminname} account to admins group in FreeIPA":
-          command => "ipa group-add-member admins --users=${adminname}",
+          command => "kinit admin -k -t /home/admin/admin.keytab; ipa group-add-member admins --users=${adminname}",
           unless  => "ipa group-show admins | grep ${adminname}",
         }
         -> exec { "Update ${adminname} password":
           command => "ldappasswd -Z -H ldap://localhost -x -D \"cn=Directory Manager\" -w ${freeipa::directory_services_password} -s ${adminsettings['password']} \"uid=${adminname},cn=users,cn=accounts,${dc}\"",
+          unless  => "echo \"${adminsettings['password']}\" | kinit ${adminname}"
         }
       }
       'absent': {
         exec { "Delete ${adminname} account":
-          command => "ipa user-del ${adminname}",
+          command => "kinit admin -k -t /home/admin/admin.keytab; ipa user-del ${adminname}",
+          onlyif  => "kinit admin -k -t /home/admin/admin.keytab; ipa user-show ${adminname}",
         }
       }
       default: { fail("unexpected value ${adminsettings['ensure']}") }
