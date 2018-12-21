@@ -6,6 +6,7 @@
 **Classes**
 
 * [`freeipa`](#freeipa): Manages IPA masters, replicas and clients.
+* [`freeipa::config::humanadmins`](#freeipaconfighumanadmins): This class manages admin accounts. It will create/give rights to any admin accounts missing. It will delete accounts set in Hiera to be deleted.
 * [`freeipa::config::krbinit`](#freeipaconfigkrbinit): Configures admin user
 * [`freeipa::config::webui`](#freeipaconfigwebui): Configures port and redirect overrides for the IPA server web UI.
 * [`freeipa::install`](#freeipainstall): Installs the packages needed for servers and clients
@@ -43,7 +44,7 @@ class {'freeipa':
     ipa_role                    => 'master',
     domain                      => 'example.lan',
     ipa_server_fqdn             => 'ipa-server-1.example.lan',
-    admin_password              => 'vagrant123',
+    puppet_admin_password       => 'vagrant123',
     directory_services_password => 'vagrant123',
     install_ipa_server          => true,
     ip_address                  => '10.10.10.35',
@@ -54,6 +55,7 @@ class {'freeipa':
     webui_disable_kerberos      => true,
     webui_enable_proxy          => true,
     webui_force_https           => true,
+    humanadmins => { foo => { password => 'secret123', ensure => 'present'}, bar => { password => 'secret123', ensure => 'present'} },
 }
 ```
 
@@ -73,7 +75,7 @@ Data type: `Enum['master','replica','client']`
 
 What role the node will be. Options are 'master', 'replica', and 'client'.
 
-##### `admin_password`
+##### `puppet_admin_password`
 
 Data type: `String[8]`
 
@@ -139,7 +141,7 @@ Data type: `String`
 
 The password for the domain_join_principal.
 
-Default value: $directory_services_password
+Default value: $puppet_admin_password
 
 ##### `enable_hostname`
 
@@ -376,6 +378,40 @@ Data type: `String`
 The HTTPS port to use for the reverse proxy. Cannot be 443.
 
 Default value: '8440'
+
+##### `humanadmins`
+
+Data type: `Freeipa::Humanadmins`
+
+Hash of admin accounts in freeipa (name, password, present/absent)
+
+Options:
+
+* **Hash** `Enum['username','password','ensure']`: :admin Hash containing infos for one admin
+* **String** `1`: :password Admin's password
+* **String** `1`: :ensure Parameter to know set if the admin should exists or not (used to delete admins). Values accepted in module are 'present'/'absent'
+
+Default value: {}
+
+##### `enable_manage_admins`
+
+Data type: `Boolean`
+
+
+
+Default value: `true`
+
+### freeipa::config::humanadmins
+
+This class manages admin accounts. It will create/give rights to any admin accounts missing. It will delete accounts set in Hiera to be deleted.
+
+#### Examples
+
+##### 
+
+```puppet
+include freeipa::config::humanadmins
+```
 
 ### freeipa::config::krbinit
 

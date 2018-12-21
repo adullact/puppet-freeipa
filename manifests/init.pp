@@ -17,14 +17,14 @@
 #        webui_disable_kerberos      => true,
 #        webui_enable_proxy          => true,
 #        webui_force_https           => true,
-#        admins                      => [ 'admin', 'admin2' ],
+#        humanadmins => { foo => { password => 'secret123', ensure => 'present'}, bar => { password => 'secret123', ensure => 'present'} },
 #    }
 #
 # Parameters
 # ----------
 # @param domain The name of the IPA domain to create or join.
 # @param ipa_role What role the node will be. Options are 'master', 'replica', and 'client'.
-# @param admin_password Password which will be assigned to the IPA account named 'admin'.
+# @param puppet_admin_password Password which will be assigned to the IPA account named 'admin'.
 # @param directory_services_password Password which will be passed into the ipa setup's parameter named "--ds-password".
 # @param autofs_package_name Name of the autofs package to install if enabled.
 # @param client_install_ldaputils If true, then the ldaputils packages are installed if ipa_role is set to client.
@@ -70,8 +70,10 @@
 # This is necessary to allow the WebUI to be accessed behind a reverse proxy when using nonstandard ports.
 # @param webui_proxy_external_fqdn The public or external FQDN used to access the IPA Web UI behind the reverse proxy.
 # @param webui_proxy_https_port The HTTPS port to use for the reverse proxy. Cannot be 443.
-# @param $admins The list of admin accounts in freeipa. (The list of users who belong to admins group)
-#
+# @param humanadmins Hash of admin accounts in freeipa (name, password, present/absent)
+# @option humanadmins Hash[Enum['username','password','ensure'], String[1]] :admin Hash containing infos for one admin
+# @option humanadmins String[1] :password Admin's password
+# @option humanadmins String[1] :ensure Parameter to know set if the admin should exists or not (used to delete admins). Values accepted in module are 'present'/'absent'
 #
 class freeipa (
   Stdlib::Fqdn                         $domain,

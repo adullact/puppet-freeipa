@@ -39,15 +39,19 @@ This module requires :
 
 ## Usage
 
+### puppet_admin/humanadmins
+
+To ensure that desired state described in code is applied on the node, we need puppet to log in kerberos. So Puppet uses a fixed account admin to do this. It is possible to set the password of this account with parameter freeipa:: puppet_admin_password. The real humans administrators are are managed with Hash freeipa::humanadmins. 
+
 ### Example usage:
 
-Creating an IPA master, with the WebUI proxied to `https://localhost:8440`.
+Creating an IPA master, with the WebUI proxied to `https://localhost:8440` and two admins foo and  bar.
 ```puppet
 class {'freeipa':
     ipa_role                    => 'master',
     domain                      => 'example.lan',
     ipa_server_fqdn             => 'ipa-server-1.example.lan',
-    admin_password              => 'vagrant123',
+    puppet_admin_password       => 'vagrant123',
     directory_services_password => 'vagrant123',
     install_ipa_server          => true,
     ip_address                  => '10.10.10.35',
@@ -58,6 +62,7 @@ class {'freeipa':
     webui_disable_kerberos      => true,
     webui_enable_proxy          => true,
     webui_force_https           => true,
+    humanadmins                 => { foo => { password => 'secret123', ensure => 'present'}, bar => { password => 'secret123', ensure => 'present'} },
 }
 ```
 
