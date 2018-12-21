@@ -13,7 +13,7 @@ class freeipa::config::humanadmins {
   $freeipa::humanadmins.each | String $adminname, Hash[Enum['password','ensure'], String] $adminsettings | {
     $_ensure_admin = $adminsettings['ensure'] ? {
       Undef   => 'present',
-      default =>  assert_type(Enum['present','absent'], $adminsettings['ensure']),
+      default => $adminsettings['ensure'],
     }
     case $_ensure_admin {
       'present': {

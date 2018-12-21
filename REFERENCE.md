@@ -383,13 +383,7 @@ Default value: '8440'
 
 Data type: `Freeipa::Humanadmins`
 
-Hash of admin accounts in freeipa (name, password, present/absent)
-
-Options:
-
-* **Hash** `Enum['username','password','ensure']`: :admin Hash containing infos for one admin
-* **String** `1`: :password Admin's password
-* **String** `1`: :ensure Parameter to know set if the admin should exists or not (used to delete admins). Values accepted in module are 'present'/'absent'
+Hash of admin accounts in freeipa. Uses the following schema : Hash[ String[1], Struct[{ password => String[1], Optional[ensure] => Enum['present','absent']}]]
 
 Default value: {}
 
