@@ -45,7 +45,7 @@ Versions are given in `metadata.json` file.
 Usually with a module, the desired state is described. If a value of parameter is changed, then during the next puppet run the node is modified to reach the desired state.
 The version 3.x is a starting work to reach the target. But, the module is more an idempotent installer of FreeIPA.
 
-So, to ensure that desired state described in code is applied on the node, puppet needs to login to kerberos. Puppet uses a fixed account `admin` to do this. It is possible to set the password of this account with parameter `freeipa::puppet_admin_password`. The accounts of humans administrators are managed with hash `freeipa::humanadmins`. If you modify `freeipa::humanadmins`, next puppet run will take care to update the admins users on master node. The replication will to the job on replicas.
+So, to ensure that desired state described in code is applied on the node, puppet needs to login to kerberos. Puppet uses a fixed account `admin` to do this. It is possible to set the password of this account with parameter `freeipa::puppet_admin_password`. If `freeipa::enable_manage_admins` is true, the accounts of humans administrators are managed with hash `freeipa::humanadmins`. If you modify `freeipa::humanadmins`, next puppet run will take care to update the admins users on master node. The replication will to the job on replicas.
 
 ## Usage
 

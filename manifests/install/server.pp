@@ -1,4 +1,4 @@
-# 
+#
 # @summary This class mainly defines options for the ipa install command, then install master or replica regarding the role set.
 #
 # @example
@@ -7,7 +7,7 @@ class freeipa::install::server {
 
   if $facts['iparole'] != 'client' {
     Exec {
-        path    => '/usr/local/bin/:/bin/:/sbin',
+      path =>  '/usr/local/bin/:/bin/:/sbin',
     }
 
     package{$freeipa::ipa_server_package_name:
@@ -106,7 +106,9 @@ class freeipa::install::server {
     class {'freeipa::config::krbinit': }
 
     if $freeipa::ipa_role == 'master' and $freeipa::enable_manage_admins {
-      class {'freeipa::config::humanadmins':}
+      class {'freeipa::config::humanadmins':
+        humanadmins => $freeipa::humanadmins,
+      }
     }
   } else {
     fail ("to change ipa_role from '${facts['iparole']}' to '${freeipa::ipa_role}' is not supported.")
