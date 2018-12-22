@@ -3,7 +3,12 @@
 #
 # @example
 #   include freeipa::install::server::replica
+#
+# @api private
+#
 class freeipa::install::server::replica {
+  assert_private()
+
   $replica_install_cmd = "/usr/sbin/ipa-replica-install \
   --principal=${freeipa::principal_usedto_joindomain} \
   --admin-password='${freeipa::password_usedto_joindomain}' \
@@ -30,7 +35,7 @@ class freeipa::install::server::replica {
       unless    => '/usr/sbin/ipactl status >/dev/null 2>&1',
       creates   => '/etc/ipa/default.conf',
       logoutput => 'on_failure',
-      notify    => Freeipa::Helpers::Flushcache["server_${freeipa::ipa_server_fqdn}"],
+      notify    => Class['Freeipa::Helpers::Flushcache'],
       before    => Service['sssd'],
     }
     -> cron { 'k5start_root':

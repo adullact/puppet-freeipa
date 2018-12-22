@@ -3,7 +3,12 @@
 #
 # @example
 #   include freeipa::install::server::master
+#
+# @api private
+#
 class freeipa::install::server::master {
+  assert_private()
+
   $server_install_cmd = "\
 /usr/sbin/ipa-server-install \
   ${freeipa::install::server::server_install_cmd_opts_hostname} \
@@ -30,7 +35,7 @@ class freeipa::install::server::master {
       unless    => '/usr/sbin/ipactl status >/dev/null 2>&1',
       creates   => '/etc/ipa/default.conf',
       logoutput => 'on_failure',
-      notify    => Freeipa::Helpers::Flushcache["server_${freeipa::ipa_server_fqdn}"],
+      notify    => Class['Freeipa::Helpers::Flushcache'],
       before    => Service['sssd'],
     }
     -> cron { 'k5start_root': #allows scp to replicas as root

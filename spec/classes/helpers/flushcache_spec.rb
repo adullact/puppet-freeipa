@@ -1,5 +1,3 @@
-
-
 require 'spec_helper'
 
 describe 'freeipa::helpers::flushcache' do
@@ -9,16 +7,15 @@ describe 'freeipa::helpers::flushcache' do
         ipa_role                    => 'master',
         ipa_master_fqdn             => 'master.example.lan',
         ipa_server_fqdn             => 'foo.example.lan',
-	domain                      => 'example.lan',
+        domain                      => 'example.lan',
         password_usedto_joindomain  => 'foobartest',
         puppet_admin_password       => 'foobartest',
         directory_services_password => 'foobartest',
-	ip_address                  => '10.10.10.35',
+        ip_address                  => '10.10.10.35',
       }
     EOS
     manifest
   end
-  let(:title) { 'namevar' }
   let(:params) do
     {}
   end

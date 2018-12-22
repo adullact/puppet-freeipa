@@ -2,7 +2,11 @@
 # 
 # @example
 #   include freeipa::config::webui
+#
+# @api private
+#
 class freeipa::config::webui {
+  assert_private()
 
   if $freeipa::webui_enable_proxy {
     #ref: https://www.redhat.com/archives/freeipa-users/2016-June/msg00128.html

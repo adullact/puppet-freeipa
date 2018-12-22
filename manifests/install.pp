@@ -4,7 +4,10 @@
 # @example
 #   include freeipa::install
 #
+# @api private
+#
 class freeipa::install {
+  assert_private()
 
   if ($facts['os']['family'] == 'RedHat') and ($freeipa::install_epel) {
     include epel
