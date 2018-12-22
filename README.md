@@ -6,6 +6,7 @@
 2. [Setup - The basics of getting started with Freeipa Puppet Module](#setup)
     * [What Freeipa Puppet module affects](#what-freeipa-pupppet-module-affects)
     * [Setup requirements](#setup-requirements)
+    * [How does the module work](#how-does-the-module-work)
 3. [Usage - Configuration options and additional functionality](#usage)
 4. [Limitations - OS compatibility, etc.](#limitations)
 5. [Authors](#authors)
@@ -37,11 +38,16 @@ This module requires :
 
   * stahnma-epel
 
+Versions are given in `metadata.json` file.
+
+### How does the module work.
+
+Usually with a module, the desired state is described. If a value of parameter is changed, then during the next puppet run the node is modified to reach the desired state.
+The version 3.x is a starting work to reach the target. But, the module is more an idempotent installer of FreeIPA.
+
+So, to ensure that desired state described in code is applied on the node, puppet needs to login to kerberos. Puppet uses a fixed account `admin` to do this. It is possible to set the password of this account with parameter `freeipa::puppet_admin_password`. The accounts of humans administrators are managed with hash `freeipa::humanadmins`. If you modify `freeipa::humanadmins`, next puppet run will take care to update the admins users on master node. The replication will to the job on replicas.
+
 ## Usage
-
-### puppet_admin/humanadmins
-
-To ensure that desired state described in code is applied on the node, we need puppet to log in kerberos. So Puppet uses a fixed account admin to do this. It is possible to set the password of this account with parameter freeipa:: puppet_admin_password. The real humans administrators are are managed with Hash freeipa::humanadmins. 
 
 ### Example usage:
 
