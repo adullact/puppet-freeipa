@@ -2,8 +2,9 @@
 # @summary Flushcache sss for Debian and RedHat only
 #
 # @example
-#   freeipa::helpers::flushcache { 'namevar': }
-define freeipa::helpers::flushcache {
+#   include freeipa::helpers::flushcache
+#
+class freeipa::helpers::flushcache {
 
   #TODO: nscd should be called on both platforms.
   case $facts['os']['family'] {
@@ -30,7 +31,7 @@ fi"
     }
   }
 
-  exec { "ipa_flushcache_${title}":
+  exec { "ipa_flushcache_${freeipa::ipa_server_fqdn}":
     command     => "/bin/bash -c ${ipa_fluch_cache_cmd}",
     returns     => ['0','1','2'],
     notify      => Service['sssd'],

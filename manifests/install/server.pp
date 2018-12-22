@@ -3,7 +3,11 @@
 #
 # @example
 #   include freeipa::install::server
+#
+# @api private
+#
 class freeipa::install::server {
+  assert_private()
 
   if $facts['iparole'] != 'client' {
     Exec {
@@ -102,8 +106,8 @@ class freeipa::install::server {
       }
     }
 
-    freeipa::helpers::flushcache { "server_${freeipa::ipa_server_fqdn}": }
-    class {'freeipa::config::krbinit': }
+    contain freeipa::helpers::flushcache
+    contain freeipa::config::krbinit
 
     if $freeipa::ipa_role == 'master' and $freeipa::enable_manage_admins {
       class {'freeipa::config::humanadmins':

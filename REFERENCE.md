@@ -5,22 +5,27 @@
 
 **Classes**
 
+_Public Classes_
+
 * [`freeipa`](#freeipa): Manages IPA masters, replicas and clients.
 * [`freeipa::config::humanadmins`](#freeipaconfighumanadmins): This class manages admin accounts. It will create/give rights to any admin accounts set to be present. It will delete accounts set to be absent.
-* [`freeipa::config::krbinit`](#freeipaconfigkrbinit): Configures admin user
-* [`freeipa::config::webui`](#freeipaconfigwebui): Configures port and redirect overrides for the IPA server web UI.
-* [`freeipa::install`](#freeipainstall): Installs the packages needed for servers and clients
+* [`freeipa::helpers::flushcache`](#freeipahelpersflushcache): Flushcache sss for Debian and RedHat only
 * [`freeipa::install::autofs`](#freeipainstallautofs): Installs and start autofs
-* [`freeipa::install::client`](#freeipainstallclient): Install freeipa client
-* [`freeipa::install::server`](#freeipainstallserver): This class mainly defines options for the ipa install command, then install master or replica regarding the role set.
-* [`freeipa::install::server::master`](#freeipainstallservermaster): Installs freeipa server as master
-* [`freeipa::install::server::replica`](#freeipainstallserverreplica): Installs freeipa server as replica
-* [`freeipa::install::sssd`](#freeipainstallsssd): Install sssd package
+
+_Private Classes_
+
+* `freeipa::config::krbinit`: Configures admin user
+* `freeipa::config::webui`: Configures port and redirect overrides for the IPA server web UI.
+* `freeipa::install`: Installs the packages needed for servers and clients
+* `freeipa::install::client`: Install freeipa client
+* `freeipa::install::server`: This class mainly defines options for the ipa install command, then install master or replica regarding the role set.
+* `freeipa::install::server::master`: Installs freeipa server as master
+* `freeipa::install::server::replica`: Installs freeipa server as replica
+* `freeipa::install::sssd`: Install sssd package
 
 **Defined types**
 
 * [`freeipa::config::humanadmin`](#freeipaconfighumanadmin): Creates or deletes admin account in FreeIPA.
-* [`freeipa::helpers::flushcache`](#freeipahelpersflushcache): Flushcache sss for Debian and RedHat only
 
 ## Classes
 
@@ -423,40 +428,16 @@ Data type: `Freeipa::Humanadmins`
 
 Hash defines desired admins of FreeIPA
 
-### freeipa::config::krbinit
+### freeipa::helpers::flushcache
 
-Configures admin user
-
-#### Examples
-
-##### 
-
-```puppet
-include freeipa::config::krbinit
-```
-
-### freeipa::config::webui
-
-Configures port and redirect overrides for the IPA server web UI.
+Flushcache sss for Debian and RedHat only
 
 #### Examples
 
 ##### 
 
 ```puppet
-include freeipa::config::webui
-```
-
-### freeipa::install
-
-Installs the packages needed for servers and clients
-
-#### Examples
-
-##### 
-
-```puppet
-include freeipa::install
+include freeipa::helpers::flushcache
 ```
 
 ### freeipa::install::autofs
@@ -469,66 +450,6 @@ Installs and start autofs
 
 ```puppet
 include freeipa::install::autofs
-```
-
-### freeipa::install::client
-
-Install freeipa client
-
-#### Examples
-
-##### 
-
-```puppet
-include freeipa::install::client
-```
-
-### freeipa::install::server
-
-This class mainly defines options for the ipa install command, then install master or replica regarding the role set.
-
-#### Examples
-
-##### 
-
-```puppet
-include freeipa::install::server
-```
-
-### freeipa::install::server::master
-
-Installs freeipa server as master
-
-#### Examples
-
-##### 
-
-```puppet
-include freeipa::install::server::master
-```
-
-### freeipa::install::server::replica
-
-Installs freeipa server as replica
-
-#### Examples
-
-##### 
-
-```puppet
-include freeipa::install::server::replica
-```
-
-### freeipa::install::sssd
-
-Install sssd package
-
-#### Examples
-
-##### 
-
-```puppet
-include freeipa::install::sssd
 ```
 
 ## Defined types
@@ -564,16 +485,4 @@ Options:
 
 * **:ensure** `Enum['present','absent']`: Desired state
 * **:password** `String[1]`: Password of this account
-
-### freeipa::helpers::flushcache
-
-Flushcache sss for Debian and RedHat only
-
-#### Examples
-
-##### 
-
-```puppet
-freeipa::helpers::flushcache { 'namevar': }
-```
 

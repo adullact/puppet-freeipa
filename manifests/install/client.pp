@@ -4,7 +4,10 @@
 # @example
 #   include freeipa::install::client
 #
+# @api private
+#
 class freeipa::install::client {
+  assert_private()
 
   if ! $facts['iparole'] or $facts['iparole'] == 'client' {
     package{$freeipa::ipa_client_package_name:

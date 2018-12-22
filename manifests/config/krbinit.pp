@@ -3,7 +3,11 @@
 #
 # @example
 #   include freeipa::config::krbinit
+#
+# @api private
+#
 class freeipa::config::krbinit {
+  assert_private()
 
   $uid_number = $freeipa::idstart
   $home_dir_path = '/home/admin'
