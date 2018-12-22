@@ -1,42 +1,23 @@
-# @summary This class manages admin accounts. It will create/give rights to any admin accounts missing. It will delete accounts set in Hiera to be deleted.
+# @summary This class manages admin accounts. It will create/give rights to any admin accounts set to be present. It will delete accounts set to be absent.
 #
 # @example
-#   include freeipa::config::humanadmins
-class freeipa::config::humanadmins {
+#   class { 'freeipa::config::humanadmins' :
+#     humanadmins => {
+#       admin1 => {ensure=>'present', password=>'secreat123'},
+#       admin2 => {ensure=>'absent'},
+#     }
+#   }
+#
+# @param humanadmins Hash defines desired admins of FreeIPA
+#
+class freeipa::config::humanadmins(
+  Freeipa::Humanadmins $humanadmins,
+) {
 
-  # Get domain in shape for ldappasswd
-  $dc_domain_split = regsubst($freeipa::domain, '([^.]+)\.*', 'dc=\1,', 'G')
-  $dc = regsubst($dc_domain_split, ',$', '')
-
-
-  # Loop through $human_admins
-  $freeipa::humanadmins.each | String $adminname, Hash[Enum['password','ensure'], String] $adminsettings | {
-    $_ensure_admin = $adminsettings['ensure'] ? {
-      Undef   => 'present',
-      default => $adminsettings['ensure'],
-    }
-    case $_ensure_admin {
-      'present': {
-        exec { "Create ${adminname} account":
-          command => "kinit admin -k -t /home/admin/admin.keytab; ipa user-add ${adminname} --first=${adminname} --last=${adminname} ",
-          unless  => "ipa user-show ${adminname} | grep login",
-        }
-        -> exec { "Add ${adminname} account to admins group in FreeIPA":
-          command => "kinit admin -k -t /home/admin/admin.keytab; ipa group-add-member admins --users=${adminname}",
-          unless  => "ipa group-show admins | grep ${adminname}",
-        }
-        -> exec { "Update ${adminname} password":
-          command => "ldappasswd -Z -H ldap://localhost -x -D \"cn=Directory Manager\" -w ${freeipa::directory_services_password} -s ${adminsettings['password']} \"uid=${adminname},cn=users,cn=accounts,${dc}\"",
-          unless  => "echo \"${adminsettings['password']}\" | kinit ${adminname}"
-        }
-      }
-      'absent': {
-        exec { "Delete ${adminname} account":
-          command => "kinit admin -k -t /home/admin/admin.keytab; ipa user-del ${adminname}",
-          onlyif  => "kinit admin -k -t /home/admin/admin.keytab; ipa user-show ${adminname}",
-        }
-      }
-      default: { fail("unexpected value ${adminsettings['ensure']}") }
+  # Loop through $humanadmins
+  $humanadmins.each | String $_adminname, Freeipa::Humanadmin $_adminsettings | {
+    freeipa::config::humanadmin { $_adminname :
+      adminsettings =>  $_adminsettings,
     }
   }
 }

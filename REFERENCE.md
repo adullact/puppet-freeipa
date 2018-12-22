@@ -6,7 +6,7 @@
 **Classes**
 
 * [`freeipa`](#freeipa): Manages IPA masters, replicas and clients.
-* [`freeipa::config::humanadmins`](#freeipaconfighumanadmins): This class manages admin accounts. It will create/give rights to any admin accounts missing. It will delete accounts set in Hiera to be deleted.
+* [`freeipa::config::humanadmins`](#freeipaconfighumanadmins): This class manages admin accounts. It will create/give rights to any admin accounts set to be present. It will delete accounts set to be absent.
 * [`freeipa::config::krbinit`](#freeipaconfigkrbinit): Configures admin user
 * [`freeipa::config::webui`](#freeipaconfigwebui): Configures port and redirect overrides for the IPA server web UI.
 * [`freeipa::install`](#freeipainstall): Installs the packages needed for servers and clients
@@ -19,6 +19,7 @@
 
 **Defined types**
 
+* [`freeipa::config::humanadmin`](#freeipaconfighumanadmin): Creates or deletes admin account in FreeIPA.
 * [`freeipa::helpers::flushcache`](#freeipahelpersflushcache): Flushcache sss for Debian and RedHat only
 
 ## Classes
@@ -397,15 +398,30 @@ Default value: `true`
 
 ### freeipa::config::humanadmins
 
-This class manages admin accounts. It will create/give rights to any admin accounts missing. It will delete accounts set in Hiera to be deleted.
+This class manages admin accounts. It will create/give rights to any admin accounts set to be present. It will delete accounts set to be absent.
 
 #### Examples
 
 ##### 
 
 ```puppet
-include freeipa::config::humanadmins
+class { 'freeipa::config::humanadmins' :
+  humanadmins => {
+    admin1 => {ensure=>'present', password=>'secreat123'},
+    admin2 => {ensure=>'absent'},
+  }
+}
 ```
+
+#### Parameters
+
+The following parameters are available in the `freeipa::config::humanadmins` class.
+
+##### `humanadmins`
+
+Data type: `Freeipa::Humanadmins`
+
+Hash defines desired admins of FreeIPA
 
 ### freeipa::config::krbinit
 
@@ -516,6 +532,38 @@ include freeipa::install::sssd
 ```
 
 ## Defined types
+
+### freeipa::config::humanadmin
+
+Creates or deletes admin account in FreeIPA.
+
+#### Examples
+
+##### 
+
+```puppet
+freeipa::config::humanadmin { 'myadmin' :
+  adminsettings => {
+    password => 'secret123',
+    ensure   =>  'present',
+  }
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `freeipa::config::humanadmin` defined type.
+
+##### `adminsettings`
+
+Data type: `Freeipa::Humanadmin`
+
+Hash of settings for one admin account
+
+Options:
+
+* **:ensure** `Enum['present','absent']`: Desired state
+* **:password** `String[1]`: Password of this account
 
 ### freeipa::helpers::flushcache
 

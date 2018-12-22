@@ -1,13 +1,12 @@
 require 'spec_helper'
 
-describe 'freeipa::config::humanadmins' do
+describe 'freeipa::config::humanadmin' do
+  let(:title) { 'admin1' }
   let(:params) do
     {
-      humanadmins: {
-        admin1: {
-          ensure: 'present',
-          password: 'secret123'
-        }
+      adminsettings: {
+        ensure:   'present',
+        password: 'secret123'
       }
     }
   end
