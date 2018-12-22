@@ -20,7 +20,7 @@ define freeipa::config::humanadmin(
   $_adminname = $name
 
   # forge domain shaped for ldappasswd
-  $_dc_domain_split = regsubst($domain, '([^.]+)\.*', 'dc=\1,', 'G')
+  $_dc_domain_split = regsubst($freeipa::domain, '([^.]+)\.*', 'dc=\1,', 'G')
   $_dc = regsubst($_dc_domain_split, ',$', '')
 
   $_ensure = $adminsettings['ensure'] ? {
