@@ -18,10 +18,6 @@ class freeipa::install::server {
       ensure => present,
     }
 
-    package{$freeipa::kstart_package_name:
-      ensure => present,
-    }
-
     if $freeipa::server_install_ldaputils {
       package { $freeipa::ldaputils_package_name:
         ensure => present,
@@ -107,9 +103,9 @@ class freeipa::install::server {
     }
 
     contain freeipa::helpers::flushcache
-    contain freeipa::config::krbinit
 
-    if $freeipa::ipa_role == 'master' and $freeipa::enable_manage_admins {
+    if $freeipa::enable_manage_admins {
+      contain freeipa::config::krbinit
       class {'freeipa::config::humanadmins':
         humanadmins => $freeipa::humanadmins,
       }

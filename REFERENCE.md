@@ -14,7 +14,7 @@ _Public Classes_
 
 _Private Classes_
 
-* `freeipa::config::krbinit`: Configures admin user
+* `freeipa::config::krbinit`: Configures keytab for admin user on FreeIPA master.
 * `freeipa::config::webui`: Configures port and redirect overrides for the IPA server web UI.
 * `freeipa::install`: Installs the packages needed for servers and clients
 * `freeipa::install::client`: Install freeipa client
@@ -25,7 +25,7 @@ _Private Classes_
 
 **Defined types**
 
-* [`freeipa::config::humanadmin`](#freeipaconfighumanadmin): Creates or deletes admin account in FreeIPA.
+* [`freeipa::config::humanadmin`](#freeipaconfighumanadmin): From FreeIPA master, creates or deletes admin account in FreeIPA.
 
 ## Classes
 
@@ -197,14 +197,6 @@ If true, then the epel repo is installed. The epel repo is usually required for 
 
 Default value: `true`
 
-##### `install_kstart`
-
-Data type: `Boolean`
-
-If true, then the kstart packages are installed.
-
-Default value: `true`
-
 ##### `install_sssdtools`
 
 Data type: `Boolean`
@@ -266,14 +258,6 @@ Data type: `Stdlib::Fqdn`
 Actual fqdn of the IPA server or client.
 
 Default value: $facts['networking']['fqdn']
-
-##### `kstart_package_name`
-
-Data type: `String`
-
-Name of the kstart package.
-
-Default value: 'kstart'
 
 ##### `ldaputils_package_name`
 
@@ -456,7 +440,7 @@ include freeipa::install::autofs
 
 ### freeipa::config::humanadmin
 
-Creates or deletes admin account in FreeIPA.
+From FreeIPA master, creates or deletes admin account in FreeIPA.
 
 #### Examples
 

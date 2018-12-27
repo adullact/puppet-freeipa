@@ -32,7 +32,6 @@ describe 'freeipa', type: :class do
 
               it { is_expected.to contain_package('ipa-server-dns') }
               it { is_expected.to contain_package('bind-dyndb-ldap') }
-              it { is_expected.to contain_package('kstart') }
               it { is_expected.to contain_package('ipa-server') }
               it { is_expected.to contain_package('openldap-clients') }
               it { is_expected.to contain_package('sssd-common') }
@@ -69,7 +68,6 @@ describe 'freeipa', type: :class do
 
               it { is_expected.to contain_package('ipa-server-dns') }
               it { is_expected.to contain_package('bind-dyndb-ldap') }
-              it { is_expected.to contain_package('kstart') }
               it { is_expected.to contain_package('ipa-server') }
               it { is_expected.to contain_package('openldap-clients') }
               it { is_expected.to contain_package('sssd-common') }
@@ -113,7 +111,6 @@ describe 'freeipa', type: :class do
           end
 
           it { is_expected.to contain_package('sssd-common') }
-          it { is_expected.to contain_package('kstart') }
 
           it { is_expected.not_to contain_package('ipa-server-dns') }
           it { is_expected.not_to contain_package('bind-dyndb-ldap') }

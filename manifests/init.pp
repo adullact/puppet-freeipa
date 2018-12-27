@@ -42,7 +42,6 @@
 # @param idstart From the IPA man pages: "The starting user and group id number".
 # @param install_autofs If true, then the autofs packages are installed.
 # @param install_epel If true, then the epel repo is installed. The epel repo is usually required for sssd packages.
-# @param install_kstart If true, then the kstart packages are installed.
 # @param install_sssdtools If true, then the sssdtools packages are installed.
 # @param ipa_client_package_name Name of the IPA client package.
 # @param ipa_server_package_name Name of the IPA server package.
@@ -51,7 +50,6 @@
 # @param install_sssd If true, then the sssd packages are installed.
 # @param ip_address IP address to pass to the IPA installer.
 # @param ipa_server_fqdn Actual fqdn of the IPA server or client.
-# @param kstart_package_name Name of the kstart package.
 # @param ldaputils_package_name Name of the ldaputils package.
 # @param ipa_master_fqdn FQDN of the server to use for a client or replica domain join.
 # @param manage_host_entry If true, then a host entry is created using the parameters 'ipa_server_fqdn' and 'ip_address'.
@@ -95,7 +93,6 @@ class freeipa (
   Integer[10000]                       $idstart                        = 10000,
   Boolean                              $install_autofs                 = false,
   Boolean                              $install_epel                   = true,
-  Boolean                              $install_kstart                 = true,
   Boolean                              $install_sssdtools              = true,
   String                               $ipa_client_package_name        = $facts['os']['family'] ? {
     'Debian' => 'freeipa-client',
@@ -106,7 +103,6 @@ class freeipa (
   Boolean                              $install_ipa_server             = true,
   Boolean                              $install_sssd                   = true,
   Stdlib::Fqdn                         $ipa_server_fqdn                = $facts['networking']['fqdn'],
-  String                               $kstart_package_name            = 'kstart',
   String                               $ldaputils_package_name         = $facts['os']['family'] ? {
     'Debian' => 'ldap-utils',
     default  => 'openldap-clients',
