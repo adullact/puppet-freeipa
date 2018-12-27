@@ -38,12 +38,6 @@ class freeipa::install::server::replica {
       notify    => Class['Freeipa::Helpers::Flushcache'],
       before    => Service['sssd'],
     }
-    -> cron { 'k5start_root':
-      command => '/usr/bin/k5start -f /etc/krb5.keytab -U -o root -k /tmp/krb5cc_0 > /dev/null 2>&1',
-      user    => 'root',
-      minute  => '*/1',
-      require => Package[$freeipa::kstart_package_name],
-    }
   } else {
     fail ("to change ipa_role from '${facts['iparole']}' to 'replica' is not supported.")
   }

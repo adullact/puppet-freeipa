@@ -14,10 +14,6 @@ class freeipa::install::client {
       ensure => present,
     }
 
-    package{$freeipa::kstart_package_name:
-      ensure => present,
-    }
-
     if $freeipa::client_install_ldaputils {
       package { $freeipa::ldaputils_package_name:
         ensure => present,
