@@ -11,33 +11,33 @@ class freeipa::config::keytab {
 
   if $facts['iparole'] == 'master' or $freeipa::ipa_role == 'master' {
 
-    $uid_number = $freeipa::idstart
-    $home_dir_path = '/home/admin'
+    $_uid_number = $freeipa::idstart
+    $_home_dir_path = '/home/admin'
+    $_admin_keytab = "${_home_dir_path}/admin.keytab"
 
     # Ensure admin homedir and keytab files.
-    file { $home_dir_path:
+    file { $_home_dir_path:
       ensure  => directory,
       mode    => '0700',
-      owner   => $uid_number,
-      group   => $uid_number,
+      owner   => $_uid_number,
+      group   => $_uid_number,
       require => Exec["server_install_${freeipa::ipa_server_fqdn}"],
     }
 
     # Set keytab for admin user.
-    $configure_admin_keytab_cmd = "/usr/sbin/kadmin.local -q \"ktadd -norandkey -k ${home_dir_path}/admin.keytab admin\" "
-    exec { 'configure_admin_keytab':
-      command => $configure_admin_keytab_cmd,
-      cwd     => $home_dir_path,
-      unless  => shellquote('/usr/bin/kvno','-k',"${home_dir_path}/admin.keytab","admin@${freeipa::realm}"),
-      require => File[$home_dir_path],
-      notify  => File["${home_dir_path}/admin.keytab"],
+    exec { 'ktadd admin keytab':
+      command => "/usr/sbin/kadmin.local -q \"ktadd -norandkey -k ${_admin_keytab} admin\"",
+      cwd     => $_home_dir_path,
+      unless  => "/usr/bin/kvno -k ${_admin_keytab} admin@${freeipa::realm}",
+      require => File[$_home_dir_path],
+      notify  => File[$_admin_keytab],
     }
 
-    file { "${home_dir_path}/admin.keytab":
-      owner   => $uid_number,
-      group   => $uid_number,
+    file { $_admin_keytab :
+      owner   => $_uid_number,
+      group   => $_uid_number,
       mode    => '0600',
-      require => File[$home_dir_path],
+      require => File[$_home_dir_path],
     }
   } else {
     # manage keytab only on master
