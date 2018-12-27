@@ -35,21 +35,21 @@ define freeipa::config::humanadmin(
 
     case $_ensure {
       'present': {
-        exec { "Create ${_adminname} account":
+        exec { "ipa user-add ${_adminname}":
           command => "kinit admin -k -t /home/admin/admin.keytab; ipa user-add ${_adminname} --first=${_adminname} --last=${_adminname} ",
           unless  => "ipa user-show ${_adminname} | grep login",
         }
-        -> exec { "Add ${_adminname} account to admins group in FreeIPA":
+        -> exec { "ipa group-add-member admins --users=${_adminname}":
           command => "kinit admin -k -t /home/admin/admin.keytab; ipa group-add-member admins --users=${_adminname}",
           unless  => "ipa group-show admins | grep ${_adminname}",
         }
-        -> exec { "Update ${_adminname} password":
+        -> exec { "ldappasswd uid=${_adminname},cn=users,cn=accounts,${_dc}":
           command => "ldappasswd -Z -H ldap://localhost -x -D \"cn=Directory Manager\" -w ${freeipa::directory_services_password} -s ${adminsettings['password']} \"uid=${_adminname},cn=users,cn=accounts,${_dc}\"",
           unless  => "echo \"${adminsettings['password']}\" | kinit ${_adminname}"
         }
       }
       'absent': {
-        exec { "Delete ${_adminname} account":
+        exec { "ipa user-del ${_adminname}":
           command => "kinit admin -k -t /home/admin/admin.keytab; ipa user-del ${_adminname}",
           onlyif  => "kinit admin -k -t /home/admin/admin.keytab; ipa user-show ${_adminname}",
         }

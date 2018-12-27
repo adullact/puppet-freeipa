@@ -202,7 +202,7 @@ describe 'freeipa class' do
     hosts_as('master').each do |master|
       it 'test a kinit on a user' do
         pp = <<-EOS
-          exec { 'execute kinit foo':
+          exec { 'kinit foo':
           path     => '/bin/',
           command  => 'echo "secret123" | kinit foo',
           }
@@ -237,7 +237,7 @@ describe 'freeipa class' do
       end
       it 'test a kinit on a user after password update' do
         pp = <<-EOS
-          exec { 'execute kinit foo':
+          exec { 'kinit foo':
           path     => '/bin/',
           command  => 'echo "secret456" | kinit foo',
           }
@@ -247,7 +247,7 @@ describe 'freeipa class' do
       end
       it 'test a kinit on a deleted user' do
         pp = <<-EOS
-          exec { 'execute kinit bar':
+          exec { 'kinit bar':
           path     => '/bin/',
           command  => 'echo "secret123" | kinit bar',
           }
