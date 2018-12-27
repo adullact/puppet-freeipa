@@ -26,7 +26,7 @@ Below are all items that module can affect:
 
  * Modifiy /etc/hosts (if `$freeipa::manage_host_entry` true)
 
- * Install the following packages if not present: autofs, bind-dyndb-ldap, epel-release, sssd-common, sssdtools, ipa-client, ipa-server, ipa-server-dns, kstart, openldap-clients
+ * Install the following packages if not present: autofs, bind-dyndb-ldap, epel-release, sssd-common, sssdtools, ipa-client, ipa-server, ipa-server-dns, openldap-clients
 
 Installation of Freeipa server will obviously install a ntp server, a DNS server, a LDAP Directory, a Kerberos server, apache, Certmonger and PKI Tomcat.
 
@@ -106,17 +106,16 @@ A full description can be found in `REFERENCE.md`.
 
 ## Limitations
 
-IPA masters and replicas works only on Centos >= 7.5
 
 Acceptance tests are done :
 
- * with puppet5 from puppetlabs packages.
+ * with last available versions of Puppet 5 and Puppet 6 from puppetlabs packages AIO.
 
- * master and replica with centos7
+ * with CentOS 7 for FreeIPA master and replica nodes. IPA masters and replicas works only on Centos >= 7.5.
 
- * clients with centos7 and ubuntu1604
+ * with CentOS 7 and Ubuntu 16.06 for FreeIPA clients .
 
-Even if puppet 4.10 or IPv6 should work, they are not tested.
+Puppet4 is EOL since 2019-01-01. Even if puppet 4.10 should work, it is not tested.
 
 ## Authors
 
@@ -124,7 +123,7 @@ Original work from Harvard University Information Technology, mainly written by 
 
 then forked by John Puskar (https://github.com/jpuskar/puppet-freeipa)
 
-then forked by ADULLACT (https://gitlab.adullact.net/adullact/puppet-freeipa) currently written by :
+then forked by ADULLACT (https://gitlab.adullact.net/adullact/puppet-freeipa) written by :
   * ADULLACT with Fabien Combernous
   * PHOSPHORE.si with Scott Barthelemy and Bertrand RETIF
 
