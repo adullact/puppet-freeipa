@@ -34,9 +34,9 @@ Installation of Freeipa server will obviously install a ntp server, a DNS server
 
 This module requires :
 
-  * puppetlabs-stdlib
+  * `puppetlabs-stdlib`
 
-  * stahnma-epel
+  * `stahnma-epel`
 
 Versions are given in `metadata.json` file.
 
