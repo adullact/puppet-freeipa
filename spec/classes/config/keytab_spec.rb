@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'freeipa::config::krbinit' do
+describe 'freeipa::config::keytab' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:pre_condition) do

@@ -2,11 +2,11 @@
 # @summary Configures keytab for admin user on FreeIPA master. 
 #
 # @example
-#   include freeipa::config::krbinit
+#   include freeipa::config::keytab
 #
 # @api private
 #
-class freeipa::config::krbinit {
+class freeipa::config::keytab {
   assert_private()
 
   if $facts['iparole'] == 'master' or $freeipa::ipa_role == 'master' {
@@ -21,12 +21,6 @@ class freeipa::config::krbinit {
       owner   => $uid_number,
       group   => $uid_number,
       require => Exec["server_install_${freeipa::ipa_server_fqdn}"],
-    }
-
-    # Gives admin user the host/fqdn principal.
-    k5login { "${home_dir_path}/.k5login":
-      principals => $freeipa::master_principals,
-      require    => File[$home_dir_path],
     }
 
     # Set keytab for admin user.
@@ -44,16 +38,6 @@ class freeipa::config::krbinit {
       group   => $uid_number,
       mode    => '0600',
       require => File[$home_dir_path],
-    }
-
-    file { "${home_dir_path}/.k5login":
-      owner    => $uid_number,
-      group    => $uid_number,
-      require  => K5login["${home_dir_path}/.k5login"],
-      seluser  => 'user_u',
-      selrole  => 'object_r',
-      seltype  => 'krb5_home_t',
-      selrange => 's0',
     }
   } else {
     # manage keytab only on master

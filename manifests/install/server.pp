@@ -105,7 +105,7 @@ class freeipa::install::server {
     contain freeipa::helpers::flushcache
 
     if $freeipa::enable_manage_admins {
-      contain freeipa::config::krbinit
+      contain freeipa::config::keytab
       class {'freeipa::config::humanadmins':
         humanadmins => $freeipa::humanadmins,
       }
