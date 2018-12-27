@@ -14,7 +14,7 @@ _Public Classes_
 
 _Private Classes_
 
-* `freeipa::config::krbinit`: Configures keytab for admin user on FreeIPA master.
+* `freeipa::config::keytab`: Configures keytab for admin user on FreeIPA master.
 * `freeipa::config::webui`: Configures port and redirect overrides for the IPA server web UI.
 * `freeipa::install`: Installs the packages needed for servers and clients
 * `freeipa::install::client`: Install freeipa client
