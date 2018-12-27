@@ -25,11 +25,7 @@ class freeipa::install::server::master {
   --unattended"
 
   if ! $facts['iparole'] or $facts['iparole'] == 'master' {
-    file { '/etc/ipa/primary':
-      ensure  => 'file',
-      content => 'Added by IPA Puppet module. Designates primary master. Do not remove.',
-    }
-    -> exec { "server_install_${freeipa::ipa_server_fqdn}":
+    exec { "server_install_${freeipa::ipa_server_fqdn}":
       command   => $server_install_cmd,
       timeout   => 0,
       unless    => '/usr/sbin/ipactl status >/dev/null 2>&1',
