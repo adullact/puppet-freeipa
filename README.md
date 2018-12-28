@@ -51,7 +51,7 @@ So, to ensure that desired state described in code is applied on the node, puppe
 
 ### Example usage:
 
-Creating an IPA master, with the WebUI proxied to `https://localhost:8440` and two admins foo and  bar.
+Creating an IPA master, with the WebUI proxied to `https://localhost:8440` and two admin accounts `jdupond` and `mgonzales`.
 ```puppet
 class {'freeipa':
     ipa_role                    => 'master',
@@ -140,7 +140,7 @@ If you follow these contributing guidelines your patch will likely make it into 
 
 Details in `CHANGELOG.md`. Key points :
 
- * release 1.6.1 : the fist release un `adullact` name space. nothing special.
+ * release 1.6.1 : the fist release under `adullact` name space. nothing special.
 
  * releases 2.x : use code ready for Puppet 4.10 and 5.x, uses pdk as guidance, enable acceptance tests, rename classes from `easy_ipa` to `freeipa`.
 
