@@ -9,8 +9,8 @@
     * [How does the module work](#how-does-the-module-work)
 3. [Usage - Configuration options and additional functionality](#usage)
 4. [Limitations - OS compatibility, etc.](#limitations)
-5. [Authors](#authors)
-6. [License](#license)
+5. [Development - Release Notes](#development)
+
 
 ## Description
 
@@ -57,8 +57,8 @@ class {'freeipa':
     ipa_role                    => 'master',
     domain                      => 'example.lan',
     ipa_server_fqdn             => 'ipa-server-1.example.lan',
-    puppet_admin_password       => 'vagrant123',
-    directory_services_password => 'vagrant123',
+    puppet_admin_password       => 'secret_abc,
+    directory_services_password => 'secret_dir',
     install_ipa_server          => true,
     ip_address                  => '10.10.10.35',
     enable_ip_address           => true,
@@ -68,7 +68,16 @@ class {'freeipa':
     webui_disable_kerberos      => true,
     webui_enable_proxy          => true,
     webui_force_https           => true,
-    humanadmins                 => { foo => { password => 'secret123', ensure => 'present'}, bar => { password => 'secret123', ensure => 'present'} },
+    humanadmins                 => {
+      jdupond => {
+        ensure => 'present',
+        password => 'secret123',
+      },
+      mgonzales => {
+        ensure => 'present',
+        password => 'secret456',
+      },
+    },
 }
 ```
 
@@ -117,7 +126,22 @@ Acceptance tests are done :
 
 Puppet4 is EOL since 2019-01-01. Even if puppet 4.10 should work, it is not tested.
 
-## Authors
+## Development
+
+Home at URL https://gitlab.adullact.net/adullact/puppet-freeipa
+
+Issues and MR are welcome. `CONTRIBUTING.md` gives some guidance about contributing process. 
+If you follow these contributing guidelines your patch will likely make it into a release a little more quickly.
+
+### Release Notes
+
+Details in `CHANGELOG.md`.
+
+ * release 1.6.1 : the fist release un `adullact` name space. nothing special.
+
+ * releases 2.x : use code ready for puppet 4.10 and 5.x, uses pdk as guidance, enable acceptance tests, rename classes from `easy_ipa` to `freeipa`.
+
+### Contributors
 
 Original work from Harvard University Information Technology, mainly written by Rob Ruma (https://github.com/huit/puppet-ipa)
 
@@ -127,11 +151,7 @@ then forked by ADULLACT (https://gitlab.adullact.net/adullact/puppet-freeipa) wr
   * ADULLACT with Fabien Combernous
   * PHOSPHORE.si with Scott Barthelemy and Bertrand RETIF
 
-## License
-
-    Copyright (C) 2013 Harvard University Information Technology
-    Copyright (C) 2018 Association des Développeurs et Utilisateurs de Logiciels Libres
-                         pour les Administrations et Colléctivités Territoriales.
+### License
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
