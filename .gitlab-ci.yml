@@ -73,6 +73,7 @@ module release:
   tags:
     - puppet-tests
   when: manual
+  allow_failure: false
   only:
     - master
   artifacts:
