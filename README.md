@@ -77,13 +77,16 @@ class {'freeipa':
         ensure => 'present',
         password => 'secret456',
       },
+      hzimmer => {
+        ensure => 'absent',
+      },
     },
 }
 ```
 
 Adding a replica:
 ```puppet
-class {'::freeipa':
+class {'freeipa':
     ipa_role             => 'replica',
     domain               => 'example.lan',
     ipa_server_fqdn      => 'ipa-server-2.example.lan',
@@ -100,7 +103,7 @@ class {'::freeipa':
 
 Adding a client:
 ```puppet
-class {'::freeipa':
+class {'freeipa':
 ipa_role             => 'client',
 domain               => 'example.lan',
 domain_join_password => 'vagrant123',
@@ -118,7 +121,7 @@ A full description can be found in `REFERENCE.md`.
 
 Acceptance tests are done :
 
- * with last available versions of Puppet 5 and Puppet 6 from puppetlabs packages AIO.
+ * with last available versions of Puppet 5 and Puppet 6 from puppetlabs packages AIO (facter 3 is shiped).
 
  * with CentOS 7 for FreeIPA master and replica nodes. IPA masters and replicas works only on Centos >= 7.5.
 
@@ -135,11 +138,13 @@ If you follow these contributing guidelines your patch will likely make it into 
 
 ### Release Notes
 
-Details in `CHANGELOG.md`.
+Details in `CHANGELOG.md`. Key points :
 
  * release 1.6.1 : the fist release un `adullact` name space. nothing special.
 
- * releases 2.x : use code ready for puppet 4.10 and 5.x, uses pdk as guidance, enable acceptance tests, rename classes from `easy_ipa` to `freeipa`.
+ * releases 2.x : use code ready for Puppet 4.10 and 5.x, uses pdk as guidance, enable acceptance tests, rename classes from `easy_ipa` to `freeipa`.
+
+ * releases 3.x : use public and private classes, enable Puppet 6 tests, drop Puppet 4 tests, refactor module to permit management of administrator accounts.
 
 ### Contributors
 
