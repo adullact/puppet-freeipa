@@ -1,5 +1,16 @@
 # puppet-freeipa
 
+## 3.0.1 :
+
+** Closed Issues **
+
+  * fix README.md typo                            : #72, #73
+
+** Known Issues **
+
+  * change puppet_admin_password does not trigger keytab update : #70
+
+
 ## 3.0.0 :
 
 ** Closed Issues **
