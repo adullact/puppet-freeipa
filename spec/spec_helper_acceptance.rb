@@ -5,23 +5,13 @@ require 'beaker/module_install_helper'
 
 run_puppet_install_helper
 install_module_on(hosts)
-
-# The module saz-resolv_conf, used by this helper, requires puppetlabs-stdlibs < 5.0.0.
-# The puppet-freeipa dependencies descrived by metadata.json installs puppetlabs-stdlib > 5.0.0.
-# It is prefered, for the moment, to not use the helping function
-# install_module_dependencies_on() until saz-resolv_conf accepts puppetlabs-stdlib > 5.0.0
-#
-# By this way, users of puppet-freeipa can use puppetlabs-stdlibs version > 5.0.0.
-# and acceptance tests can use puppetlabs-stdlibs version < 5.0.0
-# install_module_dependencies_on(hosts)
+install_module_dependencies_on(hosts)
 
 RSpec.configure do |c|
   c.before :suite do
     # Configure all nodes in nodeset
     hosts.each do |host|
       install_module_from_forge_on(host, 'saz-resolv_conf', '>= 4.0.0 < 5.0.0')
-      install_module_from_forge_on(host, 'puppetlabs-stdlib', '>= 4.25.0 < 5.0.0')
-      install_module_from_forge_on(host, 'stahnma-epel', '>= 1.3.1 < 2.0.0')
 
       pp = <<-EOS
         exec { 'stop network manager':
