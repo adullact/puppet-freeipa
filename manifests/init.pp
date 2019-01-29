@@ -16,7 +16,6 @@
 #        install_epel                => true,
 #        webui_disable_kerberos      => true,
 #        webui_enable_proxy          => true,
-#        webui_force_https           => true,
 #        humanadmins => { foo => { password => 'secret123', ensure => 'present'}, bar => { password => 'secret123', ensure => 'present'} },
 #    }
 #
@@ -64,7 +63,6 @@
 # proxied port, while allowing IPA client access to  function as normal.
 # @param webui_enable_proxy If true, then httpd is configured to act as a reverse proxy for the IPA Web UI. This allows 
 # the Web UI to be accessed from different ports and hostnames than the default.
-# @param webui_force_https If true, then /etc/httpd/conf.d/ipa-rewrite.conf is modified to force all connections to https. 
 # This is necessary to allow the WebUI to be accessed behind a reverse proxy when using nonstandard ports.
 # @param webui_proxy_external_fqdn The public or external FQDN used to access the IPA Web UI behind the reverse proxy.
 # @param webui_proxy_https_port The HTTPS port to use for the reverse proxy. Cannot be 443.
@@ -115,7 +113,6 @@ class freeipa (
   String                               $sssdtools_package_name         = 'sssd-tools',
   Boolean                              $webui_disable_kerberos         = false,
   Boolean                              $webui_enable_proxy             = false,
-  Boolean                              $webui_force_https              = false,
   Stdlib::Fqdn                         $webui_proxy_external_fqdn      = 'localhost',
   String                               $webui_proxy_https_port         = '8440',
 ) {

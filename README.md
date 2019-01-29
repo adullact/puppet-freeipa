@@ -67,7 +67,6 @@ class {'freeipa':
     install_epel                => true,
     webui_disable_kerberos      => true,
     webui_enable_proxy          => true,
-    webui_force_https           => true,
     humanadmins                 => {
       jdupond => {
         ensure => 'present',

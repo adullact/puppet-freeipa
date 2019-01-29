@@ -60,7 +60,6 @@ class {'freeipa':
     install_epel                => true,
     webui_disable_kerberos      => true,
     webui_enable_proxy          => true,
-    webui_force_https           => true,
     humanadmins => { foo => { password => 'secret123', ensure => 'present'}, bar => { password => 'secret123', ensure => 'present'} },
 }
 ```
@@ -342,14 +341,6 @@ Default value: `false`
 Data type: `Boolean`
 
 If true, then httpd is configured to act as a reverse proxy for the IPA Web UI. This allows
-
-Default value: `false`
-
-##### `webui_force_https`
-
-Data type: `Boolean`
-
-If true, then /etc/httpd/conf.d/ipa-rewrite.conf is modified to force all connections to https.
 
 Default value: `false`
 
