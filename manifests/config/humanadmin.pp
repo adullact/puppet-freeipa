@@ -37,11 +37,11 @@ define freeipa::config::humanadmin(
       'present': {
         exec { "ipa user-add ${_adminname}":
           command => "kinit admin -k -t /home/admin/admin.keytab; ipa user-add ${_adminname} --first=${_adminname} --last=${_adminname} ",
-          unless  => "ipa user-show ${_adminname} | grep login",
+          unless  => "kinit admin -k -t /home/admin/admin.keytab; ipa user-show ${_adminname} | grep login",
         }
         -> exec { "ipa group-add-member admins --users=${_adminname}":
           command => "kinit admin -k -t /home/admin/admin.keytab; ipa group-add-member admins --users=${_adminname}",
-          unless  => "ipa group-show admins | grep ${_adminname}",
+          unless  => "kinit admin -k -t /home/admin/admin.keytab; ipa group-show admins | grep ${_adminname}",
         }
         -> exec { "ldappasswd uid=${_adminname},cn=users,cn=accounts,${_dc}":
           command => "ldappasswd -Z -H ldap://localhost -x -D \"cn=Directory Manager\" -w ${freeipa::directory_services_password} -s ${adminsettings['password']} \"uid=${_adminname},cn=users,cn=accounts,${_dc}\"",
