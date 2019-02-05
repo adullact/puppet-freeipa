@@ -36,11 +36,11 @@ define freeipa::config::humanadmin(
     case $_ensure {
       'present': {
         exec { "ipa user-add ${_adminname}":
-          command => "kinit admin -k -t /home/admin/admin.keytab; ipa user-add ${_adminname} --first=${_adminname} --last=${_adminname} ",
+          command => "ipa user-add ${_adminname} --first=${_adminname} --last=${_adminname} ",
           unless  => "kinit admin -k -t /home/admin/admin.keytab; ipa user-show ${_adminname} | grep login",
         }
         -> exec { "ipa group-add-member admins --users=${_adminname}":
-          command => "kinit admin -k -t /home/admin/admin.keytab; ipa group-add-member admins --users=${_adminname}",
+          command => "ipa group-add-member admins --users=${_adminname}",
           unless  => "kinit admin -k -t /home/admin/admin.keytab; ipa group-show admins | grep ${_adminname}",
         }
         -> exec { "ldappasswd uid=${_adminname},cn=users,cn=accounts,${_dc}":
@@ -50,7 +50,7 @@ define freeipa::config::humanadmin(
       }
       'absent': {
         exec { "ipa user-del ${_adminname}":
-          command => "kinit admin -k -t /home/admin/admin.keytab; ipa user-del ${_adminname}",
+          command => "ipa user-del ${_adminname}",
           onlyif  => "kinit admin -k -t /home/admin/admin.keytab; ipa user-show ${_adminname}",
         }
       }
