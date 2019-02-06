@@ -67,6 +67,7 @@
 # @param webui_proxy_external_fqdn The public or external FQDN used to access the IPA Web UI behind the reverse proxy.
 # @param webui_proxy_https_port The HTTPS port to use for the reverse proxy. Cannot be 443.
 # @param humanadmins Hash of admin accounts in freeipa. Uses the following schema : Hash[ String[1], Struct[{ password => String[1], Optional[ensure] => Enum['present','absent']}]]
+# @param install_ca If true, then the parameter '--setup-ca' is passed to the IPA server installer (for replicas)
 #
 class freeipa (
   Stdlib::Fqdn                         $domain,
@@ -100,6 +101,7 @@ class freeipa (
   Boolean                              $install_ipa_client             = true,
   Boolean                              $install_ipa_server             = true,
   Boolean                              $install_sssd                   = true,
+  Boolean                              $install_ca                     = true,
   Stdlib::Fqdn                         $ipa_server_fqdn                = $facts['networking']['fqdn'],
   String                               $ldaputils_package_name         = $facts['os']['family'] ? {
     'Debian' => 'ldap-utils',
