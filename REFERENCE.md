@@ -368,6 +368,14 @@ Hash of admin accounts in freeipa. Uses the following schema : Hash[ String[1], 
 
 Default value: {}
 
+##### `install_ca`
+
+Data type: `Boolean`
+
+If true, then the parameter '--setup-ca' is passed to the IPA server installer (for replicas)
+
+Default value: `true`
+
 ##### `enable_manage_admins`
 
 Data type: `Boolean`

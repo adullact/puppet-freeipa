@@ -21,6 +21,7 @@ class freeipa::install::server::replica {
   ${freeipa::install::server::server_install_cmd_opts_ip_address} \
   ${freeipa::install::server::server_install_cmd_opts_no_ntp} \
   ${freeipa::install::server::server_install_cmd_opts_no_ui_redirect} \
+  ${freeipa::install::server::server_install_cmd_opts_setup_ca} \
   --unattended"
 
   if ! $facts['iparole'] or $facts['iparole'] == 'replica' {

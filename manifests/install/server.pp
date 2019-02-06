@@ -51,6 +51,12 @@ class freeipa::install::server {
       $server_install_cmd_opts_no_ntp = '--no-ntp'
     }
 
+    if $freeipa::install_ca {
+      $server_install_cmd_opts_setup_ca = '--setup-ca'
+    } else {
+      $server_install_cmd_opts_setup_ca = ''
+    }
+
     if $freeipa::final_configure_dns_server {
       if size($freeipa::custom_dns_forwarders) > 0 {
         $server_install_cmd_opts_forwarders = join(
