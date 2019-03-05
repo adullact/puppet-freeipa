@@ -18,8 +18,6 @@ describe 'freeipa class' do
 	  enable_manage_admins        => true,
           manage_host_entry           => true,
           install_epel                => true,
-          webui_disable_kerberos      => true,
-          webui_enable_proxy          => true,
           ipa_master_fqdn             => 'ipa-server-1.example.lan',
           humanadmins                 => {
             foo => {
@@ -114,8 +112,6 @@ describe 'freeipa class' do
           enable_hostname             => true,
           manage_host_entry           => true,
           install_epel                => true,
-          webui_disable_kerberos      => true,
-          webui_enable_proxy          => true,
           ipa_master_fqdn             => 'ipa-server-1.example.lan',
         }
         EOS
@@ -232,8 +228,6 @@ describe 'freeipa class' do
 	  enable_manage_admins        => true,
           manage_host_entry           => true,
           install_epel                => true,
-          webui_disable_kerberos      => true,
-          webui_enable_proxy          => true,
           ipa_master_fqdn             => 'ipa-server-1.example.lan',
           humanadmins                 => {
             foo => {

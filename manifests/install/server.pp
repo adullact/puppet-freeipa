@@ -92,8 +92,6 @@ class freeipa::install::server {
       {ensure => 'running'},
     )
 
-    contain 'freeipa::config::webui'
-
     service { 'ipa':
       ensure  => 'running',
       enable  => true,

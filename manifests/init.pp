@@ -14,8 +14,6 @@
 #        enable_hostname             => true,
 #        manage_host_entry           => true,
 #        install_epel                => true,
-#        webui_disable_kerberos      => true,
-#        webui_enable_proxy          => true,
 #        humanadmins => { foo => { password => 'secret123', ensure => 'present'}, bar => { password => 'secret123', ensure => 'present'} },
 #    }
 #
@@ -58,14 +56,6 @@
 # @param server_install_ldaputils If true, then the ldaputils packages are installed if ipa_role is not set to client.
 # @param sssd_package_name Name of the sssd package.
 # @param sssdtools_package_name Name of the sssdtools package.
-# @param webui_disable_kerberos If true, then /etc/httpd/conf.d/ipa.conf is written to exclude kerberos support for incoming 
-# requests whose HTTP_HOST variable match the parameter 'webio_proxy_external_fqdn'. This allows the IPA Web UI to work on a 
-# proxied port, while allowing IPA client access to  function as normal.
-# @param webui_enable_proxy If true, then httpd is configured to act as a reverse proxy for the IPA Web UI. This allows 
-# the Web UI to be accessed from different ports and hostnames than the default.
-# This is necessary to allow the WebUI to be accessed behind a reverse proxy when using nonstandard ports.
-# @param webui_proxy_external_fqdn The public or external FQDN used to access the IPA Web UI behind the reverse proxy.
-# @param webui_proxy_https_port The HTTPS port to use for the reverse proxy. Cannot be 443.
 # @param humanadmins Hash of admin accounts in freeipa. Uses the following schema : Hash[ String[1], Struct[{ password => String[1], Optional[ensure] => Enum['present','absent']}]]
 # @param install_ca If true, then the parameter '--setup-ca' is passed to the IPA server installer (for replicas)
 #
@@ -113,10 +103,6 @@ class freeipa (
   Boolean                              $server_install_ldaputils       = true,
   String                               $sssd_package_name              = 'sssd-common',
   String                               $sssdtools_package_name         = 'sssd-tools',
-  Boolean                              $webui_disable_kerberos         = false,
-  Boolean                              $webui_enable_proxy             = false,
-  Stdlib::Fqdn                         $webui_proxy_external_fqdn      = 'localhost',
-  String                               $webui_proxy_https_port         = '8440',
 ) {
 
   if $facts['kernel'] != 'Linux' or $facts['osfamily'] == 'Windows' {

@@ -15,7 +15,6 @@ _Public Classes_
 _Private Classes_
 
 * `freeipa::config::keytab`: Configures keytab for admin user on FreeIPA master.
-* `freeipa::config::webui`: Configures port and redirect overrides for the IPA server web UI.
 * `freeipa::install`: Installs the packages needed for servers and clients
 * `freeipa::install::client`: Install freeipa client
 * `freeipa::install::server`: This class mainly defines options for the ipa install command, then install master or replica regarding the role set.
@@ -36,10 +35,6 @@ Parameters
 Also, triggers the install of the required dns server packages.
 and passed to the IPA installer.
 and passed to the IPA installer.
-requests whose HTTP_HOST variable match the parameter 'webio_proxy_external_fqdn'. This allows the IPA Web UI to work on a
-proxied port, while allowing IPA client access to  function as normal.
-the Web UI to be accessed from different ports and hostnames than the default.
-This is necessary to allow the WebUI to be accessed behind a reverse proxy when using nonstandard ports.
 
 #### Examples
 
@@ -58,8 +53,6 @@ class {'freeipa':
     enable_hostname             => true,
     manage_host_entry           => true,
     install_epel                => true,
-    webui_disable_kerberos      => true,
-    webui_enable_proxy          => true,
     humanadmins => { foo => { password => 'secret123', ensure => 'present'}, bar => { password => 'secret123', ensure => 'present'} },
 }
 ```
@@ -327,38 +320,6 @@ Data type: `String`
 Name of the sssdtools package.
 
 Default value: 'sssd-tools'
-
-##### `webui_disable_kerberos`
-
-Data type: `Boolean`
-
-If true, then /etc/httpd/conf.d/ipa.conf is written to exclude kerberos support for incoming
-
-Default value: `false`
-
-##### `webui_enable_proxy`
-
-Data type: `Boolean`
-
-If true, then httpd is configured to act as a reverse proxy for the IPA Web UI. This allows
-
-Default value: `false`
-
-##### `webui_proxy_external_fqdn`
-
-Data type: `Stdlib::Fqdn`
-
-The public or external FQDN used to access the IPA Web UI behind the reverse proxy.
-
-Default value: 'localhost'
-
-##### `webui_proxy_https_port`
-
-Data type: `String`
-
-The HTTPS port to use for the reverse proxy. Cannot be 443.
-
-Default value: '8440'
 
 ##### `humanadmins`
 

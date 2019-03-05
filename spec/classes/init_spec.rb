@@ -24,7 +24,6 @@ describe 'freeipa', type: :class do
               it { is_expected.to contain_class('freeipa::install::server') }
               it { is_expected.to contain_class('freeipa::install::sssd') }
               it { is_expected.to contain_class('freeipa::install::server::master') }
-              it { is_expected.to contain_class('freeipa::config::webui') }
 
               it { is_expected.not_to contain_class('freeipa::install::autofs') }
               it { is_expected.not_to contain_class('freeipa::install::server::replica') }
@@ -60,7 +59,6 @@ describe 'freeipa', type: :class do
               it { is_expected.to contain_class('freeipa::install::server') }
               it { is_expected.to contain_class('freeipa::install::sssd') }
               it { is_expected.to contain_class('freeipa::install::server::replica') }
-              it { is_expected.to contain_class('freeipa::config::webui') }
 
               it { is_expected.not_to contain_class('freeipa::install::autofs') }
               it { is_expected.not_to contain_class('freeipa::install::server::master') }
@@ -102,7 +100,6 @@ describe 'freeipa', type: :class do
           it { is_expected.not_to contain_class('freeipa::install::server') }
           it { is_expected.not_to contain_class('freeipa::install::server::master') }
           it { is_expected.not_to contain_class('freeipa::install::server::replica') }
-          it { is_expected.not_to contain_class('freeipa::config::webui') }
 
           if facts[:os]['family'] == 'Debian'
             it { is_expected.to contain_package('freeipa-client') }
