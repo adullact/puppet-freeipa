@@ -1,5 +1,19 @@
 # puppet-freeipa
 
+## 4.0.0 :
+
+** Closed Issues **
+
+  * missing kinit during admin management         : #75
+  * missing CA on replica                         : #76
+  * remove webui_enable_proxy                     : #78
+  * webui_force_https is not used                 : #79
+  * no_ui_redirect is set to false by default     : #80
+
+** Known Issues **
+
+  * change puppet_admin_password does not trigger keytab update : #70
+
 ## 3.0.1 :
 
 ** Closed Issues **
@@ -9,7 +23,6 @@
 ** Known Issues **
 
   * change puppet_admin_password does not trigger keytab update : #70
-
 
 ## 3.0.0 :
 
