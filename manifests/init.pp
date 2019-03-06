@@ -51,7 +51,7 @@
 # @param ipa_master_fqdn FQDN of the server to use for a client or replica domain join.
 # @param manage_host_entry If true, then a host entry is created using the parameters 'ipa_server_fqdn' and 'ip_address'.
 # @param mkhomedir If true, then the parameter '--mkhomedir' is passed to the IPA client installer.
-# @param no_ui_redirect If true, then the parameter '--no-ui-redirect' is passed to the IPA server installer.
+# @param webui_redirect If true, then web requests to URL root / will be redirected to webui https://example.com/ipa/ui.
 # @param realm The name of the IPA realm to create or join.
 # @param server_install_ldaputils If true, then the ldaputils packages are installed if ipa_role is not set to client.
 # @param sssd_package_name Name of the sssd package.
@@ -99,7 +99,7 @@ class freeipa (
   },
   Boolean                              $manage_host_entry              = false,
   Boolean                              $mkhomedir                      = true,
-  Boolean                              $no_ui_redirect                 = false,
+  Boolean                              $webui_redirect                 = true,
   Boolean                              $server_install_ldaputils       = true,
   String                               $sssd_package_name              = 'sssd-common',
   String                               $sssdtools_package_name         = 'sssd-tools',

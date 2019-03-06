@@ -74,7 +74,7 @@ class freeipa::install::server {
       $server_install_cmd_opts_forwarders = ''
     }
 
-    if $freeipa::no_ui_redirect {
+    if $freeipa::webui_redirect {
       $server_install_cmd_opts_no_ui_redirect = ''
     } else {
       $server_install_cmd_opts_no_ui_redirect = '--no-ui-redirect'

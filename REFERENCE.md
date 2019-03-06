@@ -281,13 +281,13 @@ If true, then the parameter '--mkhomedir' is passed to the IPA client installer.
 
 Default value: `true`
 
-##### `no_ui_redirect`
+##### `webui_redirect`
 
 Data type: `Boolean`
 
-If true, then the parameter '--no-ui-redirect' is passed to the IPA server installer.
+If true, then web requests to URL root / will be redirected to webui https://example.com/ipa/ui.
 
-Default value: `false`
+Default value: `true`
 
 ##### `realm`
 
