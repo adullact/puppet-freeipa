@@ -1,6 +1,6 @@
 {
   "name": "adullact-freeipa",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "author": "adullact",
   "summary": "Manages IPA servers and clients.",
   "license": "GPL-3.0",
