@@ -72,10 +72,10 @@ module release:
     - pdk build
   tags:
     - puppet-tests
-  when: manual
-  allow_failure: false
   only:
-    - master
+    - tags
+  except:
+    - branches
   artifacts:
     paths:
       - pkg/
