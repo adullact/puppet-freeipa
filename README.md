@@ -115,6 +115,7 @@ A full description can be found in `REFERENCE.md`.
 
 ## Limitations
 
+This module will not work well if managed passwords contain `'` or `\`. They must be banned.
 
 Acceptance tests are done :
 
