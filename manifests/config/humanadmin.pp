@@ -35,6 +35,8 @@ define freeipa::config::humanadmin(
 
     case $_ensure {
       'present': {
+        $_adminpassword = $adminsettings['password']
+
         exec { "ipa user-add ${_adminname}":
           command => "ipa user-add ${_adminname} --first=${_adminname} --last=${_adminname} ",
           unless  => "kinit admin -k -t /home/admin/admin.keytab; ipa user-show ${_adminname} | grep login",
@@ -44,8 +46,8 @@ define freeipa::config::humanadmin(
           unless  => "kinit admin -k -t /home/admin/admin.keytab; ipa group-show admins | grep ${_adminname}",
         }
         -> exec { "ldappasswd uid=${_adminname},cn=users,cn=accounts,${_dc}":
-          command => "ldappasswd -Z -H ldap://localhost -x -D \"cn=Directory Manager\" -w ${freeipa::directory_services_password} -s ${adminsettings['password']} \"uid=${_adminname},cn=users,cn=accounts,${_dc}\"",
-          unless  => "echo \"${adminsettings['password']}\" | kinit ${_adminname}"
+          command => "ldappasswd -Z -H ldap://localhost -x -D 'cn=Directory Manager' -w '${freeipa::directory_services_password}' -s '${_adminpassword}' 'uid=${_adminname},cn=users,cn=accounts,${_dc}'",
+          unless  => "echo '${_adminpassword}' | kinit ${_adminname}"
         }
       }
       'absent': {
