@@ -1,6 +1,6 @@
 {
   "name": "adullact-freeipa",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "author": "adullact",
   "summary": "Manages IPA servers and clients.",
   "license": "GPL-3.0",
@@ -37,7 +37,7 @@
       "version_requirement": ">= 5.0.0 < 7.0.0"
     }
   ],
-  "pdk-version": "1.7.0",
+  "pdk-version": "1.9.1",
   "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
-  "template-ref": "1.7.0-0-g57412ed"
+  "template-ref": "1.9.1-0-g6945d31"
 }
