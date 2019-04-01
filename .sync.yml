@@ -1,6 +1,9 @@
 .gitlab-ci.yml:
   unmanaged: true
 
+appveyor.yml:
+  delete: true
+
 .travis.yml:
   delete: true
 
@@ -39,4 +42,3 @@ Gemfile:
       - gem: 'rubocop'
         condition: "Gem::Version.new(RUBY_VERSION.dup) == Gem::Version.new('2.4.4')"
         version: '>= 0.58.0'
-

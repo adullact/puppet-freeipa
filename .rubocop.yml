@@ -179,7 +179,9 @@ Style/LineEndConcatenation:
 Style/StringLiterals:
   Enabled: True
 Style/TrailingCommaInArguments:
-  Enabled: True
+  Enabled: False
+Style/TrailingCommaInLiteral:
+  Enabled: False
 Style/GlobalVars:
   Enabled: True
 Style/GuardClause:
