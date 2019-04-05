@@ -1,5 +1,11 @@
 # puppet-freeipa
 
+## 4.1.0 :
+
+** Closed Issues **
+
+  * set password for humain admins with enclosing quotes : #84
+
 ## 4.0.0 :
 
 ** Closed Issues **
