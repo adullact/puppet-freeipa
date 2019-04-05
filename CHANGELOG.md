@@ -1,5 +1,11 @@
 # puppet-freeipa
 
+## 4.1.1 :
+
+** Closed Issues **
+
+  * missing CHANGLOG in version 4.1.0 : #86
+
 ## 4.1.0 :
 
 ** Closed Issues **
