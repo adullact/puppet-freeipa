@@ -1,38 +1,74 @@
 require 'spec_helper_acceptance'
 
-describe 'freeipa class' do
-  context 'with ipa_role master' do
+describe 'class freeipa' do
+  context 'with ipa_role master and no humanadmins defined' do
     hosts_as('master').each do |master|
-      it 'applies idempotently' do
-        pp = <<-EOS
-        class { 'freeipa':
-          ipa_role                    => 'master',
-          domain                      => 'example.lan',
-          ipa_server_fqdn             => 'ipa-server-1.example.lan',
-          puppet_admin_password       => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
-          directory_services_password => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
-          install_ipa_server          => true,
-          ip_address                  => '10.10.10.35',
-          enable_ip_address           => true,
-          enable_hostname             => true,
-          enable_manage_admins        => true,
-          manage_host_entry           => true,
-          install_epel                => true,
-          ipa_master_fqdn             => 'ipa-server-1.example.lan',
-          humanadmins                 => {
-            foo => {
-              ensure   => 'present',
-              password => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
-            },
-            bar => {
-              password => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
-              ensure   => 'present',
-            },
-          },
-        }
-        EOS
+      pp = <<-EOS
+      class { 'freeipa':
+        ipa_role                    => 'master',
+        domain                      => 'example.lan',
+        ipa_server_fqdn             => 'ipa-server-1.example.lan',
+        puppet_admin_password       => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
+        directory_services_password => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
+        install_ipa_server          => true,
+        ip_address                  => '10.10.10.35',
+        enable_ip_address           => true,
+        enable_hostname             => true,
+        enable_manage_admins        => true,
+        manage_host_entry           => true,
+        install_epel                => true,
+        ipa_master_fqdn             => 'ipa-server-1.example.lan',
+        humanadmins                 => {},
+      }
+      EOS
 
+      it 'installs master without error' do
         apply_manifest_on(master, pp, catch_failures: true)
+      end
+      it 'installs master idempotently' do
+        apply_manifest_on(master, pp, catch_changes: true)
+      end
+
+      describe command('ipactl status') do
+        its(:exit_status) { is_expected.to be 0 }
+      end
+    end
+  end
+
+  context 'with ipa_role master and some humanadmins defined' do
+    hosts_as('master').each do |master|
+      pp = <<-EOS
+      class { 'freeipa':
+        ipa_role                    => 'master',
+        domain                      => 'example.lan',
+        ipa_server_fqdn             => 'ipa-server-1.example.lan',
+        puppet_admin_password       => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
+        directory_services_password => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
+        install_ipa_server          => true,
+        ip_address                  => '10.10.10.35',
+        enable_ip_address           => true,
+        enable_hostname             => true,
+        enable_manage_admins        => true,
+        manage_host_entry           => true,
+        install_epel                => true,
+        ipa_master_fqdn             => 'ipa-server-1.example.lan',
+        humanadmins                 => {
+          foo => {
+            ensure   => 'present',
+            password => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
+          },
+          bar => {
+            password => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
+            ensure   => 'present',
+          },
+        },
+      }
+      EOS
+
+      it 'creates humanadmins without error' do
+        apply_manifest_on(master, pp, catch_failures: true)
+      end
+      it 'creates humanadmins idempotently' do
         apply_manifest_on(master, pp, catch_changes: true)
       end
 
