@@ -1,55 +1,61 @@
 # puppet-freeipa
 
+## 4.2.0 :
+
+** Closed Issues **
+
+  * #88 module is not idempotent when manage admin is enabled but hash of admins is empty
+
 ## 4.1.1 :
 
 ** Closed Issues **
 
-  * missing CHANGLOG in version 4.1.0 : #86
+  * #86 missing CHANGLOG in version 4.1.0
 
 ## 4.1.0 :
 
 ** Closed Issues **
 
-  * set password for humain admins with enclosing quotes : #84
+  * #84 set password for humain admins with enclosing quotes
 
 ## 4.0.0 :
 
 ** Closed Issues **
 
-  * missing kinit during admin management         : #75
-  * missing CA on replica                         : #76
-  * remove webui_enable_proxy                     : #78
-  * webui_force_https is not used                 : #79
-  * no_ui_redirect is set to false by default     : #80
+  * #75 missing kinit during admin management
+  * #76 missing CA on replica
+  * #78 remove webui_enable_proxy
+  * #79 webui_force_https is not used
+  * #80 no_ui_redirect is set to false by default
 
 ** Known Issues **
 
-  * change puppet_admin_password does not trigger keytab update : #70
+  * #70 change puppet_admin_password does not trigger keytab update
 
 ## 3.0.1 :
 
 ** Closed Issues **
 
-  * fix README.md typo                            : #72, #73
+  * #72 #73 fix README.md typo
 
 ** Known Issues **
 
-  * change puppet_admin_password does not trigger keytab update : #70
+  * #70 change puppet_admin_password does not trigger keytab update
 
 ## 3.0.0 :
 
 ** Closed Issues **
 
-  * improve acceptance tests                      : #68, #63, 
-  * auto-reverse options requires setupdns        : #55
-  * rename freeipa::config::admin_user in freeipa::config::keytab : #53, #62
-  * remove file /etc/ipa/primary                  : #61
-  * declare privates classes as private           : #58, #59
-  * update README                                 : #51, #56, #64, #65, #66, #67
-  * add contributing guide line                   : #66
-  * ensure administrator account is updated       : #10, #54
-  * remove k5login and permanant ticket for admin : #60, #62
-  * use custom type with Struct datatype          : #10, #54, #57
+  * #63 #68 improve acceptance tests
+  * #55 auto-reverse options requires setupdns
+  * #53 #62 rename freeipa::config::admin_user in freeipa::config::keytab
+  * #61 remove file /etc/ipa/primary 
+  * #58 #59 declare privates classes as private
+  * #51 #56 #64 #65 #66 #67 update README
+  * #66 add contributing guide line
+  * #10 #54 ensure administrator account is updated
+  * #60 #62 remove k5login and permanant ticket for admin
+  * #10 #54 #57 use custom type with Struct datatype
 
 ** Known Issues **
 
