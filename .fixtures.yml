@@ -5,11 +5,3 @@ fixtures:
     yumrepo_core:
       repo: 'https://github.com/puppetlabs/puppetlabs-yumrepo_core.git'
       puppet_version: ">= 6.0.0"
-    cron_core:
-      repo: 'https://github.com/puppetlabs/puppetlabs-cron_core.git'
-      puppet_version: ">= 6.0.0"
-    k5login_core:
-      repo: 'https://github.com/puppetlabs/puppetlabs-k5login_core.git'
-      puppet_version: ">= 6.0.0"
-  symlinks:
-    freeipa: "#{source_dir}"
