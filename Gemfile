@@ -41,6 +41,7 @@ group :development do
   gem "puppet-lint",                                   require: false
   gem "rspec",                                         require: false
   gem "rake",                                          require: false
+  gem "beaker-vagrant",                                require: false
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']

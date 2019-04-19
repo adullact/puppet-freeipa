@@ -27,3 +27,4 @@ Gemfile:
       - gem: 'puppet-lint'
       - gem: 'rspec'
       - gem: 'rake'
+      - gem: 'beaker-vagrant'
