@@ -1,5 +1,11 @@
 # puppet-freeipa
 
+## 4.3.0 :
+
+** Closed Issues **
+
+  * #93 allow puppetlabs/stdlib 6.x
+
 ## 4.2.0 :
 
 ** Closed Issues **
