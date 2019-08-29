@@ -11,17 +11,24 @@ RSpec.configure do |c|
   c.before :suite do
     # Configure all nodes in nodeset
     hosts.each do |host|
-      install_module_from_forge_on(host, 'saz-resolv_conf', '>= 4.0.0 < 5.0.0')
-
       pp = <<-EOS
         exec { 'stop network manager':
           command => 'systemctl stop NetworkManager',
           onlyif  => 'systemctl status NetworkManager',
           path    => '/usr/bin:/sbin:/bin',
         }
+        package { 'git':
+          ensure => present,
+        }
       EOS
 
       apply_manifest_on(host, pp, catch_failures: true)
+
+      # install_module_from_forge_on(host, 'saz-resolv_conf', '>= 4.0.0 < 5.0.0')
+      # we need to not use function install_module_from_forge_on() because saz/resolv_conf is not often published on forge
+      modname = 'resolv_conf'
+      giturl = "https://github.com/saz/puppet-#{modname}.git"
+      on host, puppet("resource exec 'git clone #{modname}' command='git clone #{giturl} /etc/puppetlabs/code/environments/production/modules/#{modname}' path=/usr/bin")
     end
 
     # Configure /etc/hosts for each node.
