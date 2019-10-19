@@ -32,3 +32,5 @@ Gemfile:
       - gem: 'rspec'
       - gem: 'rake'
       - gem: 'beaker-vagrant'
+      - gem: 'bolt'
+      - gem: 'beaker-task_helper'

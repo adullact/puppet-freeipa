@@ -43,7 +43,7 @@ acceptance with puppet5:
     BEAKER_debug: 'true '
     RBENV_VERSION: '2.5.1'
   script:
-    - bundle exec rake beaker:default
+    - bundle exec rake spec_prep beaker:default
   tags:
     - puppet-tests
   except:
@@ -58,7 +58,7 @@ acceptance with puppet6:
     BEAKER_debug: 'true '
     RBENV_VERSION: '2.5.1'
   script:
-    - bundle exec rake beaker:default
+    - bundle exec rake spec_prep beaker:default
   tags:
     - puppet-tests
   except:

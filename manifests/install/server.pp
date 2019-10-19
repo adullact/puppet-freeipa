@@ -108,12 +108,6 @@ class freeipa::install::server {
 
     contain freeipa::helpers::flushcache
 
-    if $freeipa::enable_manage_admins and $freeipa::humanadmins.length > 0 {
-      contain freeipa::config::keytab
-      class {'freeipa::config::humanadmins':
-        humanadmins => $freeipa::humanadmins,
-      }
-    }
   } else {
     fail ("to change ipa_role from '${facts['iparole']}' to '${freeipa::ipa_role}' is not supported.")
   }
