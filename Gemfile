@@ -17,31 +17,32 @@ ruby_version_segments = Gem::Version.new(RUBY_VERSION.dup).segments
 minor_version = ruby_version_segments[0..1].join('.')
 
 group :development do
-  gem "fast_gettext", '1.1.0',                         require: false if Gem::Version.new(RUBY_VERSION.dup) < Gem::Version.new('2.1.0')
-  gem "fast_gettext",                                  require: false if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.1.0')
-  gem "json_pure", '<= 2.0.1',                         require: false if Gem::Version.new(RUBY_VERSION.dup) < Gem::Version.new('2.0.0')
-  gem "json", '= 1.8.1',                               require: false if Gem::Version.new(RUBY_VERSION.dup) == Gem::Version.new('2.1.9')
-  gem "json", '= 2.0.4',                               require: false if Gem::Requirement.create('~> 2.4.2').satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))
-  gem "json", '= 2.1.0',                               require: false if Gem::Requirement.create(['>= 2.5.0', '< 2.7.0']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))
-  gem "puppet-module-posix-default-r#{minor_version}", require: false, platforms: [:ruby]
-  gem "puppet-module-posix-dev-r#{minor_version}",     require: false, platforms: [:ruby]
-  gem "puppet-module-win-default-r#{minor_version}",   require: false, platforms: [:mswin, :mingw, :x64_mingw]
-  gem "puppet-module-win-dev-r#{minor_version}",       require: false, platforms: [:mswin, :mingw, :x64_mingw]
-  gem "facter",                                        require: false
-  gem "hiera",                                         require: false
-  gem "parallel_tests",                                require: false
-  gem "rspec-puppet",                                  require: false
-  gem "puppetlabs_spec_helper",                        require: false
-  gem "beaker",                                        require: false
-  gem "beaker-puppet",                                 require: false
-  gem "beaker-rspec",                                  require: false
-  gem "beaker-puppet_install_helper",                  require: false
-  gem "beaker-module_install_helper",                  require: false
-  gem "metadata-json-lint",                            require: false
-  gem "puppet-lint",                                   require: false
-  gem "rspec",                                         require: false
-  gem "rake",                                          require: false
-  gem "beaker-vagrant",                                require: false
+  gem "fast_gettext", '1.1.0',                                   require: false if Gem::Version.new(RUBY_VERSION.dup) < Gem::Version.new('2.1.0')
+  gem "fast_gettext",                                            require: false if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.1.0')
+  gem "json_pure", '<= 2.0.1',                                   require: false if Gem::Version.new(RUBY_VERSION.dup) < Gem::Version.new('2.0.0')
+  gem "json", '= 1.8.1',                                         require: false if Gem::Version.new(RUBY_VERSION.dup) == Gem::Version.new('2.1.9')
+  gem "json", '= 2.0.4',                                         require: false if Gem::Requirement.create('~> 2.4.2').satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))
+  gem "json", '= 2.1.0',                                         require: false if Gem::Requirement.create(['>= 2.5.0', '< 2.7.0']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))
+  gem "rb-readline", '= 0.5.5',                                  require: false, platforms: [:mswin, :mingw, :x64_mingw]
+  gem "puppet-module-posix-default-r#{minor_version}", '~> 0.3', require: false, platforms: [:ruby]
+  gem "puppet-module-posix-dev-r#{minor_version}", '~> 0.3',     require: false, platforms: [:ruby]
+  gem "puppet-module-win-default-r#{minor_version}", '~> 0.3',   require: false, platforms: [:mswin, :mingw, :x64_mingw]
+  gem "puppet-module-win-dev-r#{minor_version}", '~> 0.3',       require: false, platforms: [:mswin, :mingw, :x64_mingw]
+  gem "facter",                                                  require: false
+  gem "hiera",                                                   require: false
+  gem "parallel_tests",                                          require: false
+  gem "rspec-puppet",                                            require: false
+  gem "puppetlabs_spec_helper",                                  require: false
+  gem "beaker",                                                  require: false
+  gem "beaker-puppet",                                           require: false
+  gem "beaker-rspec",                                            require: false
+  gem "beaker-puppet_install_helper",                            require: false
+  gem "beaker-module_install_helper",                            require: false
+  gem "metadata-json-lint",                                      require: false
+  gem "puppet-lint",                                             require: false
+  gem "rspec",                                                   require: false
+  gem "rake",                                                    require: false
+  gem "beaker-vagrant",                                          require: false
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']

@@ -105,7 +105,7 @@ describe 'class freeipa' do
 
       it 'ipactl status on replica' do
         result = on(replica, 'ipactl status')
-        result.exit_code.should == 0
+        expect(result.exit_code).to be == 0
       end
     end
   end
