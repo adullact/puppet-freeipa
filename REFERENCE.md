@@ -8,7 +8,6 @@
 _Public Classes_
 
 * [`freeipa`](#freeipa): Manages IPA masters, replicas and clients.
-* [`freeipa::config::humanadmins`](#freeipaconfighumanadmins): This class manages admin accounts. It will create/give rights to any admin accounts set to be present. It will delete accounts set to be absent.
 * [`freeipa::helpers::flushcache`](#freeipahelpersflushcache): Flushcache sss for Debian and RedHat only
 * [`freeipa::install::autofs`](#freeipainstallautofs): Installs and start autofs
 
@@ -22,9 +21,9 @@ _Private Classes_
 * `freeipa::install::server::replica`: Installs freeipa server as replica
 * `freeipa::install::sssd`: Install sssd package
 
-**Defined types**
+**Tasks**
 
-* [`freeipa::config::humanadmin`](#freeipaconfighumanadmin): From FreeIPA master, creates or deletes admin account in FreeIPA.
+* [`create_admin`](#create_admin): Create a new FreeIPA admin account
 
 ## Classes
 
@@ -32,9 +31,6 @@ _Private Classes_
 
 Parameters
 ----------
-Also, triggers the install of the required dns server packages.
-and passed to the IPA installer.
-and passed to the IPA installer.
 
 #### Examples
 
@@ -53,7 +49,6 @@ class {'freeipa':
     enable_hostname             => true,
     manage_host_entry           => true,
     install_epel                => true,
-    humanadmins => { foo => { password => 'secret123', ensure => 'present'}, bar => { password => 'secret123', ensure => 'present'} },
 }
 ```
 
@@ -106,6 +101,7 @@ Default value: `false`
 Data type: `Boolean`
 
 If true, then the parameter '--setup-dns' is passed to the IPA server installer.
+Also, triggers the install of the required dns server packages.
 
 Default value: `true`
 
@@ -146,6 +142,7 @@ Default value: $puppet_admin_password
 Data type: `Boolean`
 
 If true, then the parameter '--hostname' is populated with the parameter 'ipa_server_fqdn'
+and passed to the IPA installer.
 
 Default value: `true`
 
@@ -154,6 +151,7 @@ Default value: `true`
 Data type: `Boolean`
 
 If true, then the parameter '--ip-address' is populated with the parameter 'ip_address'
+and passed to the IPA installer.
 
 Default value: `false`
 
@@ -321,14 +319,6 @@ Name of the sssdtools package.
 
 Default value: 'sssd-tools'
 
-##### `humanadmins`
-
-Data type: `Freeipa::Humanadmins`
-
-Hash of admin accounts in freeipa. Uses the following schema : Hash[ String[1], Struct[{ password => String[1], Optional[ensure] => Enum['present','absent']}]]
-
-Default value: {}
-
 ##### `install_ca`
 
 Data type: `Boolean`
@@ -336,41 +326,6 @@ Data type: `Boolean`
 If true, then the parameter '--setup-ca' is passed to the IPA server installer (for replicas)
 
 Default value: `true`
-
-##### `enable_manage_admins`
-
-Data type: `Boolean`
-
-
-
-Default value: `true`
-
-### freeipa::config::humanadmins
-
-This class manages admin accounts. It will create/give rights to any admin accounts set to be present. It will delete accounts set to be absent.
-
-#### Examples
-
-##### 
-
-```puppet
-class { 'freeipa::config::humanadmins' :
-  humanadmins => {
-    admin1 => {ensure=>'present', password=>'secreat123'},
-    admin2 => {ensure=>'absent'},
-  }
-}
-```
-
-#### Parameters
-
-The following parameters are available in the `freeipa::config::humanadmins` class.
-
-##### `humanadmins`
-
-Data type: `Freeipa::Humanadmins`
-
-Hash defines desired admins of FreeIPA
 
 ### freeipa::helpers::flushcache
 
@@ -396,37 +351,49 @@ Installs and start autofs
 include freeipa::install::autofs
 ```
 
-## Defined types
+## Tasks
 
-### freeipa::config::humanadmin
+### create_admin
 
-From FreeIPA master, creates or deletes admin account in FreeIPA.
+Create a new FreeIPA admin account
 
-#### Examples
-
-##### 
-
-```puppet
-freeipa::config::humanadmin { 'myadmin' :
-  adminsettings => {
-    password => 'secret123',
-    ensure   =>  'present',
-  }
-}
-```
+**Supports noop?** false
 
 #### Parameters
 
-The following parameters are available in the `freeipa::config::humanadmin` defined type.
+##### `operator_login`
 
-##### `adminsettings`
+Data type: `String[1]`
 
-Data type: `Freeipa::Humanadmin`
+FreeIPA login of operator running the task
 
-Hash of settings for one admin account
+##### `operator_password`
 
-Options:
+Data type: `String[1]`
 
-* **:ensure** `Enum['present','absent']`: Desired state
-* **:password** `String[1]`: Password of this account
+Password of operator running the task
+
+##### `login`
+
+Data type: `String[1]`
+
+Login name of created administrator account
+
+##### `firstname`
+
+Data type: `String[1]`
+
+First name of created administrator account
+
+##### `lastname`
+
+Data type: `String[1]`
+
+Last name of created administrator account
+
+##### `password`
+
+Data type: `String[8]`
+
+Password of created administrator account
 

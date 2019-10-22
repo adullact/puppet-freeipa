@@ -14,7 +14,6 @@
 #        enable_hostname             => true,
 #        manage_host_entry           => true,
 #        install_epel                => true,
-#        humanadmins => { foo => { password => 'secret123', ensure => 'present'}, bar => { password => 'secret123', ensure => 'present'} },
 #    }
 #
 # Parameters
@@ -25,16 +24,19 @@
 # @param directory_services_password Password which will be passed into the ipa setup's parameter named "--ds-password".
 # @param autofs_package_name Name of the autofs package to install if enabled.
 # @param client_install_ldaputils If true, then the ldaputils packages are installed if ipa_role is set to client.
-# @param configure_dns_server If true, then the parameter '--setup-dns' is passed to the IPA server installer. 
-# Also, triggers the install of the required dns server packages.
+# @param configure_dns_server
+#   If true, then the parameter '--setup-dns' is passed to the IPA server installer.
+#   Also, triggers the install of the required dns server packages.
 # @param configure_ntp If false, then the parameter '--no-ntp' is passed to the IPA server installer.
 # @param custom_dns_forwarders Each element in this array is prefixed with '--forwarder' and passed to the IPA server installer.
 # @param principal_usedto_joindomain The principal (usually username) used to join a client or replica to the IPA domain.
 # @param password_usedto_joindomain The password for the domain_join_principal.
-# @param enable_hostname If true, then the parameter '--hostname' is populated with the parameter 'ipa_server_fqdn' 
-# and passed to the IPA installer.
-# @param enable_ip_address If true, then the parameter '--ip-address' is populated with the parameter 'ip_address' 
-# and passed to the IPA installer.
+# @param enable_hostname
+#   If true, then the parameter '--hostname' is populated with the parameter 'ipa_server_fqdn'
+#   and passed to the IPA installer.
+# @param enable_ip_address
+#   If true, then the parameter '--ip-address' is populated with the parameter 'ip_address'
+#   and passed to the IPA installer.
 # @param fixed_primary If true, then the parameter '--fixed-primary' is passed to the IPA installer.
 # @param idstart From the IPA man pages: "The starting user and group id number".
 # @param install_autofs If true, then the autofs packages are installed.
@@ -56,7 +58,6 @@
 # @param server_install_ldaputils If true, then the ldaputils packages are installed if ipa_role is not set to client.
 # @param sssd_package_name Name of the sssd package.
 # @param sssdtools_package_name Name of the sssdtools package.
-# @param humanadmins Hash of admin accounts in freeipa. Uses the following schema : Hash[ String[1], Struct[{ password => String[1], Optional[ensure] => Enum['present','absent']}]]
 # @param install_ca If true, then the parameter '--setup-ca' is passed to the IPA server installer (for replicas)
 #
 class freeipa (
@@ -67,7 +68,6 @@ class freeipa (
   Stdlib::IP::Address                  $ip_address,
   Stdlib::Fqdn                         $ipa_master_fqdn,
   Stdlib::Fqdn                         $realm                          = upcase($domain),
-  Freeipa::Humanadmins                 $humanadmins                    = {},
   String                               $autofs_package_name            = 'autofs',
   Boolean                              $client_install_ldaputils       = false,
   Boolean                              $configure_dns_server           = true,
@@ -75,7 +75,6 @@ class freeipa (
   Array[String]                        $custom_dns_forwarders          = [],
   String                               $principal_usedto_joindomain    = 'admin',
   String                               $password_usedto_joindomain     = $puppet_admin_password,
-  Boolean                              $enable_manage_admins           = true,
   Boolean                              $enable_hostname                = true,
   Boolean                              $enable_ip_address              = false,
   Boolean                              $fixed_primary                  = false,

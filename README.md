@@ -43,15 +43,13 @@ Versions are given in `metadata.json` file.
 ### How does the module work.
 
 Usually with a module, the desired state is described. If a value of parameter is changed, then during the next puppet run the node is modified to reach the desired state.
-The version 3.x is a starting work to reach the target. But, the module is more an idempotent installer of FreeIPA.
-
-So, to ensure that desired state described in code is applied on the node, puppet needs to login to kerberos. Puppet uses a fixed account `admin` to do this. It is possible to set the password of this account with parameter `freeipa::puppet_admin_password`. If `freeipa::enable_manage_admins` is true, the accounts of humans administrators are managed with hash `freeipa::humanadmins`. If you modify `freeipa::humanadmins`, next puppet run will take care to update the admins users on master node. The replication will to the job on replicas.
+But, the module is more an idempotent installer of FreeIPA. So changing a value of parameter does not change the value on the node.
 
 ## Usage
 
 ### Example usage:
 
-Creating an IPA master, with the WebUI proxied to `https://localhost:8440` and two admin accounts `jdupond` and `mgonzales`.
+Creating an IPA master :
 ```puppet
 class {'freeipa':
     ipa_role                    => 'master',
@@ -65,19 +63,6 @@ class {'freeipa':
     enable_hostname             => true,
     manage_host_entry           => true,
     install_epel                => true,
-    humanadmins                 => {
-      jdupond => {
-        ensure => 'present',
-        password => 'secret123',
-      },
-      mgonzales => {
-        ensure => 'present',
-        password => 'secret456',
-      },
-      hzimmer => {
-        ensure => 'absent',
-      },
-    },
 }
 ```
 

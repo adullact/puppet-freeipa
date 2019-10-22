@@ -43,6 +43,8 @@ group :development do
   gem "rspec",                                                   require: false
   gem "rake",                                                    require: false
   gem "beaker-vagrant",                                          require: false
+  gem "bolt",                                                    require: false
+  gem "beaker-task_helper",                                      require: false
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']

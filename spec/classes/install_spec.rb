@@ -15,7 +15,6 @@ describe 'freeipa::install' do
             puppet_admin_password       => 'foobartest',
             directory_services_password => 'foobartest',
             ip_address                  => '10.10.10.35',
-	    humanadmins                 => { foo => { password => 'vagrant123', ensure => 'present'}, bar => { password => 'vagrant123', ensure => 'present'} },
           }
         EOS
         manifest
