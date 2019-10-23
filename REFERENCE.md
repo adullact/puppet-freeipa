@@ -23,7 +23,7 @@ _Private Classes_
 
 **Tasks**
 
-* [`create_admin`](#create_admin): Create a new FreeIPA admin account
+* [`manage_admin`](#manage_admin): Create a new FreeIPA admin account
 
 ## Classes
 
@@ -353,7 +353,7 @@ include freeipa::install::autofs
 
 ## Tasks
 
-### create_admin
+### manage_admin
 
 Create a new FreeIPA admin account
 
@@ -377,23 +377,29 @@ Password of operator running the task
 
 Data type: `String[1]`
 
-Login name of created administrator account
+Login name of managed administrator account
+
+##### `ensure`
+
+Data type: `Enum['present','absent']`
+
+Whether the login account should exist or not
 
 ##### `firstname`
 
-Data type: `String[1]`
+Data type: `Optional[String[1]]`
 
-First name of created administrator account
+First name of managed administrator account
 
 ##### `lastname`
 
-Data type: `String[1]`
+Data type: `Optional[String[1]]`
 
-Last name of created administrator account
+Last name of managed administrator account
 
 ##### `password`
 
-Data type: `String[8]`
+Data type: `Optional[String[8]]`
 
-Password of created administrator account
+Password of managed administrator account
 

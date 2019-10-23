@@ -1,0 +1,35 @@
+{
+  "puppet_task_version": 1,
+  "supports_noop": false,
+  "description": "Create a new FreeIPA admin account",
+  "parameters": {
+    "operator_login": {
+      "description": "FreeIPA login of operator running the task",
+      "type": "String[1]"
+    },
+    "operator_password": {
+      "description": "Password of operator running the task",
+      "type": "String[1]"
+    },
+    "login": {
+      "description": "Login name of managed administrator account",
+      "type": "String[1]"
+    },
+    "ensure": {
+      "description": "Whether the login account should exist or not",
+      "type": "Enum['present','absent']"
+    },
+    "firstname": {
+      "description": "First name of managed administrator account",
+      "type": "Optional[String[1]]"
+    },
+    "lastname": {
+      "description": "Last name of managed administrator account",
+      "type": "Optional[String[1]]"
+    },
+    "password": {
+      "description": "Password of managed administrator account",
+      "type": "Optional[String[8]]"
+    }
+  }
+}

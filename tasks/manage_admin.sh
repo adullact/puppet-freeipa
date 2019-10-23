@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Create an admin account of FreeIPA
+# Create and delete an admin account of FreeIPA
 
 KINIT_CMD='/usr/bin/kinit'
 KDESTROY_CMD='/usr/bin/kdestroy'
@@ -27,7 +27,7 @@ message() {
         msg="action '${action}' on Kerberos ticket-granting ticket has failed."
       fi
     ;;
-    user-add | group-add-member)
+    user-add | group-add-member | user-del)
       if [ $status -eq 0 ]; then
         msg="action '${action}' on IPA object is done."
       else
@@ -138,6 +138,26 @@ ipa_group_add_admins() {
   fi
 }
 
+#
+# Delete user from FreeIPA
+#
+ipa_del_user() {
+  local login= retval=
+  login=$1
+
+  $IPA_CMD user-del $login
+  retval=$?
+
+  message 'user-del' $retval
+
+  if [ $retval -ne 0 ]; then
+    krb_tgt destroy
+    exit $retval
+  else
+    return $retval
+  fi
+
+}
 
 #
 # Main
@@ -147,8 +167,18 @@ is_commands_installed $USED_COMMANDS
 
 krb_tgt init $PT_operator_login $PT_operator_password
 
-ipa_add_user $PT_login $PT_firstname $PT_lastname $PT_password
-
-ipa_group_add_admins $PT_login
+case $PT_ensure in
+  present)
+    ipa_add_user $PT_login $PT_firstname $PT_lastname $PT_password
+    ipa_group_add_admins $PT_login
+  ;;
+  absent)
+    ipa_del_user $PT_login
+  ;;
+  *)
+    msg="Unexpected ensure value '${PT_ensure}'"
+    exit 1
+  ;;
+esac
 
 krb_tgt destroy
