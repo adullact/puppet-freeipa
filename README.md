@@ -47,9 +47,10 @@ But, the module is more an idempotent installer of FreeIPA. So changing a value 
 
 ## Usage
 
-### Example usage:
+### Examples of usage:
 
-Creating an IPA master :
+Deploy an IPA master :
+
 ```puppet
 class {'freeipa':
     ipa_role                    => 'master',
@@ -66,7 +67,8 @@ class {'freeipa':
 }
 ```
 
-Adding a replica:
+Add a replica:
+
 ```puppet
 class {'freeipa':
     ipa_role             => 'replica',
@@ -83,7 +85,8 @@ class {'freeipa':
 }
 ```
 
-Adding a client:
+Add a client:
+
 ```puppet
 class {'freeipa':
 ipa_role             => 'client',
@@ -93,6 +96,14 @@ install_epel         => true,
 ipa_master_fqdn      => 'ipa-server-1.example.lan',
 }
 ```
+
+Create an admin account with task :
+
+`bolt task run freeipa::manage_admin operator_login='mylogin' operator_password='mysecret' ensure='present' login='jaimarre' firstname='Jean' lastname='Aimarre' password='newadminsecret' --nodes <ipamaster> --modulepath ~/modules`
+
+Delete an admin account with task :
+
+`bolt task run freeipa::manage_admin operator_login='mylogin' operator_password='mysecret' ensure='present' login='jaimarre' --nodes <ipamaster> --modulepath ~/modules`
 
 ### REFERENCE
 
