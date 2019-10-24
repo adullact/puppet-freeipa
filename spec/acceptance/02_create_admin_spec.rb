@@ -20,7 +20,7 @@ describe 'manage_admin task' do
       result = run_task(
         'freeipa::manage_admin',
         'master',
-        { 'operator_login' => 'admin', 'operator_password' => 's^ecr@et.ea;R/O*=?j!.QsAu+$', 'ensure' => 'present', 'login' => 'jaimarre', 'firstname' => 'Jean', 'lastname' => 'Aimarre', 'password' => 'adminsecret' }
+        { 'operator_login' => 'admin', 'operator_password' => 's^ecr@et.ea;R/O*=?j!.QsAu+$', 'ensure' => 'present', 'login' => 'jaimarre', 'firstname' => 'Jean', 'lastname' => 'Ai marre', 'password' => 'adminsecret' }
       )
       # rubocop:enable Style/BracesAroundHashParameters
       expect(result.first).to include('status' => 'success')

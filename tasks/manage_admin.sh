@@ -73,7 +73,7 @@ krb_tgt() {
 
   case $krb_action in
     init)
-      $ECHO_CMD "${op_pwd}" | $KINIT_CMD $op_login
+      $ECHO_CMD "${op_pwd}" | $KINIT_CMD "${op_login}"
       retval=$?
     ;;
     destroy)
@@ -105,7 +105,7 @@ ipa_add_user() {
   lastname=$3
   password=$4
 
-  $ECHO_CMD "${password}" | $IPA_CMD user-add $login --first=$firstname --last=$lastname
+  $ECHO_CMD "${password}" | $IPA_CMD user-add "${login}" --first="${firstname}" --last="${lastname}"
   retval=$?
 
   message 'user-add' $retval
@@ -125,7 +125,7 @@ ipa_group_add_admins() {
   local login= retval=
   login=$1
 
-  $IPA_CMD group-add-member admins --users=$login
+  $IPA_CMD group-add-member admins --users="${login}"
   retval=$?
 
   message 'group-add-member' $retval
@@ -145,7 +145,7 @@ ipa_del_user() {
   local login= retval=
   login=$1
 
-  $IPA_CMD user-del $login
+  $IPA_CMD user-del "${login}"
   retval=$?
 
   message 'user-del' $retval
@@ -165,15 +165,15 @@ ipa_del_user() {
 
 is_commands_installed $USED_COMMANDS
 
-krb_tgt init $PT_operator_login $PT_operator_password
+krb_tgt init "${PT_operator_login}" "${PT_operator_password}"
 
 case $PT_ensure in
   present)
-    ipa_add_user $PT_login $PT_firstname $PT_lastname $PT_password
-    ipa_group_add_admins $PT_login
+    ipa_add_user "${PT_login}" "${PT_firstname}" "${PT_lastname}" "${PT_password}"
+    ipa_group_add_admins "${PT_login}"
   ;;
   absent)
-    ipa_del_user $PT_login
+    ipa_del_user "${PT_login}"
   ;;
   *)
     msg="Unexpected ensure value '${PT_ensure}'"
