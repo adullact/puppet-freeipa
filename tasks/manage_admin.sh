@@ -73,11 +73,11 @@ krb_tgt() {
 
   case $krb_action in
     init)
-      $ECHO_CMD "${op_pwd}" | $KINIT_CMD "${op_login}"
+      $ECHO_CMD "${op_pwd}" | $KINIT_CMD "${op_login}" 2>&1
       retval=$?
     ;;
     destroy)
-      $KDESTROY_CMD
+      $KDESTROY_CMD 2>&1
       retval=$?
     ;;
     *)
@@ -105,7 +105,7 @@ ipa_add_user() {
   lastname=$3
   password=$4
 
-  $ECHO_CMD "${password}" | $IPA_CMD user-add "${login}" --first="${firstname}" --last="${lastname}"
+  $ECHO_CMD "${password}" | $IPA_CMD user-add "${login}" --first="${firstname}" --last="${lastname}" 2>&1
   retval=$?
 
   message 'user-add' $retval
@@ -125,7 +125,7 @@ ipa_group_add_admins() {
   local login= retval=
   login=$1
 
-  $IPA_CMD group-add-member admins --users="${login}"
+  $IPA_CMD group-add-member admins --users="${login}" 2>&1
   retval=$?
 
   message 'group-add-member' $retval
@@ -145,7 +145,7 @@ ipa_del_user() {
   local login= retval=
   login=$1
 
-  $IPA_CMD user-del "${login}"
+  $IPA_CMD user-del "${login}" 2>&1
   retval=$?
 
   message 'user-del' $retval
