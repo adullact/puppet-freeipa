@@ -1,0 +1,52 @@
+---
+HOSTS:
+  ipa-server-1:
+    roles:
+    - default
+    - master
+    - centos
+    platform: el-8-x86_64
+    hypervisor: vagrant
+    box: centos/8
+    box_check_update: false
+    vagrant_memsize: 2048
+    vagrant_cpus: 2
+    ip: 10.10.10.35
+  ipa-server-2:
+    roles:
+    - replica
+    - centos
+    platform: el-8-x86_64
+    hypervisor: vagrant
+    box: centos/8
+    box_check_update: false
+    vagrant_memsize: 2048
+    vagrant_cpus: 2
+    ip: 10.10.10.36
+  ipa-client-centos:
+    roles:
+    - client
+    - client-centos7
+    - centos
+    platform: el-7-x86_64
+    hypervisor: vagrant
+    box: centos/7
+    box_version: 1809.01
+    box_check_update: false
+    vagrant_memsize: 1024
+    ip: 10.10.10.37
+  ipa-client-ubuntu16:
+    roles:
+    - client
+    - client-ubuntu16
+    platform: ubuntu-1604-amd64
+    hypervisor: vagrant
+    box: ubuntu/xenial64
+    box_version: 20181114.0.0
+    box_check_update: false
+    vagrant_memsize: 1024
+    ip: 10.10.10.38
+
+CONFIG:
+  type: foss
+  loglevel: debug

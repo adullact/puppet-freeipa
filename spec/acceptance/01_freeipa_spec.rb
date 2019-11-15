@@ -1,5 +1,8 @@
 require 'spec_helper_acceptance'
 
+ip_master = fact_on('master', 'networking.interfaces.eth1.ip')
+ip_replica = fact_on('replica', 'networking.interfaces.eth1.ip')
+
 describe 'class freeipa' do
   context 'with ipa_role master' do
     hosts_as('master').each do |master|
@@ -11,7 +14,7 @@ describe 'class freeipa' do
         puppet_admin_password       => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
         directory_services_password => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
         install_ipa_server          => true,
-        ip_address                  => '10.10.10.35',
+        ip_address                  => '#{ip_master}',
         enable_ip_address           => true,
         enable_hostname             => true,
         manage_host_entry           => true,
@@ -45,7 +48,7 @@ describe 'class freeipa' do
           directory_services_password => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
           password_usedto_joindomain  => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
           install_ipa_server          => true,
-          ip_address                  => '10.10.10.36',
+          ip_address                  => '#{ip_replica}',
           enable_ip_address           => true,
           enable_hostname             => true,
           manage_host_entry           => true,
@@ -67,6 +70,7 @@ describe 'class freeipa' do
 
   context 'with ipa_role client' do
     hosts_as('client').each do |client|
+      ip_client = fact_on('client', 'networking.interfaces.enp0s8.ip')
       it 'applies idempotently' do
         pp = <<-EOS
         class {'freeipa':
@@ -75,7 +79,7 @@ describe 'class freeipa' do
           puppet_admin_password       => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
           directory_services_password => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
           password_usedto_joindomain  => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
-          ip_address                  => '10.10.10.37',
+          ip_address                  => '#{ip_client}',
           install_epel                => true,
           ipa_master_fqdn             => 'ipa-server-1.example.lan'
         }
@@ -98,7 +102,7 @@ describe 'class freeipa' do
           puppet_admin_password       => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
           directory_services_password => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
           install_ipa_server          => true,
-          ip_address                  => '10.10.10.35',
+          ip_address                  => '#{ip_master}',
           enable_ip_address           => true,
           enable_hostname             => true,
           manage_host_entry           => true,
@@ -122,72 +126,13 @@ describe 'class freeipa' do
           puppet_admin_password       => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
           directory_services_password => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
           password_usedto_joindomain  => 's^ecr@et.ea;R/O*=?j!.QsAu+$',
-          ip_address                  => '10.10.10.35',
+          ip_address                  => '#{ip_master}',
           install_epel                => true,
           ipa_master_fqdn             => 'ipa-server-1.example.lan'
         }
         EOS
 
         apply_manifest_on(master, pp, expect_failures: true)
-      end
-    end
-  end
-
-  context 'Test ssh connnections for jsmith user with pre-defined ssh-key' do
-    # Install ssh key on root on master
-    hosts_as('master').each do |master|
-      it 'doest a kinit with puppet admin user' do
-        on(master, "echo 's^ecr@et.ea;R/O*=?j!.QsAu+$' | kinit admin")
-      end
-
-      it 'creates user jsmith in freeipa' do
-        on(master, "echo 's^ecr@et.ea;R/O*=?j!.QsAu+$' | ipa user-add jsmith --first=John --last=Smith --password")
-      end
-
-      it 'creates ssh key' do
-        on(master, "ssh-keygen -t rsa -N '' -f /root/.ssh/id_rsa")
-      end
-
-      it 'adds the public key in freeipa to jsmith' do
-        on(master, 'key=`cat /root/.ssh/id_rsa.pub`; ipa user-mod jsmith --sshpubkey="$key"')
-      end
-
-      # Add HBAC Rule to give all ipa users access to ipa-client-centos
-      it 'creates a HBAC rule for all users' do
-        on(master, 'ipa hbacrule-add --usercat=all --servicecat=all allGroup')
-      end
-
-      it 'adds centos client to allGroup rule' do
-        on(master, 'ipa hbacrule-add-host --hosts=ipa-client-centos allGroup')
-      end
-
-      # Remove allow_all HBAC
-      it 'deletes the allow_all default rule' do
-        on(master, 'ipa hbacrule-del allow_all')
-      end
-
-      it 'ssh on allowed host' do
-        pp = <<-EOS
-          exec { 'test ssh':
-          path     => '/bin/',
-          command  => 'ssh -o "StrictHostKeyChecking no" jsmith@10.10.10.37 id',
-          returns  => "0"
-          }
-          EOS
-
-        apply_manifest_on(master, pp, catch_failures: true)
-      end
-
-      it 'ssh on not allowed host ' do
-        pp = <<-EOS
-          exec { 'test ssh':
-          path     => '/bin/',
-          command  => 'ssh -o "StrictHostKeyChecking no" jsmith@localhost id',
-          returns  => "255"
-          }
-          EOS
-
-        apply_manifest_on(master, pp, catch_failures: true)
       end
     end
   end
