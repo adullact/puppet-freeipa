@@ -108,20 +108,12 @@ class freeipa (
     fail('This module is only supported on Linux.')
   }
 
-  $master_principals = suffix(
-    prefix(
-      [$ipa_server_fqdn],
-      'host/'
-    ),
-    "@${realm}"
-  )
-
   if $ipa_role == 'client' {
     $final_configure_dns_server = false
   } else {
     $final_configure_dns_server = $configure_dns_server
   }
 
-  class {'::freeipa::install':}
+  include freeipa::install
 
 }

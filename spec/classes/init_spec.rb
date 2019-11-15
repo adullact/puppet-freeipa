@@ -22,10 +22,8 @@ describe 'freeipa', type: :class do
 
               it { is_expected.to contain_class('freeipa::install') }
               it { is_expected.to contain_class('freeipa::install::server') }
-              it { is_expected.to contain_class('freeipa::install::sssd') }
               it { is_expected.to contain_class('freeipa::install::server::master') }
 
-              it { is_expected.not_to contain_class('freeipa::install::autofs') }
               it { is_expected.not_to contain_class('freeipa::install::server::replica') }
               it { is_expected.not_to contain_class('freeipa::install::client') }
 
@@ -57,10 +55,8 @@ describe 'freeipa', type: :class do
 
               it { is_expected.to contain_class('freeipa::install') }
               it { is_expected.to contain_class('freeipa::install::server') }
-              it { is_expected.to contain_class('freeipa::install::sssd') }
               it { is_expected.to contain_class('freeipa::install::server::replica') }
 
-              it { is_expected.not_to contain_class('freeipa::install::autofs') }
               it { is_expected.not_to contain_class('freeipa::install::server::master') }
               it { is_expected.not_to contain_class('freeipa::install::client') }
 
@@ -93,10 +89,8 @@ describe 'freeipa', type: :class do
           end
 
           it { is_expected.to contain_class('freeipa::install') }
-          it { is_expected.to contain_class('freeipa::install::sssd') }
           it { is_expected.to contain_class('freeipa::install::client') }
 
-          it { is_expected.not_to contain_class('freeipa::install::autofs') }
           it { is_expected.not_to contain_class('freeipa::install::server') }
           it { is_expected.not_to contain_class('freeipa::install::server::master') }
           it { is_expected.not_to contain_class('freeipa::install::server::replica') }
