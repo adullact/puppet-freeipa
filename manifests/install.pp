@@ -21,11 +21,20 @@ class freeipa::install {
 
   # Note: sssd.conf handled by ipa-server-install.
   if $freeipa::install_sssd {
-    contain 'freeipa::install::sssd'
+    package { $freeipa::sssd_package_name:
+      ensure => present,
+    }
   }
 
   if $freeipa::install_autofs {
-    contain 'freeipa::install::autofs'
+    package { $freeipa::autofs_package_name:
+      ensure => present,
+    }
+
+    service { 'autofs':
+      ensure => 'running',
+      enable => true,
+    }
   }
 
   if $freeipa::install_sssdtools {
