@@ -10,6 +10,8 @@ run_puppet_install_helper
 install_module_on(hosts)
 install_module_dependencies_on(hosts)
 
+ip_master = fact_on('master', 'networking.interfaces.eth1.ip')
+
 RSpec.configure do |c|
   c.before :suite do
     # Configure all nodes in nodeset
@@ -34,79 +36,54 @@ RSpec.configure do |c|
       on host, puppet("resource exec 'git clone #{modname}' command='git clone #{giturl} /etc/puppetlabs/code/environments/production/modules/#{modname}' path=/usr/bin")
     end
 
-    # Configure /etc/hosts for each node.
-    # WARNING : function hosts_as() return an array.
-    # But here we use several roles dedicated, used only once time in nodeset.
-    # This permit to use one different IP for each role : master, replica, client-centos7 and client-ubuntu16.
-
-    # Here master with ip address 10.10.10.35
     hosts_as('master').each do |master|
       pp = <<-EOS
         exec { 'set master /etc/hosts':
           path     => '/bin/',
-          command  => 'echo -e "127.0.0.1       ipa-server-1.example.lan ipa-server-1\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n 10.10.10.35 ipa-server-1.example.lan ipa-server-1\n" > /etc/hosts',
+          command  => 'echo -e "127.0.0.1       ipa-server-1.example.lan ipa-server-1\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n #{ip_master} ipa-server-1.example.lan ipa-server-1\n" > /etc/hosts',
         }
         EOS
 
       apply_manifest_on(master, pp, catch_failures: true, debug: true)
     end
 
-    # Here replica with ip address 10.10.10.36
     hosts_as('replica').each do |replica|
+      ip_replica = fact_on('replica', 'networking.interfaces.eth1.ip')
       pp = <<-EOS
          exec { 'set replica /etc/hosts':
            path     => '/bin/',
-           command  => 'echo -e "127.0.0.1       ipa-server-2.example.lan ipa-server-2\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n 10.10.10.36 ipa-server-2.example.lan ipa-server-2\n" > /etc/hosts',
+           command  => 'echo -e "127.0.0.1       ipa-server-2.example.lan ipa-server-2\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n #{ip_replica} ipa-server-2.example.lan ipa-server-2\n" > /etc/hosts',
          }
          class { 'resolv_conf':
-           nameservers => ['10.10.10.35'],
+           nameservers => ['#{ip_master}'],
          }
          host {'ipa-server-1.example.lan':
            ensure => present,
-           ip => '10.10.10.35',
+           ip => '#{ip_master}',
          }
       EOS
 
       apply_manifest_on(replica, pp, catch_failures: true, debug: true)
     end
 
-    # Here a first client running CentOS7 with ip address 10.10.10.37
-    hosts_as('client-centos7').each do |clientcentos7|
-      pp = <<-EOS
-        exec { 'set client centos /etc/hosts':
-          path     => '/bin/',
-          command  => 'echo -e "127.0.0.1       ipa-client-centos.example.lan ipa-server-2\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n 10.10.10.37 ipa-client-centos.example.lan ipa-client-centos\n" > /etc/hosts',
-        }
-      EOS
-
-      apply_manifest_on(clientcentos7, pp, catch_failures: true)
-    end
-
-    # Here a second client running Ubuntu1604 with ip address 10.10.10.38
-    hosts_as('client-ubuntu16').each do |clientubuntu16|
-      pp = <<-EOS
-         exec { 'set client ubuntu /etc/hosts':
-           path     => '/bin/',
-           command  => 'echo -e "127.0.0.1       ipa-client-ubuntu16.example.lan ipa-server-2\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n 10.10.10.38 ipa-client-ubuntu16.example.lan ipa-client-ubuntu16\n" > /etc/hosts',
-         }
-         EOS
-
-      apply_manifest_on(clientubuntu16, pp, catch_failures: true)
-    end
-
-    # WARNING : function hosts_as() return an array. We now use hosts_as() normaly with several nodes returned.
-    #  * all clients have role 'client' in nodeset.
-    #  * all nodes running CentOS have role 'centos' in nodeset.
+    # WARNING : function hosts_as() return an array.
+    # We now use hosts_as() normaly with several nodes returned.
+    # All clients have role 'client' in nodeset.
 
     # Configure all clients nodes.
     hosts_as('client').each do |client|
+      ip_client = fact_on('client', 'networking.interfaces.enp0s8.ip')
       pp = <<-EOS
+        exec { 'set client ubuntu /etc/hosts':
+          path     => '/bin/',
+          command  => 'echo -e "127.0.0.1       #{client}.example.lan #{client}\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n #{ip_client} #{client}.example.lan #{client}\n" > /etc/hosts',
+        }
         class { 'resolv_conf':
-          nameservers => ['10.10.10.35'],
+          nameservers => ['#{ip_master}'],
         }
         host {'ipa-server-1.example.lan':
           ensure => present,
-          ip => '10.10.10.35',
+          ip => '#{ip_master}',
         }
         EOS
 
