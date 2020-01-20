@@ -89,11 +89,14 @@ Add a client:
 
 ```puppet
 class {'freeipa':
-ipa_role             => 'client',
-domain               => 'example.lan',
-domain_join_password => 'vagrant123',
-install_epel         => true,
-ipa_master_fqdn      => 'ipa-server-1.example.lan',
+    ipa_role                    => 'client',
+    domain                      => 'example.lan',
+    password_usedto_joindomain  => 'vagrant123',
+    install_epel                => true,
+    directory_services_password => 'vagrant123',
+    ipa_master_fqdn             => 'ipa.example.lan',
+    puppet_admin_password       => 'vagrant123',
+    ip_address                  => $ipaddress,
 }
 ```
 
