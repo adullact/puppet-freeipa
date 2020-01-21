@@ -25,6 +25,12 @@ RSpec.configure do |c|
         package { 'git':
           ensure => present,
         }
+        # with nss 3.36.0 we can have trouble with CA failing to start
+        if $facts['os']['family'] == 'RedHat' {
+          package { 'nss':
+            ensure => latest,
+          }
+        }
       EOS
 
       apply_manifest_on(host, pp, catch_failures: true)
@@ -50,17 +56,17 @@ RSpec.configure do |c|
     hosts_as('replica').each do |replica|
       ip_replica = fact_on('replica', 'networking.interfaces.eth1.ip')
       pp = <<-EOS
-         exec { 'set replica /etc/hosts':
-           path     => '/bin/',
-           command  => 'echo -e "127.0.0.1       ipa-server-2.example.lan ipa-server-2\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n #{ip_replica} ipa-server-2.example.lan ipa-server-2\n" > /etc/hosts',
-         }
-         class { 'resolv_conf':
-           nameservers => ['#{ip_master}'],
-         }
-         host {'ipa-server-1.example.lan':
-           ensure => present,
-           ip => '#{ip_master}',
-         }
+        exec { 'set replica /etc/hosts':
+          path     => '/bin/',
+          command  => 'echo -e "127.0.0.1       ipa-server-2.example.lan ipa-server-2\n ::1     ip6-localhost ip6-loopback\n fe00::0 ip6-localnet\n ff00::0 ip6-mcastprefix\n ff02::1 ip6-allnodes\n ff02::2 ip6-allrouters\n\n #{ip_replica} ipa-server-2.example.lan ipa-server-2\n" > /etc/hosts',
+        }
+        class { 'resolv_conf':
+          nameservers => ['#{ip_master}'],
+        }
+        host {'ipa-server-1.example.lan':
+          ensure => present,
+          ip => '#{ip_master}',
+        }
       EOS
 
       apply_manifest_on(replica, pp, catch_failures: true, debug: true)
