@@ -8,7 +8,7 @@ HOSTS:
     platform: el-7-x86_64
     hypervisor: vagrant
     box: centos/7
-    box_version: 1809.01
+    box_version: 1905.1
     box_check_update: false
     vagrant_memsize: 2048
     vagrant_cpus: 2
@@ -19,7 +19,7 @@ HOSTS:
     platform: el-7-x86_64
     hypervisor: vagrant
     box: centos/7
-    box_version: 1809.01
+    box_version: 1905.1
     box_check_update: false
     vagrant_memsize: 2048
     vagrant_cpus: 2
@@ -29,7 +29,7 @@ HOSTS:
     platform: ubuntu-1804-amd64
     hypervisor: vagrant
     box: ubuntu/bionic64
-    box_version: 20191114.0.0
+    box_version: 20200116.1.0
     box_check_update: false
     vagrant_memsize: 1024
 
