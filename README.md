@@ -124,7 +124,7 @@ Acceptance tests are done :
 
  * with CentOS 7 for FreeIPA master and replica nodes. IPA masters and replicas works only on Centos >= 7.5.
 
- * with CentOS 7 and Ubuntu 16.06 for FreeIPA clients .
+ * with CentOS 7 and Ubuntu 18.06 for FreeIPA clients .
 
 Puppet4 is EOL since 2019-01-01. Even if puppet 4.10 should work, it is not tested.
 
@@ -144,6 +144,10 @@ Details in `CHANGELOG.md`. Key points :
  * releases 2.x : use code ready for Puppet 4.10 and 5.x, uses pdk as guidance, enable acceptance tests, rename classes from `easy_ipa` to `freeipa`.
 
  * releases 3.x : use public and private classes, enable Puppet 6 tests, drop Puppet 4 tests, refactor module to permit management of administrator accounts.
+
+ * releases 4.x : some cleanup of unused code, updates depencies and install CA on replica by default.
+
+ * releases 5.x : managment of admin accounts are moved from manifests to tasks.
 
 ### Contributors
 
