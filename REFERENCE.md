@@ -20,7 +20,7 @@ _Private Classes_
 
 **Tasks**
 
-* [`manage_admin`](#manage_admin): Create a new FreeIPA admin account
+* [`manage_admin`](#manage_admin): Manage (create or delete) a FreeIPA admin account
 
 ## Classes
 
@@ -342,7 +342,7 @@ include freeipa::helpers::flushcache
 
 ### manage_admin
 
-Create a new FreeIPA admin account
+Manage (create or delete) a FreeIPA admin account
 
 **Supports noop?** false
 

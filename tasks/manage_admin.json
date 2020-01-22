@@ -1,7 +1,7 @@
 {
   "puppet_task_version": 1,
   "supports_noop": false,
-  "description": "Create a new FreeIPA admin account",
+  "description": "Manage (create or delete) a FreeIPA admin account",
   "parameters": {
     "operator_login": {
       "description": "FreeIPA login of operator running the task",
