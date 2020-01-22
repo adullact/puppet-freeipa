@@ -9,17 +9,14 @@ _Public Classes_
 
 * [`freeipa`](#freeipa): Manages IPA masters, replicas and clients.
 * [`freeipa::helpers::flushcache`](#freeipahelpersflushcache): Flushcache sss for Debian and RedHat only
-* [`freeipa::install::autofs`](#freeipainstallautofs): Installs and start autofs
 
 _Private Classes_
 
-* `freeipa::config::keytab`: Configures keytab for admin user on FreeIPA master.
 * `freeipa::install`: Installs the packages needed for servers and clients
 * `freeipa::install::client`: Install freeipa client
 * `freeipa::install::server`: This class mainly defines options for the ipa install command, then install master or replica regarding the role set.
 * `freeipa::install::server::master`: Installs freeipa server as master
 * `freeipa::install::server::replica`: Installs freeipa server as replica
-* `freeipa::install::sssd`: Install sssd package
 
 **Tasks**
 
@@ -66,19 +63,19 @@ The name of the IPA domain to create or join.
 
 Data type: `Enum['master','replica','client']`
 
-What role the node will be. Options are 'master', 'replica', and 'client'.
+What role the node will be.
 
 ##### `puppet_admin_password`
 
 Data type: `String[8]`
 
-Password which will be assigned to the IPA account named 'admin'.
+Password which will be assigned to the IPA account named `admin` and used by Puppet.
 
 ##### `directory_services_password`
 
 Data type: `String[8]`
 
-Password which will be passed into the ipa setup's parameter named "--ds-password".
+Password which will be passed into the ipa setup's parameter named `--ds-password`.
 
 ##### `autofs_package_name`
 
@@ -100,8 +97,8 @@ Default value: `false`
 
 Data type: `Boolean`
 
-If true, then the parameter '--setup-dns' is passed to the IPA server installer.
-Also, triggers the install of the required dns server packages.
+If true, then install and configure an integrated DNS server, create DNS zone specified by `domain`,
+and fill it with service records necessary for IPA deployment.
 
 Default value: `true`
 
@@ -109,7 +106,7 @@ Default value: `true`
 
 Data type: `Boolean`
 
-If false, then the parameter '--no-ntp' is passed to the IPA server installer.
+If false, then do not configure NTP.
 
 Default value: `true`
 
@@ -117,7 +114,7 @@ Default value: `true`
 
 Data type: `Array[String]`
 
-Each element in this array is prefixed with '--forwarder' and passed to the IPA server installer.
+Each element in this array is prefixed with `--forwarder` and passed to the IPA server installer.
 
 Default value: []
 
@@ -141,7 +138,7 @@ Default value: $puppet_admin_password
 
 Data type: `Boolean`
 
-If true, then the parameter '--hostname' is populated with the parameter 'ipa_server_fqdn'
+If true, then the installer flag `--hostname` is populated with the parameter `ipa_server_fqdn`
 and passed to the IPA installer.
 
 Default value: `true`
@@ -150,7 +147,7 @@ Default value: `true`
 
 Data type: `Boolean`
 
-If true, then the parameter '--ip-address' is populated with the parameter 'ip_address'
+If true, then the installer flag `--ip-address` is populated with the parameter `ip_address`
 and passed to the IPA installer.
 
 Default value: `false`
@@ -159,7 +156,8 @@ Default value: `false`
 
 Data type: `Boolean`
 
-If true, then the parameter '--fixed-primary' is passed to the IPA installer.
+If true, on client it configure SSSD to use a fixed server as the primary IPA server.
+The default behavior of client is to use DNS SRV records to determine the primary server to use.
 
 Default value: `false`
 
@@ -215,7 +213,7 @@ Default value: 'ipa-server'
 
 Data type: `Boolean`
 
-If true, then the IPA client packages are installed if the parameter 'ipa_role' is set to 'client'.
+If true, then the IPA client packages are installed if the parameter `ipa_role` is set to `client`.
 
 Default value: `true`
 
@@ -223,7 +221,7 @@ Default value: `true`
 
 Data type: `Boolean`
 
-If true, then the IPA server packages are installed if the parameter 'ipa_role' is not set to 'client'.
+If true, then the IPA server packages are installed if the parameter `ipa_role` is not set to `client`.
 
 Default value: `true`
 
@@ -239,13 +237,14 @@ Default value: `true`
 
 Data type: `Stdlib::IP::Address`
 
-IP address to pass to the IPA installer.
+The IP address of this server.
+If this address does not match the address the host resolves to and `configure_dns_server` is not `true`, the installation will fail.
 
 ##### `ipa_server_fqdn`
 
 Data type: `Stdlib::Fqdn`
 
-Actual fqdn of the IPA server or client.
+Actual fqdn of the IPA server.
 
 Default value: $facts['networking']['fqdn']
 
@@ -267,7 +266,7 @@ FQDN of the server to use for a client or replica domain join.
 
 Data type: `Boolean`
 
-If true, then a host entry is created using the parameters 'ipa_server_fqdn' and 'ip_address'.
+If true, then a host entry is created using the parameters `ipa_server_fqdn` and `ip_address`.
 
 Default value: `false`
 
@@ -275,7 +274,7 @@ Default value: `false`
 
 Data type: `Boolean`
 
-If true, then the parameter '--mkhomedir' is passed to the IPA client installer.
+If true, on client configure PAM to create a users home directory if it does not exist.
 
 Default value: `true`
 
@@ -323,7 +322,7 @@ Default value: 'sssd-tools'
 
 Data type: `Boolean`
 
-If true, then the parameter '--setup-ca' is passed to the IPA server installer (for replicas)
+If true, install and configure a CA even on replica.
 
 Default value: `true`
 
@@ -337,18 +336,6 @@ Flushcache sss for Debian and RedHat only
 
 ```puppet
 include freeipa::helpers::flushcache
-```
-
-### freeipa::install::autofs
-
-Installs and start autofs
-
-#### Examples
-
-##### 
-
-```puppet
-include freeipa::install::autofs
 ```
 
 ## Tasks
