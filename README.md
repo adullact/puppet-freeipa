@@ -69,6 +69,8 @@ class {'freeipa':
 
 Add a replica:
 
+The initial password of `admin` user have expiration set to 3 months. So, if the expiration is not handled and a replica is deployed after this limit, it is impossible to get kerberos TGT. And so the replica deployment fail (Note: the installer send an error message about network issue).
+
 ```puppet
 class {'freeipa':
     ipa_role             => 'replica',
