@@ -150,9 +150,13 @@ ipa_del_user() {
 
   message 'user-del' $retval
 
-  if [ $retval -ne 0 ]; then
+  # EXIT STATUS extracted from man ipa
+  #     0 if the command was successful
+  #     1 if an error occurred
+  #     2 if an entry is not found
+  if [[ $retval -ne 0 ]] || [[ $retval -ne 2 ]]; then
     krb_tgt destroy
-    exit $retval
+    exit 0
   else
     return $retval
   fi

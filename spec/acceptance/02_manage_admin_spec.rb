@@ -27,7 +27,20 @@ describe 'manage_admin task' do
     end
   end
 
-  context 'with ensure absent' do
+  context 'with ensure absent on existing existing' do
+    it 'deletes admin account' do
+      # rubocop:disable Style/BracesAroundHashParameters
+      result = run_task(
+        'freeipa::manage_admin',
+        'master',
+        { 'operator_login' => 'admin', 'operator_password' => 's^ecr@et.ea;R/O*=?j!.QsAu+$', 'ensure' => 'absent', 'login' => 'jaimarre' }
+      )
+      # rubocop:enable Style/BracesAroundHashParameters
+      expect(result.first).to include('status' => 'success')
+    end
+  end
+
+  context 'with ensure absent on NOT existing account' do
     it 'deletes admin account' do
       # rubocop:disable Style/BracesAroundHashParameters
       result = run_task(
