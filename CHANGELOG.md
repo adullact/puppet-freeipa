@@ -1,5 +1,24 @@
 # puppet-freeipa
 
+## 5.0.0 :
+
+** Closed Issues **
+
+  * Documentation Update, Adding a Client #109 (Vijay Kumar)
+  * remove unused code #108
+  * update pdk and remove all should usage by expect #99
+  * bolt task should handle when ipa command returns 2 #103
+  * doc update, deploy replica fail on network issue message #104
+  * some doc cleanup #111
+  * redirect stderr to stdout #102
+  * missing quote around values in task #101
+  * rename task create_admin as manage_admin #97
+  * Add task create_admin and remove parameter enable_manage_admins #98
+
+** Known Issues **
+
+  * change puppet_admin_password does not trigger password update #107
+
 ## 4.3.0 :
 
 ** Closed Issues **
