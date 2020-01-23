@@ -1,5 +1,11 @@
 # puppet-freeipa
 
+## 5.0.1 :
+
+** Closed Issues **
+
+  * add Ubuntu18.04 as supported OS for clients #113
+
 ## 5.0.0 :
 
 ** Closed Issues **
