@@ -112,11 +112,13 @@ Delete an admin account with task :
 
 ### REFERENCE
 
-A full description can be found in `REFERENCE.md`.
+A full description can be found in `[REFERENCE.md](https://gitlab.adullact.net/adullact/puppet-freeipa/blob/master/REFERENCE.md)`.
 
 ## Limitations
 
 This module will not work well if managed passwords contain `'` or `\`. They must be banned.
+
+To deploy a server is only supported on CentOS 7. To deploy a client is supported on CentOS 7, Ubuntu 16.04 and 18.04.
 
 Acceptance tests are done :
 
@@ -124,7 +126,7 @@ Acceptance tests are done :
 
  * with CentOS 7 for FreeIPA master and replica nodes. IPA masters and replicas works only on Centos >= 7.5.
 
- * with CentOS 7 and Ubuntu 18.06 for FreeIPA clients .
+ * with Ubuntu 18.06 for FreeIPA clients .
 
 Puppet4 is EOL since 2019-01-01. Even if puppet 4.10 should work, it is not tested.
 
@@ -132,7 +134,7 @@ Puppet4 is EOL since 2019-01-01. Even if puppet 4.10 should work, it is not test
 
 Home at URL https://gitlab.adullact.net/adullact/puppet-freeipa
 
-Issues and MR are welcome. `CONTRIBUTING.md` gives some guidance about contributing process. 
+Issues and MR are welcome. `[CONTRIBUTING.md](https://gitlab.adullact.net/adullact/puppet-freeipa/blob/master/CONTRIBUTING.md)` gives some guidance about contributing process.
 If you follow these contributing guidelines your patch will likely make it into a release a little more quickly.
 
 ### Release Notes
