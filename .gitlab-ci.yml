@@ -68,7 +68,8 @@ module release:
   stage: release
   variables:
     RBENV_VERSION: '2.5.1'
-  script: 
+  script:
+    - rm -f Gemfile.lock
     - pdk build
   tags:
     - puppet-tests
