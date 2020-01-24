@@ -1,10 +1,24 @@
 # puppet-freeipa
 
+## 5.0.2 :
+
+** Closed Issues **
+
+  * doc update , delete with ensure present #116
+
+** Known Issues **
+
+  * change puppet_admin_password does not trigger password update #107
+
 ## 5.0.1 :
 
 ** Closed Issues **
 
   * add Ubuntu18.04 as supported OS for clients #113
+
+** Known Issues **
+
+  * change puppet_admin_password does not trigger password update #107
 
 ## 5.0.0 :
 
