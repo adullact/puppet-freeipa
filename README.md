@@ -108,7 +108,7 @@ Create an admin account with task :
 
 Delete an admin account with task :
 
-`bolt task run freeipa::manage_admin operator_login='mylogin' operator_password='mysecret' ensure='present' login='jaimarre' --nodes <ipamaster> --modulepath ~/modules`
+`bolt task run freeipa::manage_admin operator_login='mylogin' operator_password='mysecret' ensure='absent' login='jaimarre' --nodes <ipamaster> --modulepath ~/modules`
 
 ### REFERENCE
 
