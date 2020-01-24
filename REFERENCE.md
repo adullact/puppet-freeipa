@@ -370,7 +370,7 @@ Login name of managed administrator account
 
 Data type: `Enum['present','absent']`
 
-Whether the login account should exist or not
+Ensure the login account should exist or not
 
 ##### `firstname`
 

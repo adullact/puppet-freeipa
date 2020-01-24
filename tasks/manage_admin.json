@@ -16,7 +16,7 @@
       "type": "String[1]"
     },
     "ensure": {
-      "description": "Whether the login account should exist or not",
+      "description": "Ensure the login account should exist or not",
       "type": "Enum['present','absent']"
     },
     "firstname": {
