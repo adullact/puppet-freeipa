@@ -128,6 +128,11 @@ Acceptance tests are done :
 
  * with Ubuntu 18.06 for FreeIPA clients .
 
+With follwoing issue not fixed the acceptance tests about tasks are disabled :
+https://github.com/puppetlabs/beaker-task_helper/issues/47
+PR : https://github.com/puppetlabs/beaker-task_helper/pull/48
+
+
 Puppet4 is EOL since 2019-01-01. Even if puppet 4.10 should work, it is not tested.
 
 ## Development
