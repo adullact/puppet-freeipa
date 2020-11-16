@@ -36,7 +36,7 @@ This module requires :
 
   * `puppetlabs-stdlib`
 
-  * `stahnma-epel`
+  * `puppet-epel`
 
 Versions are given in `metadata.json` file.
 
