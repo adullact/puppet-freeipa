@@ -1,17 +1,19 @@
 require 'spec_helper'
 
+ipa_node = 'foo.example.com'
+
 describe 'freeipa::install::client' do
   context 'with node not yet configured' do
-    on_supported_os.each do |os, os_facts|
+    on_supported_os.each do |os, facts|
       context "on #{os}" do
-        let(:facts) { os_facts }
+        let(:facts) { facts }
         let(:pre_condition) do
           manifest = <<-EOS
             class{ 'freeipa' :
               ipa_role                    => 'client',
-              ipa_master_fqdn             => 'master.example.lan',
-              ipa_server_fqdn             => 'foo.example.lan',
-              domain                      => 'example.lan',
+              ipa_master_fqdn             => 'master.example.com',
+              ipa_server_fqdn             => '#{ipa_node}',
+              domain                      => 'example.com',
               password_usedto_joindomain  => 'foobartest',
               puppet_admin_password       => 'foobartest',
               directory_services_password => 'foobartest',
@@ -22,6 +24,7 @@ describe 'freeipa::install::client' do
         end
 
         it { is_expected.to compile }
+        it { is_expected.to contain_exec("client_install_#{ipa_node}").with('command' => %r{.*hostname=#{ipa_node}.*}) }
       end
     end
   end
@@ -34,9 +37,9 @@ describe 'freeipa::install::client' do
           manifest = <<-EOS
             class{ 'freeipa' :
               ipa_role                    => 'client',
-              ipa_master_fqdn             => 'master.example.lan',
-              ipa_server_fqdn             => 'foo.example.lan',
-              domain                      => 'example.lan',
+              ipa_master_fqdn             => 'master.example.com',
+              ipa_server_fqdn             => 'foo.example.com',
+              domain                      => 'example.com',
               password_usedto_joindomain  => 'foobartest',
               puppet_admin_password       => 'foobartest',
               directory_services_password => 'foobartest',
@@ -59,9 +62,9 @@ describe 'freeipa::install::client' do
           manifest = <<-EOS
             class{ 'freeipa' :
               ipa_role                    => 'client',
-              ipa_master_fqdn             => 'master.example.lan',
-              ipa_server_fqdn             => 'foo.example.lan',
-              domain                      => 'example.lan',
+              ipa_master_fqdn             => 'master.example.com',
+              ipa_server_fqdn             => 'foo.example.com',
+              domain                      => 'example.com',
               password_usedto_joindomain  => 'foobartest',
               puppet_admin_password       => 'foobartest',
               directory_services_password => 'foobartest',

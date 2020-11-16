@@ -52,7 +52,7 @@
 # @param ip_address
 #    The IP address of this server.
 #    If this address does not match the address the host resolves to and `configure_dns_server` is not `true`, the installation will fail.
-# @param ipa_server_fqdn Actual fqdn of the IPA server.
+# @param ipa_server_fqdn Actual fqdn of the IPA server being configured.
 # @param ldaputils_package_name Name of the ldaputils package.
 # @param ipa_master_fqdn FQDN of the server to use for a client or replica domain join.
 # @param manage_host_entry If true, then a host entry is created using the parameters `ipa_server_fqdn` and `ip_address`.

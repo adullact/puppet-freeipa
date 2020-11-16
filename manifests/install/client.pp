@@ -38,7 +38,14 @@ class freeipa::install::client {
       $client_install_cmd_opts_no_ntp = '--no-ntp'
     }
 
-      $client_install_cmd = "/usr/sbin/ipa-client-install \
+    if $freeipa::enable_hostname {
+      $client_install_cmd_opts_hostname = "--hostname=${freeipa::ipa_server_fqdn}"
+        end
+    } else {
+      $client_install_cmd_opts_hostname = ''
+    }
+
+    $client_install_cmd = "/usr/sbin/ipa-client-install \
     --server=${freeipa::ipa_master_fqdn} \
     --realm=${freeipa::realm} \
     --domain=${freeipa::domain} \
@@ -47,9 +54,10 @@ class freeipa::install::client {
     ${client_install_cmd_opts_mkhomedir} \
     ${client_install_cmd_opts_fixed_primary} \
     ${client_install_cmd_opts_no_ntp} \
+    ${client_install_cmd_opts_hostname} \
     --unattended"
 
-    exec { "client_install_${::fqdn}":
+    exec { "client_install_${facts['fqdn']}":
       command   => $client_install_cmd,
       timeout   => 0,
       unless    => "cat /etc/ipa/default.conf | grep -i \"${freeipa::domain}\"",
