@@ -64,6 +64,7 @@ class {'freeipa':
     enable_hostname             => true,
     manage_host_entry           => true,
     install_epel                => true,
+    ipa_master_fqdn             => 'ipa-server-1.example.lan',
 }
 ```
 
@@ -99,6 +100,7 @@ class {'freeipa':
     ipa_master_fqdn             => 'ipa.example.lan',
     puppet_admin_password       => 'vagrant123',
     ip_address                  => $ipaddress,
+    ipa_master_fqdn             => 'ipa-server-1.example.lan',
 }
 ```
 
