@@ -47,6 +47,7 @@ class {'freeipa':
     enable_hostname             => true,
     manage_host_entry           => true,
     install_epel                => true,
+    ipa_master_fqdn             => 'ipa-server-1.example.lan',
 }
 ```
 
