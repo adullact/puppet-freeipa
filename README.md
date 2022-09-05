@@ -56,7 +56,7 @@ class {'freeipa':
     ipa_role                    => 'master',
     domain                      => 'example.lan',
     ipa_server_fqdn             => 'ipa-server-1.example.lan',
-    puppet_admin_password       => 'secret_abc,
+    puppet_admin_password       => 'secret_abc',
     directory_services_password => 'secret_dir',
     install_ipa_server          => true,
     ip_address                  => '10.10.10.35',
