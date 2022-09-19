@@ -25,7 +25,7 @@
 
 ## Classes
 
-### `freeipa`
+### <a name="freeipa"></a>`freeipa`
 
 Parameters
 ----------
@@ -53,33 +53,69 @@ class {'freeipa':
 
 #### Parameters
 
-The following parameters are available in the `freeipa` class.
+The following parameters are available in the `freeipa` class:
 
-##### `domain`
+* [`domain`](#domain)
+* [`ipa_role`](#ipa_role)
+* [`puppet_admin_password`](#puppet_admin_password)
+* [`directory_services_password`](#directory_services_password)
+* [`autofs_package_name`](#autofs_package_name)
+* [`client_install_ldaputils`](#client_install_ldaputils)
+* [`configure_dns_server`](#configure_dns_server)
+* [`configure_ntp`](#configure_ntp)
+* [`custom_dns_forwarders`](#custom_dns_forwarders)
+* [`principal_usedto_joindomain`](#principal_usedto_joindomain)
+* [`password_usedto_joindomain`](#password_usedto_joindomain)
+* [`enable_hostname`](#enable_hostname)
+* [`enable_ip_address`](#enable_ip_address)
+* [`fixed_primary`](#fixed_primary)
+* [`idstart`](#idstart)
+* [`install_autofs`](#install_autofs)
+* [`install_epel`](#install_epel)
+* [`install_sssdtools`](#install_sssdtools)
+* [`ipa_client_package_name`](#ipa_client_package_name)
+* [`ipa_server_package_name`](#ipa_server_package_name)
+* [`install_ipa_client`](#install_ipa_client)
+* [`install_ipa_server`](#install_ipa_server)
+* [`install_sssd`](#install_sssd)
+* [`ip_address`](#ip_address)
+* [`ipa_server_fqdn`](#ipa_server_fqdn)
+* [`ldaputils_package_name`](#ldaputils_package_name)
+* [`ipa_master_fqdn`](#ipa_master_fqdn)
+* [`manage_host_entry`](#manage_host_entry)
+* [`mkhomedir`](#mkhomedir)
+* [`webui_redirect`](#webui_redirect)
+* [`realm`](#realm)
+* [`server_install_ldaputils`](#server_install_ldaputils)
+* [`sssd_package_name`](#sssd_package_name)
+* [`sssdtools_package_name`](#sssdtools_package_name)
+* [`install_ca`](#install_ca)
+
+##### <a name="domain"></a>`domain`
 
 Data type: `Stdlib::Fqdn`
 
 The name of the IPA domain to create or join.
 
-##### `ipa_role`
+##### <a name="ipa_role"></a>`ipa_role`
 
 Data type: `Enum['master','replica','client']`
 
 What role the node will be.
 
-##### `puppet_admin_password`
+##### <a name="puppet_admin_password"></a>`puppet_admin_password`
 
-Data type: `String[8]`
+Data type: `Variant[String[8],Sensitive[String[8]]]`
 
 Password which will be assigned to the IPA account named `admin` and used by Puppet.
 
-##### `directory_services_password`
+##### <a name="directory_services_password"></a>`directory_services_password`
 
-Data type: `String[8]`
+Data type: `Variant[String[8],Sensitive[String[8]]]`
 
 Password which will be passed into the ipa setup's parameter named `--ds-password`.
 
-##### `autofs_package_name`
+##### <a name="autofs_package_name"></a>`autofs_package_name`
 
 Data type: `String`
 
@@ -87,7 +123,7 @@ Name of the autofs package to install if enabled.
 
 Default value: `'autofs'`
 
-##### `client_install_ldaputils`
+##### <a name="client_install_ldaputils"></a>`client_install_ldaputils`
 
 Data type: `Boolean`
 
@@ -95,7 +131,7 @@ If true, then the ldaputils packages are installed if ipa_role is set to client.
 
 Default value: ``false``
 
-##### `configure_dns_server`
+##### <a name="configure_dns_server"></a>`configure_dns_server`
 
 Data type: `Boolean`
 
@@ -104,7 +140,7 @@ and fill it with service records necessary for IPA deployment.
 
 Default value: ``true``
 
-##### `configure_ntp`
+##### <a name="configure_ntp"></a>`configure_ntp`
 
 Data type: `Boolean`
 
@@ -112,7 +148,7 @@ If false, then do not configure NTP.
 
 Default value: ``true``
 
-##### `custom_dns_forwarders`
+##### <a name="custom_dns_forwarders"></a>`custom_dns_forwarders`
 
 Data type: `Array[String]`
 
@@ -120,7 +156,7 @@ Each element in this array is prefixed with `--forwarder` and passed to the IPA 
 
 Default value: `[]`
 
-##### `principal_usedto_joindomain`
+##### <a name="principal_usedto_joindomain"></a>`principal_usedto_joindomain`
 
 Data type: `String`
 
@@ -128,15 +164,15 @@ The principal (usually username) used to join a client or replica to the IPA dom
 
 Default value: `'admin'`
 
-##### `password_usedto_joindomain`
+##### <a name="password_usedto_joindomain"></a>`password_usedto_joindomain`
 
-Data type: `String`
+Data type: `Variant[String,Sensitive[String]]`
 
 The password for the domain_join_principal.
 
 Default value: `$puppet_admin_password`
 
-##### `enable_hostname`
+##### <a name="enable_hostname"></a>`enable_hostname`
 
 Data type: `Boolean`
 
@@ -145,7 +181,7 @@ and passed to the IPA installer.
 
 Default value: ``true``
 
-##### `enable_ip_address`
+##### <a name="enable_ip_address"></a>`enable_ip_address`
 
 Data type: `Boolean`
 
@@ -154,7 +190,7 @@ and passed to the IPA installer.
 
 Default value: ``false``
 
-##### `fixed_primary`
+##### <a name="fixed_primary"></a>`fixed_primary`
 
 Data type: `Boolean`
 
@@ -163,7 +199,7 @@ The default behavior of client is to use DNS SRV records to determine the primar
 
 Default value: ``false``
 
-##### `idstart`
+##### <a name="idstart"></a>`idstart`
 
 Data type: `Integer[10000]`
 
@@ -171,7 +207,7 @@ From the IPA man pages: "The starting user and group id number".
 
 Default value: `10000`
 
-##### `install_autofs`
+##### <a name="install_autofs"></a>`install_autofs`
 
 Data type: `Boolean`
 
@@ -179,7 +215,7 @@ If true, then the autofs packages are installed.
 
 Default value: ``false``
 
-##### `install_epel`
+##### <a name="install_epel"></a>`install_epel`
 
 Data type: `Boolean`
 
@@ -187,7 +223,7 @@ If true, then the epel repo is installed. The epel repo is usually required for 
 
 Default value: ``true``
 
-##### `install_sssdtools`
+##### <a name="install_sssdtools"></a>`install_sssdtools`
 
 Data type: `Boolean`
 
@@ -195,7 +231,7 @@ If true, then the sssdtools packages are installed.
 
 Default value: ``true``
 
-##### `ipa_client_package_name`
+##### <a name="ipa_client_package_name"></a>`ipa_client_package_name`
 
 Data type: `String`
 
@@ -203,7 +239,7 @@ Name of the IPA client package.
 
 Default value: `$facts['os']['family']`
 
-##### `ipa_server_package_name`
+##### <a name="ipa_server_package_name"></a>`ipa_server_package_name`
 
 Data type: `String`
 
@@ -211,7 +247,7 @@ Name of the IPA server package.
 
 Default value: `'ipa-server'`
 
-##### `install_ipa_client`
+##### <a name="install_ipa_client"></a>`install_ipa_client`
 
 Data type: `Boolean`
 
@@ -219,7 +255,7 @@ If true, then the IPA client packages are installed if the parameter `ipa_role` 
 
 Default value: ``true``
 
-##### `install_ipa_server`
+##### <a name="install_ipa_server"></a>`install_ipa_server`
 
 Data type: `Boolean`
 
@@ -227,7 +263,7 @@ If true, then the IPA server packages are installed if the parameter `ipa_role` 
 
 Default value: ``true``
 
-##### `install_sssd`
+##### <a name="install_sssd"></a>`install_sssd`
 
 Data type: `Boolean`
 
@@ -235,14 +271,14 @@ If true, then the sssd packages are installed.
 
 Default value: ``true``
 
-##### `ip_address`
+##### <a name="ip_address"></a>`ip_address`
 
 Data type: `Stdlib::IP::Address`
 
 The IP address of this server.
 If this address does not match the address the host resolves to and `configure_dns_server` is not `true`, the installation will fail.
 
-##### `ipa_server_fqdn`
+##### <a name="ipa_server_fqdn"></a>`ipa_server_fqdn`
 
 Data type: `Stdlib::Fqdn`
 
@@ -250,7 +286,7 @@ Actual fqdn of the IPA server being configured.
 
 Default value: `$facts['networking']['fqdn']`
 
-##### `ldaputils_package_name`
+##### <a name="ldaputils_package_name"></a>`ldaputils_package_name`
 
 Data type: `String`
 
@@ -258,13 +294,13 @@ Name of the ldaputils package.
 
 Default value: `$facts['os']['family']`
 
-##### `ipa_master_fqdn`
+##### <a name="ipa_master_fqdn"></a>`ipa_master_fqdn`
 
 Data type: `Stdlib::Fqdn`
 
 FQDN of the server to use for a client or replica domain join.
 
-##### `manage_host_entry`
+##### <a name="manage_host_entry"></a>`manage_host_entry`
 
 Data type: `Boolean`
 
@@ -272,7 +308,7 @@ If true, then a host entry is created using the parameters `ipa_server_fqdn` and
 
 Default value: ``false``
 
-##### `mkhomedir`
+##### <a name="mkhomedir"></a>`mkhomedir`
 
 Data type: `Boolean`
 
@@ -280,7 +316,7 @@ If true, on client configure PAM to create a users home directory if it does not
 
 Default value: ``true``
 
-##### `webui_redirect`
+##### <a name="webui_redirect"></a>`webui_redirect`
 
 Data type: `Boolean`
 
@@ -288,7 +324,7 @@ If true, then web requests to URL root / will be redirected to webui https://exa
 
 Default value: ``true``
 
-##### `realm`
+##### <a name="realm"></a>`realm`
 
 Data type: `Stdlib::Fqdn`
 
@@ -296,7 +332,7 @@ The name of the IPA realm to create or join.
 
 Default value: `upcase($domain)`
 
-##### `server_install_ldaputils`
+##### <a name="server_install_ldaputils"></a>`server_install_ldaputils`
 
 Data type: `Boolean`
 
@@ -304,7 +340,7 @@ If true, then the ldaputils packages are installed if ipa_role is not set to cli
 
 Default value: ``true``
 
-##### `sssd_package_name`
+##### <a name="sssd_package_name"></a>`sssd_package_name`
 
 Data type: `String`
 
@@ -312,7 +348,7 @@ Name of the sssd package.
 
 Default value: `'sssd-common'`
 
-##### `sssdtools_package_name`
+##### <a name="sssdtools_package_name"></a>`sssdtools_package_name`
 
 Data type: `String`
 
@@ -320,7 +356,7 @@ Name of the sssdtools package.
 
 Default value: `'sssd-tools'`
 
-##### `install_ca`
+##### <a name="install_ca"></a>`install_ca`
 
 Data type: `Boolean`
 
@@ -328,7 +364,7 @@ If true, install and configure a CA even on replica.
 
 Default value: ``true``
 
-### `freeipa::helpers::flushcache`
+### <a name="freeipahelpersflushcache"></a>`freeipa::helpers::flushcache`
 
 Flushcache sss for Debian and RedHat only
 
@@ -342,7 +378,7 @@ include freeipa::helpers::flushcache
 
 ## Tasks
 
-### `manage_admin`
+### <a name="manage_admin"></a>`manage_admin`
 
 Manage (create or delete) a FreeIPA admin account
 

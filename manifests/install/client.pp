@@ -50,7 +50,7 @@ class freeipa::install::client {
     --realm=${freeipa::realm} \
     --domain=${freeipa::domain} \
     --principal='${freeipa::principal_usedto_joindomain}' \
-    --password='${freeipa::password_usedto_joindomain}' \
+    --password=\"\$PASSWORD_USEDTO_JOINDOMAIN\" \
     ${client_install_cmd_opts_mkhomedir} \
     ${client_install_cmd_opts_fixed_primary} \
     ${client_install_cmd_opts_no_ntp} \
@@ -58,14 +58,17 @@ class freeipa::install::client {
     --unattended"
 
     exec { "client_install_${facts['fqdn']}":
-      command   => $client_install_cmd,
-      timeout   => 0,
-      unless    => "cat /etc/ipa/default.conf | grep -i \"${freeipa::domain}\"",
-      creates   => '/etc/ipa/default.conf',
-      logoutput => 'on_failure',
-      before    => Service['sssd'],
-      provider  => 'shell',
-      require   => Package[$freeipa::ipa_client_package_name],
+      environment =>  [
+        "PASSWORD_USEDTO_JOINDOMAIN=${freeipa::password_usedto_joindomain.unwrap}",
+      ],
+      command     => $client_install_cmd,
+      timeout     => 0,
+      unless      => "cat /etc/ipa/default.conf | grep -i \"${freeipa::domain}\"",
+      creates     => '/etc/ipa/default.conf',
+      logoutput   => 'on_failure',
+      before      => Service['sssd'],
+      provider    => 'shell',
+      require     => Package[$freeipa::ipa_client_package_name],
     }
 
     if $freeipa::install_sssd {

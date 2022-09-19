@@ -26,6 +26,28 @@ describe 'freeipa::install::client' do
         it { is_expected.to compile }
         it { is_expected.to contain_exec("client_install_#{ipa_node}").with('command' => %r{.*hostname=#{ipa_node}.*}) }
       end
+
+      context "Sensitive password on #{os}" do
+        let(:facts) { facts }
+        let(:pre_condition) do
+          manifest = <<-EOS
+            class{ 'freeipa' :
+              ipa_role                    => 'client',
+              ipa_master_fqdn             => 'master.example.com',
+              ipa_server_fqdn             => '#{ipa_node}',
+              domain                      => 'example.com',
+              password_usedto_joindomain  => Sensitive('foobartest'),
+              puppet_admin_password       => Sensitive('foobartest'),
+              directory_services_password => Sensitive('foobartest'),
+              ip_address                  => '10.10.10.35',
+            }
+          EOS
+          manifest
+        end
+
+        it { is_expected.to compile }
+        it { is_expected.to contain_exec("client_install_#{ipa_node}").with('command' => %r{.*hostname=#{ipa_node}.*}) }
+      end
     end
   end
 

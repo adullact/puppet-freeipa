@@ -11,7 +11,7 @@ class freeipa::install::server::replica {
 
   $replica_install_cmd = "/usr/sbin/ipa-replica-install \
   --principal=${freeipa::principal_usedto_joindomain} \
-  --admin-password='${freeipa::password_usedto_joindomain}' \
+  --admin-password=\"\$PASSWORD_USEDTO_JOINDOMAIN\" \
   ${freeipa::install::server::server_install_cmd_opts_hostname} \
   --realm=${freeipa::realm} \
   --domain=${freeipa::domain} \
@@ -26,14 +26,17 @@ class freeipa::install::server::replica {
 
   if ! $facts['iparole'] or $facts['iparole'] == 'replica' {
     exec { "server_install_${freeipa::ipa_server_fqdn}":
-      command   => $replica_install_cmd,
-      timeout   => 0,
-      unless    => '/usr/sbin/ipactl status >/dev/null 2>&1',
-      creates   => '/etc/ipa/default.conf',
-      logoutput => 'on_failure',
-      notify    => Class['Freeipa::Helpers::Flushcache'],
-      before    => Service['sssd'],
-      require   => Package[$freeipa::ipa_server_package_name],
+      environment =>  [
+        "PASSWORD_USEDTO_JOINDOMAIN=${freeipa::password_usedto_joindomain.unwrap}",
+      ],
+      command     => $replica_install_cmd,
+      timeout     => 0,
+      unless      => '/usr/sbin/ipactl status >/dev/null 2>&1',
+      creates     => '/etc/ipa/default.conf',
+      logoutput   => 'on_failure',
+      notify      => Class['Freeipa::Helpers::Flushcache'],
+      before      => Service['sssd'],
+      require     => Package[$freeipa::ipa_server_package_name],
     }
   } else {
     fail ("to change ipa_role from '${facts['iparole']}' to 'replica' is not supported.")
