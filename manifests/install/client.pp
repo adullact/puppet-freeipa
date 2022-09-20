@@ -65,6 +65,7 @@ class freeipa::install::client {
       logoutput => 'on_failure',
       before    => Service['sssd'],
       provider  => 'shell',
+      require   => Package[$freeipa::ipa_client_package_name],
     }
 
     if $freeipa::install_sssd {

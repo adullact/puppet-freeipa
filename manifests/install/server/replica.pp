@@ -33,6 +33,7 @@ class freeipa::install::server::replica {
       logoutput => 'on_failure',
       notify    => Class['Freeipa::Helpers::Flushcache'],
       before    => Service['sssd'],
+      require   => Package[$freeipa::ipa_server_package_name],
     }
   } else {
     fail ("to change ipa_role from '${facts['iparole']}' to 'replica' is not supported.")

@@ -89,7 +89,10 @@ class freeipa::install::server {
     ensure_resource (
       'service',
       'httpd',
-      {ensure => 'running'},
+      {
+        ensure  => 'running',
+        require => Package[$freeipa::ipa_server_package_name],
+      },
     )
 
     service { 'ipa':
