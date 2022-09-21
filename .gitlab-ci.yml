@@ -2,8 +2,8 @@
 stages:
   - syntax
   - unit
-  - acceptance-puppet5
   - acceptance-puppet6
+  - acceptance-puppet7
   - release
 
 cache:
@@ -18,36 +18,21 @@ before_script:
   - bundle -v
   - bundle install --without system_tests --path vendor/bundle --jobs $(nproc)
 
-syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop-Ruby 2.5.1-Puppet ~> 5.5:
+syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop-Ruby 2.7.5-Puppet ~> 7.9:
   stage: syntax
-  image: ruby:2.5.1
+  image: ruby:2.7.5
   script:
     - bundle exec rake syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop
   variables:
-    PUPPET_GEM_VERSION: '~> 5.5'
+    PUPPET_GEM_VERSION: '~> 7.9'
 
-parallel_spec-Ruby 2.5.1-Puppet ~> 5.5:
+parallel_spec-Ruby 2.7.5-Puppet ~> 7.9:
   stage: unit
-  image: ruby:2.5.1
+  image: ruby:2.7.5
   script:
     - bundle exec rake parallel_spec
   variables:
-    PUPPET_GEM_VERSION: '~> 5.5'
-
-acceptance with puppet5:
-  stage: acceptance-puppet5
-  variables:
-    PUPPET_INSTALL_TYPE: 'agent'
-    BEAKER_IS_PE: 'no'
-    BEAKER_PUPPET_COLLECTION: 'puppet5'
-    BEAKER_debug: 'true '
-    RBENV_VERSION: '2.5.1'
-  script:
-    - bundle exec rake spec_prep beaker:default
-  tags:
-    - puppet-tests
-  except:
-    - master
+    PUPPET_GEM_VERSION: '~> 7.9'
 
 acceptance with puppet6:
   stage: acceptance-puppet6
@@ -56,7 +41,22 @@ acceptance with puppet6:
     BEAKER_IS_PE: 'no'
     BEAKER_PUPPET_COLLECTION: 'puppet6'
     BEAKER_debug: 'true '
-    RBENV_VERSION: '2.5.1'
+    RBENV_VERSION: '2.7.5'
+  script:
+    - bundle exec rake spec_prep beaker:default
+  tags:
+    - puppet-tests
+  except:
+    - master
+
+acceptance with puppet7:
+  stage: acceptance-puppet7
+  variables:
+    PUPPET_INSTALL_TYPE: 'agent'
+    BEAKER_IS_PE: 'no'
+    BEAKER_PUPPET_COLLECTION: 'puppet7'
+    BEAKER_debug: 'true '
+    RBENV_VERSION: '2.7.5'
   script:
     - bundle exec rake spec_prep beaker:default
   tags:
@@ -67,10 +67,10 @@ acceptance with puppet6:
 module release:
   stage: release
   variables:
-    RBENV_VERSION: '2.5.1'
+    RBENV_VERSION: '2.7.5'
   script:
     - rm -f Gemfile.lock
-    - pdk build
+    - bundle exec pdk build
   tags:
     - puppet-tests
   only:

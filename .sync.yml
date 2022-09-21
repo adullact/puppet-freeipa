@@ -7,12 +7,10 @@ appveyor.yml:
 .travis.yml:
   delete: true
 
-.rubocop.yml:
-  unmanaged: true
-
 .gitignore:
   paths:
     - '.vscode/'
+    - '.devcontainer/'
 
 Gemfile:
   required:
@@ -34,3 +32,10 @@ Gemfile:
       - gem: 'beaker-vagrant'
       - gem: 'bolt'
       - gem: 'beaker-task_helper'
+      - gem: 'pdk'
+        version: '2.3.0'
+      - gem: 'puppet-strings'
+        version: '2.9.0'
+
+spec/spec_helper.rb:
+  mock_with: ':rspec'
