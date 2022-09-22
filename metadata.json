@@ -38,6 +38,11 @@
       "version_requirement": ">= 6.0.0 < 8.0.0"
     }
   ],
+  "tags": [
+    "ipa",
+    "free-ipa",
+    "freeipa"
+  ],
   "pdk-version": "2.3.0",
   "template-url": "https://github.com/puppetlabs/pdk-templates#2.3.0",
   "template-ref": "tags/2.3.0-0-g8aaceff"

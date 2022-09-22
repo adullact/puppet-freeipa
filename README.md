@@ -32,13 +32,7 @@ Installation of Freeipa server will obviously install a ntp server, a DNS server
 
 ### Setup Requirements
 
-This module requires :
-
-  * `puppetlabs-stdlib`
-
-  * `puppet-epel`
-
-Versions are given in `metadata.json` file.
+Requirements are given in [metadata.json](https://gitlab.adullact.net/adullact/puppet-freeipa/blob/master/metadata.json)file.
 
 ### How does the module work.
 
@@ -114,17 +108,17 @@ Delete an admin account with task :
 
 ### REFERENCE
 
-A full description can be found in `[REFERENCE.md](https://gitlab.adullact.net/adullact/puppet-freeipa/blob/master/REFERENCE.md)`.
+A full description can be found in [REFERENCE.md](https://gitlab.adullact.net/adullact/puppet-freeipa/blob/master/REFERENCE.md).
 
 ## Limitations
 
 This module will not work well if managed passwords contain `'` or `\`. They must be banned.
 
-To deploy a server is only supported on CentOS 7. To deploy a client is supported on CentOS 7, Ubuntu 16.04 and 18.04.
+To deploy a server is only supported on CentOS 7.
 
 Acceptance tests are done :
 
- * with last available versions of Puppet 5 and Puppet 6 from puppetlabs packages AIO (facter 3 is shiped).
+ * with last available versions of Puppet 6 and Puppet 7 from puppetlabs packages All In One.
 
  * with CentOS 7 for FreeIPA master and replica nodes. IPA masters and replicas works only on Centos >= 7.5.
 
@@ -134,14 +128,11 @@ With follwoing issue not fixed the acceptance tests about tasks are disabled :
 https://github.com/puppetlabs/beaker-task_helper/issues/47
 PR : https://github.com/puppetlabs/beaker-task_helper/pull/48
 
-
-Puppet4 is EOL since 2019-01-01. Even if puppet 4.10 should work, it is not tested.
-
 ## Development
 
 Home at URL https://gitlab.adullact.net/adullact/puppet-freeipa
 
-Issues and MR are welcome. `[CONTRIBUTING.md](https://gitlab.adullact.net/adullact/puppet-freeipa/blob/master/CONTRIBUTING.md)` gives some guidance about contributing process.
+Issues and MR are welcome. [CONTRIBUTING.md](https://gitlab.adullact.net/adullact/puppet-freeipa/blob/master/CONTRIBUTING.md) gives some guidance about contributing process.
 If you follow these contributing guidelines your patch will likely make it into a release a little more quickly.
 
 ### Release Notes
