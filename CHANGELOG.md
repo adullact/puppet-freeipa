@@ -1,5 +1,27 @@
 # puppet-freeipa
 
+## 6.0.0 :
+
+** Closed Issues **
+
+  * some documentation clean up  #128
+  * allow puppetlabs-stdlib < 9, puppet-epel < 5 #127
+  * drop Puppet 5, add Puppet 7, use pdk 2.3.0, ruby 2.7.5 #126
+  * stahnma-epel package deprecated, move to puppet-epel #123 (Petter Ostergren)
+  * Document Update : missing ipa_master_fqdn mandatory parameter #118 (Vijay Kumar)
+  * missing enable_hostname management for client #122
+  * disable acceptance testing about tasks  #121
+
+** Closed MR **
+
+  * fix ordering of operations !128 (Patrick Brideau)
+  * fix missing ' in README.md  !129 (Matteo A)
+  * Use Sensitive data type for passwords !130 (Patrick Brideau)
+
+** Known Issues **
+
+  * change puppet_admin_password does not trigger password update #107
+
 ## 5.0.2 :
 
 ** Closed Issues **
