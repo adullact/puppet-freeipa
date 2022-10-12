@@ -67,6 +67,7 @@
 # @param external_ca If true, generate csr to be signed
 # @param external_ca_type_ms_cs If true, add option to csr to be signed by Microsoft AD CA
 # @param external_ca_profile Array of profiles to define (OID) in the csr to generate
+# @param ca_subject Name of the CA
 #
 class freeipa (
   Stdlib::Fqdn                         $domain,
@@ -113,6 +114,7 @@ class freeipa (
   Boolean                              $server_install_ldaputils       = true,
   String                               $sssd_package_name              = 'sssd-common',
   String                               $sssdtools_package_name         = 'sssd-tools',
+  String                               $ca_subject                     = "CN=Certificate Authority,O=${realm}",
 ) {
   if $facts['kernel'] != 'Linux' or $facts['os']['family'] == 'Windows' {
     fail('This module is only supported on Linux.')

@@ -16,6 +16,7 @@ class freeipa::install::server::master {
   --domain=${freeipa::domain} \
   --admin-password=\"\$PUPPET_ADMIN_PASSWORD\" \
   --ds-password=\"\$DIRECTORY_SERVICES_PASSWORD\" \
+  --ca-subject='${freeipa::ca_subject}' \
   ${freeipa::install::server::server_install_cmd_opts_setup_dns} \
   ${freeipa::install::server::server_install_cmd_opts_forwarders} \
   ${freeipa::install::server::server_install_cmd_opts_ip_address} \
