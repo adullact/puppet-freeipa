@@ -67,7 +67,7 @@
 # @param external_ca If true, generate csr to be signed
 # @param external_ca_type_ms_cs If true, add option to csr to be signed by Microsoft AD CA
 # @param external_ca_profile Array of profiles to define (OID) in the csr to generate
-# @param ca_subject Name of the CA
+# @param ca_subject The CA certificate subject DN. (default CN=Certificate Authority,O=<realm-name>). RDNs are in LDAP order (most specific RDN first).
 #
 class freeipa (
   Stdlib::Fqdn                         $domain,
