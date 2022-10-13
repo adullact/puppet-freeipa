@@ -66,13 +66,14 @@ acceptance with puppet7:
 
 module release:
   stage: release
+  image: ruby:2.7.5
   variables:
-    RBENV_VERSION: '2.7.5'
+    PUPPET_GEM_VERSION: '~> 7.14'
+    BLACKSMITH_FORGE_USERNAME: '$BLACKSMITH_FORGE_USERNAME'
+    BLACKSMITH_FORGE_API_KEY: '$BLACKSMITH_FORGE_API_KEY'
   script:
-    - rm -f Gemfile.lock
-    - bundle exec pdk build
-  tags:
-    - puppet-tests
+    - bundle exec puppet strings generate --format markdown --out REFERENCE.md
+    - bundle exec rake module:push
   only:
     - tags
   except:
