@@ -22,6 +22,7 @@ class freeipa::install::server::master {
   ${freeipa::install::server::server_install_cmd_opts_no_ntp} \
   ${freeipa::install::server::server_install_cmd_opts_idstart} \
   ${freeipa::install::server::server_install_cmd_opts_no_ui_redirect} \
+  ${freeipa::install::server::server_install_cmd_opts_external_ca} \
   --unattended"
 
   if ! $facts['iparole'] or $facts['iparole'] == 'master' {

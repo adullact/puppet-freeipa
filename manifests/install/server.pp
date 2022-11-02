@@ -75,6 +75,29 @@ class freeipa::install::server {
       $server_install_cmd_opts_no_ui_redirect = '--no-ui-redirect'
     }
 
+    if $freeipa::install_external_ca {
+      if $freeipa::external_ca_type_ms_cs {
+        $_type_ms_cs = '--external-ca-type=ms-cs'
+      } else {
+        $_type_ms_cs = ''
+      }
+
+      if $freeipa::external_ca_profile != [] {
+        $_profiles = join(
+          prefix(
+            $freeipa::external_ca_profile,
+            '--external-ca-profile=',
+          ),
+          ' ',
+        )
+      } else {
+        $_profiles = ''
+      }
+      $server_install_cmd_opts_external_ca = "--external-ca ${_type_ms_cs} ${_profiles}"
+    } else {
+      $server_install_cmd_opts_external_ca = ''
+    }
+
     if $freeipa::ipa_role == 'master' {
       contain 'freeipa::install::server::master'
     } elsif $freeipa::ipa_role == 'replica' {
