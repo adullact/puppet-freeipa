@@ -106,6 +106,36 @@ Delete an admin account with task :
 
 `bolt task run freeipa::manage_admin operator_login='mylogin' operator_password='mysecret' ensure='absent' login='jaimarre' --nodes <ipamaster> --modulepath ~/modules`
 
+Add IPA server that is SubCA of a Microsoft PKI :
+
+```puppet
+class {'freeipa':
+    [ SAME CONFIG AS MASTER, plus... ]
+    ca_subject             => 'CN=Secondary Certificate Authority,O=EXAMPLE.LAN",
+    install_external_ca    => true,
+    external_ca_type_ms_cs => true,
+    external_ca_profile    => [
+      'OID:MAJOR:MINOR'
+    ],
+}
+```
+
+Where `OID:MAJOR:MINOR` might be a template created in the AD.
+
+The FreeIPA server will be partially created.  The certificate signing request
+will be created in `/root/ipa.csr` that will have to be signed by the authority.
+
+Then, a manual action is required to complete the installation:
+
+```bash
+ipa-server-install \
+    --external-cert-file /root/ipa.crt \
+    --external-cert-file /root/ca.crt
+```
+
+See [this blog post](https://frasertweedale.github.io/blog-redhat/posts/2017-08-14-ad-cs.html)
+about this feature.
+
 ### REFERENCE
 
 A full description can be found in [REFERENCE.md](https://gitlab.adullact.net/adullact/puppet-freeipa/blob/master/REFERENCE.md).
