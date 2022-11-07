@@ -110,7 +110,7 @@ Add IPA server that is SubCA of a Microsoft PKI :
 
 ```puppet
 class {'freeipa':
-    [ SAME CONFIG AS MASTER, plus... ]
+    # Same configs as master, but add the following:
     ca_subject             => 'CN=Secondary Certificate Authority,O=EXAMPLE.LAN",
     install_external_ca    => true,
     external_ca_type_ms_cs => true,
