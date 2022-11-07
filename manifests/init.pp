@@ -64,7 +64,7 @@
 # @param sssd_package_name Name of the sssd package.
 # @param sssdtools_package_name Name of the sssdtools package.
 # @param install_ca If true, install and configure a CA even on replica.
-# @param install_external_ca If true, generate csr to be signed
+# @param external_ca If true, generate csr to be signed
 # @param external_ca_type_ms_cs If true, add option to csr to be signed by Microsoft AD CA
 # @param external_ca_profile Array of profiles to define (OID) in the csr to generate
 #
@@ -99,7 +99,7 @@ class freeipa (
   Boolean                              $install_ipa_server             = true,
   Boolean                              $install_sssd                   = true,
   Boolean                              $install_ca                     = true,
-  Boolean                              $install_external_ca            = false,
+  Boolean                              $external_ca                    = false,
   Boolean                              $external_ca_type_ms_cs         = false,
   Array[String]                        $external_ca_profile            = [],
   Stdlib::Fqdn                         $ipa_server_fqdn                = $facts['networking']['fqdn'],

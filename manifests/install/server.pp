@@ -75,7 +75,7 @@ class freeipa::install::server {
       $server_install_cmd_opts_no_ui_redirect = '--no-ui-redirect'
     }
 
-    if $freeipa::install_external_ca {
+    if $freeipa::external_ca {
       if $freeipa::external_ca_type_ms_cs {
         $_type_ms_cs = '--external-ca-type=ms-cs'
       } else {
