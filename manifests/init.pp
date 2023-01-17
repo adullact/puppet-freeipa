@@ -38,6 +38,9 @@
 # @param enable_ip_address
 #   If true, then the installer flag `--ip-address` is populated with the parameter `ip_address`
 #   and passed to the IPA installer.
+# @param enable_random_serial_numbers
+#   If true, then the installer flag `--random-serial-numbers` is added during installation
+#   Only valid on IPA >= 4.10
 # @param fixed_primary
 #   If true, on client it configure SSSD to use a fixed server as the primary IPA server.
 #   The default behavior of client is to use DNS SRV records to determine the primary server to use.
@@ -86,6 +89,7 @@ class freeipa (
   Variant[String,Sensitive[String]]    $password_usedto_joindomain     = $puppet_admin_password,
   Boolean                              $enable_hostname                = true,
   Boolean                              $enable_ip_address              = false,
+  Boolean                              $enable_random_serial_numbers   = false,
   Boolean                              $fixed_primary                  = false,
   Integer[10000]                       $idstart                        = 60000,
   Boolean                              $install_autofs                 = false,

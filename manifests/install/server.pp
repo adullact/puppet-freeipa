@@ -39,6 +39,12 @@ class freeipa::install::server {
       $server_install_cmd_opts_ip_address = ''
     }
 
+    if $freeipa::enable_random_serial_numbers {
+      $server_install_cmd_opts_random_serial_numbers = '--random-serial-numbers'
+    } else {
+      $server_install_cmd_opts_random_serial_numbers = ''
+    }
+
     if $freeipa::final_configure_dns_server {
       $server_install_cmd_opts_setup_dns = '--setup-dns --auto-reverse'
     } else {

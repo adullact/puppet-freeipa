@@ -20,6 +20,7 @@ class freeipa::install::server::master {
   ${freeipa::install::server::server_install_cmd_opts_setup_dns} \
   ${freeipa::install::server::server_install_cmd_opts_forwarders} \
   ${freeipa::install::server::server_install_cmd_opts_ip_address} \
+  ${freeipa::install::server::server_install_cmd_opts_random_serial_numbers} \
   ${freeipa::install::server::server_install_cmd_opts_no_ntp} \
   ${freeipa::install::server::server_install_cmd_opts_idstart} \
   ${freeipa::install::server::server_install_cmd_opts_no_ui_redirect} \
