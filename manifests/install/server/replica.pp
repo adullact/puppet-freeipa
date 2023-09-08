@@ -19,6 +19,7 @@ class freeipa::install::server::replica {
   ${freeipa::install::server::server_install_cmd_opts_setup_dns} \
   ${freeipa::install::server::server_install_cmd_opts_forwarders} \
   ${freeipa::install::server::server_install_cmd_opts_ip_address} \
+  ${freeipa::install::server::server_install_cmd_opts_zone_overlap} \
   ${freeipa::install::server::server_install_cmd_opts_no_ntp} \
   ${freeipa::install::server::server_install_cmd_opts_no_ui_redirect} \
   ${freeipa::install::server::server_install_cmd_opts_setup_ca} \

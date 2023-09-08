@@ -45,6 +45,12 @@ class freeipa::install::server {
       $server_install_cmd_opts_random_serial_numbers = ''
     }
 
+    if $freeipa::enable_zone_overlap {
+      $server_install_cmd_opts_zone_overlap = '--allow-zone-overlap'
+    } else {
+      $server_install_cmd_opts_zone_overlap = ''
+    }
+
     if $freeipa::final_configure_dns_server {
       $server_install_cmd_opts_setup_dns = '--setup-dns --auto-reverse'
     } else {
