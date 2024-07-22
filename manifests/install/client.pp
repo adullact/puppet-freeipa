@@ -10,7 +10,7 @@ class freeipa::install::client {
   assert_private()
 
   if ! $facts['iparole'] or $facts['iparole'] == 'client' {
-    package{$freeipa::ipa_client_package_name:
+    package { $freeipa::ipa_client_package_name:
       ensure => present,
     }
 
@@ -40,7 +40,7 @@ class freeipa::install::client {
 
     if $freeipa::enable_hostname {
       $client_install_cmd_opts_hostname = "--hostname=${freeipa::ipa_server_fqdn}"
-        end
+      end
     } else {
       $client_install_cmd_opts_hostname = ''
     }
@@ -57,8 +57,8 @@ class freeipa::install::client {
     ${client_install_cmd_opts_hostname} \
     --unattended"
 
-    exec { "client_install_${facts['fqdn']}":
-      environment =>  [
+    exec { "client_install_${facts['networking']['fqdn']}":
+      environment => [
         "PASSWORD_USEDTO_JOINDOMAIN=${freeipa::password_usedto_joindomain.unwrap}",
       ],
       command     => $client_install_cmd,

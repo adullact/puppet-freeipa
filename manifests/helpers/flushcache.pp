@@ -5,7 +5,6 @@
 #   include freeipa::helpers::flushcache
 #
 class freeipa::helpers::flushcache {
-
   #TODO: nscd should be called on both platforms.
   case $facts['os']['family'] {
     'RedHat': {
@@ -37,5 +36,4 @@ fi"
     notify      => Service['sssd'],
     refreshonly => true,
   }
-
 }

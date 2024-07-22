@@ -26,7 +26,7 @@ class freeipa::install::server::master {
 
   if ! $facts['iparole'] or $facts['iparole'] == 'master' {
     exec { "server_install_${freeipa::ipa_server_fqdn}":
-      environment =>  [
+      environment => [
         "PUPPET_ADMIN_PASSWORD=${freeipa::puppet_admin_password.unwrap}",
         "DIRECTORY_SERVICES_PASSWORD=${freeipa::directory_services_password.unwrap}",
       ],

@@ -2,74 +2,76 @@
 stages:
   - syntax
   - unit
-  - acceptance-puppet6
   - acceptance-puppet7
   - release
 
-cache:
-  paths:
-    - vendor/bundle
+.in-acceptance-only-matrix:
+  parallel:
+    matrix:
+      - RUBY_VERSION: ['3.2.0']
+        PUPPET_GEM_VERSION: ['~> 7']
+        PUPPET_COLLECTION: ['7']
 
-before_script:
-  - bundle -v
-  - rm Gemfile.lock || true
-  - gem update --system
-  - gem --version
-  - bundle -v
-  - bundle install --without system_tests --path vendor/bundle --jobs $(nproc)
+.common-matrix:
+  parallel:
+    matrix:
+      - RUBY_VERSION: ['3.2.0']
+        PUPPET_GEM_VERSION: ['~> 7']
+  image: ruby:${RUBY_VERSION}
+  cache:
+    paths:
+      - vendor/bundle
+  before_script:
+    - rm -f Gemfile.lock || true
+    - ruby --version
+    - gem --version
+    - bundle -v
+    - bundle config set --local path 'vendor/bundle'
+    - bundle config set --local without 'system_tests'
+    - bundle config set --local jobs $(nproc)
+    - bundle install
+    - bundle clean
+    - bundle env
 
-syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop-Ruby 2.7.5-Puppet ~> 7.9:
+syntax:
+  extends: .common-matrix
   stage: syntax
-  image: ruby:2.7.5
   script:
     - bundle exec rake syntax lint metadata_lint check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop
-  variables:
-    PUPPET_GEM_VERSION: '~> 7.9'
 
-parallel_spec-Ruby 2.7.5-Puppet ~> 7.9:
+unit:
+  needs:
+    - syntax
+  extends: .common-matrix
   stage: unit
-  image: ruby:2.7.5
   script:
     - bundle exec rake parallel_spec
-  variables:
-    PUPPET_GEM_VERSION: '~> 7.9'
 
-acceptance with puppet6:
-  stage: acceptance-puppet6
-  variables:
-    PUPPET_INSTALL_TYPE: 'agent'
-    BEAKER_IS_PE: 'no'
-    BEAKER_PUPPET_COLLECTION: 'puppet6'
-    BEAKER_debug: 'true '
-    RBENV_VERSION: '2.7.5'
-  script:
-    - bundle exec rake spec_prep beaker:default
-  tags:
-    - puppet-tests
-  except:
-    - master
-
-acceptance with puppet7:
+acceptance-puppet7:
+  needs:
+    - unit
+  extends:
+    - .common-matrix
+    - .in-acceptance-only-matrix
   stage: acceptance-puppet7
   variables:
-    PUPPET_INSTALL_TYPE: 'agent'
+    RBENV_VERSION: ${RUBY_VERSION}
+    PUPPET_INSTALL_TYPE: agent
     BEAKER_IS_PE: 'no'
-    BEAKER_PUPPET_COLLECTION: 'puppet7'
-    BEAKER_debug: 'true '
-    RBENV_VERSION: '2.7.5'
+    BEAKER_PUPPET_COLLECTION: puppet${PUPPET_COLLECTION}
+    BEAKER_debug: 'true'
   script:
-    - bundle exec rake spec_prep beaker:default
+    - bundle exec rake beaker
   tags:
-    - puppet-tests
+    - beaker-acceptance
   except:
     - master
 
 module release:
   stage: release
-  image: ruby:2.7.5
+  image: ruby:3.2.0
   variables:
-    PUPPET_GEM_VERSION: '~> 7.14'
-    BLACKSMITH_FORGE_USERNAME: '$BLACKSMITH_FORGE_USERNAME'
+    PUPPET_GEM_VERSION: '~> 7'
     BLACKSMITH_FORGE_API_KEY: '$BLACKSMITH_FORGE_API_KEY'
   script:
     - bundle exec puppet strings generate --format markdown --out REFERENCE.md

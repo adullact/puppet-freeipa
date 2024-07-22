@@ -55,7 +55,7 @@ class freeipa::install {
           'ipa-server-dns',
           'bind-dyndb-ldap',
         ]
-        package{$dns_packages:
+        package { $dns_packages:
           ensure => present,
         }
       }
@@ -68,5 +68,4 @@ class freeipa::install {
       fail ("unexpected role ${freeipa::ipa_role}")
     }
   }
-
 }

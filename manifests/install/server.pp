@@ -11,10 +11,10 @@ class freeipa::install::server {
 
   if $facts['iparole'] != 'client' {
     Exec {
-      path =>  '/usr/local/bin/:/bin/:/sbin',
+      path => '/usr/local/bin/:/bin/:/sbin',
     }
 
-    package{$freeipa::ipa_server_package_name:
+    package { $freeipa::ipa_server_package_name:
       ensure => present,
     }
 
@@ -28,7 +28,7 @@ class freeipa::install::server {
 
     if $freeipa::enable_hostname {
       $server_install_cmd_opts_hostname = "--hostname=${freeipa::ipa_server_fqdn}"
-        end
+      end
     } else {
       $server_install_cmd_opts_hostname = ''
     }
@@ -62,7 +62,7 @@ class freeipa::install::server {
         $server_install_cmd_opts_forwarders = join(
           prefix(
             $freeipa::custom_dns_forwarders,
-            '--forwarder '),
+          '--forwarder '),
           ' '
         )
       }
@@ -110,7 +110,6 @@ class freeipa::install::server {
     }
 
     contain freeipa::helpers::flushcache
-
   } else {
     fail ("to change ipa_role from '${facts['iparole']}' to '${freeipa::ipa_role}' is not supported.")
   }

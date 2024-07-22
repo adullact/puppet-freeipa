@@ -26,7 +26,7 @@ class freeipa::install::server::replica {
 
   if ! $facts['iparole'] or $facts['iparole'] == 'replica' {
     exec { "server_install_${freeipa::ipa_server_fqdn}":
-      environment =>  [
+      environment => [
         "PASSWORD_USEDTO_JOINDOMAIN=${freeipa::password_usedto_joindomain.unwrap}",
       ],
       command     => $replica_install_cmd,

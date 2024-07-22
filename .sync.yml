@@ -1,41 +1,36 @@
-.gitlab-ci.yml:
-  unmanaged: true
-
-appveyor.yml:
+---
+.yardopts:
   delete: true
-
 .travis.yml:
   delete: true
-
+appveyor.yml:
+  delete: true
 .gitignore:
   paths:
-    - '.vscode/'
-    - '.devcontainer/'
+    - .devcontainer/
+    - .vscode/
+    - .yardopts
+.gitlab-ci.yml:
+  unmanaged: true
 
 Gemfile:
   required:
     ':development':
-      - gem: 'facter'
       - gem: 'hiera'
-      - gem: 'parallel_tests'
       - gem: 'rspec-puppet'
-      - gem: 'puppetlabs_spec_helper'
       - gem: 'beaker'
       - gem: 'beaker-puppet'
       - gem: 'beaker-rspec'
       - gem: 'beaker-puppet_install_helper'
       - gem: 'beaker-module_install_helper'
-      - gem: 'metadata-json-lint'
-      - gem: 'puppet-lint'
-      - gem: 'rspec'
-      - gem: 'rake'
       - gem: 'beaker-vagrant'
       - gem: 'bolt'
-      - gem: 'beaker-task_helper'
       - gem: 'pdk'
-        version: '2.3.0'
-      - gem: 'puppet-strings'
-        version: '2.9.0'
+        version: '3.2.0'
 
+Rakefile:
+  requires:
+    - 'beaker-rspec/rake_task'
+ 
 spec/spec_helper.rb:
   mock_with: ':rspec'

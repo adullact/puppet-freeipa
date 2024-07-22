@@ -108,8 +108,7 @@ class freeipa (
   String                               $sssd_package_name              = 'sssd-common',
   String                               $sssdtools_package_name         = 'sssd-tools',
 ) {
-
-  if $facts['kernel'] != 'Linux' or $facts['osfamily'] == 'Windows' {
+  if $facts['kernel'] != 'Linux' or $facts['os']['family'] == 'Windows' {
     fail('This module is only supported on Linux.')
   }
 
@@ -120,5 +119,4 @@ class freeipa (
   }
 
   include freeipa::install
-
 }
