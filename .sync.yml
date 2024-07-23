@@ -21,6 +21,8 @@ Gemfile:
       - gem: 'beaker'
       - gem: 'beaker-puppet'
       - gem: 'beaker-rspec'
+      - gem: 'ed25519'
+      - gem: 'bcrypt_pbkdf'
       - gem: 'beaker-puppet_install_helper'
       - gem: 'beaker-module_install_helper'
       - gem: 'beaker-vagrant'

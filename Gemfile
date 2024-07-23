@@ -39,6 +39,8 @@ group :development do
   gem "beaker",                                  require: false
   gem "beaker-puppet",                           require: false
   gem "beaker-rspec",                            require: false
+  gem "ed25519",                                 require: false
+  gem "bcrypt_pbkdf",                            require: false
   gem "beaker-puppet_install_helper",            require: false
   gem "beaker-module_install_helper",            require: false
   gem "beaker-vagrant",                          require: false
