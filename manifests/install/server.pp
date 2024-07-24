@@ -59,12 +59,7 @@ class freeipa::install::server {
 
     if $freeipa::final_configure_dns_server {
       if size($freeipa::custom_dns_forwarders) > 0 {
-        $server_install_cmd_opts_forwarders = join(
-          prefix(
-            $freeipa::custom_dns_forwarders,
-          '--forwarder '),
-          ' '
-        )
+        $server_install_cmd_opts_forwarders = join($freeipa::custom_dns_forwarders.map |$f| { "--forwarder ${f}" }, ' ')
       }
       else {
         $server_install_cmd_opts_forwarders = '--no-forwarders'
