@@ -21,13 +21,7 @@
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "7"
-      ]
-    },
-    {
-      "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": [
-        "18.04"
+        "9"
       ]
     }
   ],

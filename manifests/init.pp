@@ -83,7 +83,7 @@ class freeipa (
   Boolean                              $enable_hostname                = true,
   Boolean                              $enable_ip_address              = false,
   Boolean                              $fixed_primary                  = false,
-  Integer[10000]                       $idstart                        = 10000,
+  Integer[10000]                       $idstart                        = 60000,
   Boolean                              $install_autofs                 = false,
   Boolean                              $install_epel                   = true,
   Boolean                              $install_sssdtools              = true,

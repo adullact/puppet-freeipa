@@ -7,10 +7,13 @@ require 'bolt/pal'
 Bolt::PAL.load_puppet
 
 run_puppet_install_helper
+sleep 5
 install_module_on(hosts)
 install_module_dependencies_on(hosts)
 
-ip_master = fact_on('master', 'networking.interfaces.eth1.ip')
+ip_master = fact_on('master', 'networking.interfaces.enp0s8.ip')
+ip_replica = fact_on('replica', 'networking.interfaces.enp0s8.ip')
+ip_client = fact_on('client', 'networking.interfaces.enp0s8.ip')
 
 RSpec.configure do |c|
   c.before :suite do
@@ -54,7 +57,6 @@ RSpec.configure do |c|
     end
 
     hosts_as('replica').each do |replica|
-      ip_replica = fact_on('replica', 'networking.interfaces.eth1.ip')
       pp = <<-EOS
         exec { 'set replica /etc/hosts':
           path     => '/bin/',
@@ -74,11 +76,10 @@ RSpec.configure do |c|
 
     # WARNING : function hosts_as() return an array.
     # We now use hosts_as() normaly with several nodes returned.
-    # All clients have role 'client' in nodeset.
+    # All ipa clients have role 'client' in nodeset.
 
     # Configure all clients nodes.
     hosts_as('client').each do |client|
-      ip_client = fact_on('client', 'networking.interfaces.enp0s8.ip')
       pp = <<-EOS
         exec { 'set client ubuntu /etc/hosts':
           path     => '/bin/',

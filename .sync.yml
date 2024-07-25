@@ -25,6 +25,7 @@ Gemfile:
       - gem: 'bcrypt_pbkdf'
       - gem: 'beaker-puppet_install_helper'
       - gem: 'beaker-module_install_helper'
+      - gem: 'beaker-task_helper'
       - gem: 'beaker-vagrant'
       - gem: 'bolt'
       - gem: 'pdk'

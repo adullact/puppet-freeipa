@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 
-ip_master = fact_on('master', 'networking.interfaces.eth1.ip')
-ip_replica = fact_on('replica', 'networking.interfaces.eth1.ip')
+ip_master = fact_on('master', 'networking.interfaces.enp0s8.ip')
+ip_replica = fact_on('replica', 'networking.interfaces.enp0s8.ip')
 
 describe 'class freeipa' do
   context 'with ipa_role master' do

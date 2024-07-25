@@ -43,6 +43,7 @@ group :development do
   gem "bcrypt_pbkdf",                            require: false
   gem "beaker-puppet_install_helper",            require: false
   gem "beaker-module_install_helper",            require: false
+  gem "beaker-task_helper",                      require: false
   gem "beaker-vagrant",                          require: false
   gem "bolt",                                    require: false
   gem "pdk", '3.2.0',                            require: false
