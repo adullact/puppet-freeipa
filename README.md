@@ -114,15 +114,11 @@ A full description can be found in [REFERENCE.md](https://gitlab.adullact.net/ad
 
 This module will not work well if managed passwords contain `'` or `\`. They must be banned.
 
-To deploy a server is only supported on CentOS 7.
-
 Acceptance tests are done :
 
- * with last available versions of Puppet 6 and Puppet 7 from puppetlabs packages All In One.
+ * with last available versions Puppet 7 from puppetlabs packages All In One.
 
- * with CentOS 7 for FreeIPA master and replica nodes. IPA masters and replicas works only on Centos >= 7.5.
-
- * with Ubuntu 18.06 for FreeIPA clients .
+ * with CentOS 9 for FreeIPA master and replica nodes
 
 With follwoing issue not fixed the acceptance tests about tasks are disabled :
 https://github.com/puppetlabs/beaker-task_helper/issues/47
