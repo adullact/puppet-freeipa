@@ -83,13 +83,7 @@ class freeipa::install::server {
       }
 
       if $freeipa::external_ca_profile != [] {
-        $_profiles = join(
-          prefix(
-            $freeipa::external_ca_profile,
-            '--external-ca-profile=',
-          ),
-          ' ',
-        )
+        $_profiles = join($freeipa::external_ca_profile.map |$f| { "--external-ca-profile ${f}" }, ' ')
       } else {
         $_profiles = ''
       }
