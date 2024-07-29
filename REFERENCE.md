@@ -68,6 +68,7 @@ The following parameters are available in the `freeipa` class:
 * [`password_usedto_joindomain`](#-freeipa--password_usedto_joindomain)
 * [`enable_hostname`](#-freeipa--enable_hostname)
 * [`enable_ip_address`](#-freeipa--enable_ip_address)
+* [`enable_random_serial_numbers`](#-freeipa--enable_random_serial_numbers)
 * [`fixed_primary`](#-freeipa--fixed_primary)
 * [`idstart`](#-freeipa--idstart)
 * [`install_autofs`](#-freeipa--install_autofs)
@@ -191,6 +192,15 @@ Data type: `Boolean`
 
 If true, then the installer flag `--ip-address` is populated with the parameter `ip_address`
 and passed to the IPA installer.
+
+Default value: `false`
+
+##### <a name="-freeipa--enable_random_serial_numbers"></a>`enable_random_serial_numbers`
+
+Data type: `Boolean`
+
+If true, then the installer flag `--random-serial-numbers` is added during installation
+Only valid on IPA >= 4.10
 
 Default value: `false`
 
