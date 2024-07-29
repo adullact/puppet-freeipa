@@ -20,6 +20,7 @@ describe 'class freeipa' do
         manage_host_entry           => true,
         install_epel                => true,
         ipa_master_fqdn             => 'ipa-server-1.example.lan',
+        ca_subject                  => 'CN=Test Certificate Authority,O=EXAMPLE.LAN'
       }
       EOS
 
@@ -32,6 +33,10 @@ describe 'class freeipa' do
 
       describe command('ipactl status') do
         its(:exit_status) { is_expected.to be 0 }
+      end
+
+      describe command('openssl x509 -in /etc/ipa/ca.crt -noout -subject') do
+        its(:stdout) { is_expected.to match %r{subject=O = EXAMPLE.LAN, CN = Test Certificate Authority} }
       end
     end
   end
