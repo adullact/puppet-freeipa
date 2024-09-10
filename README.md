@@ -161,29 +161,11 @@ Home at URL https://gitlab.adullact.net/adullact/puppet-freeipa
 Issues and MR are welcome. [CONTRIBUTING.md](https://gitlab.adullact.net/adullact/puppet-freeipa/blob/master/CONTRIBUTING.md) gives some guidance about contributing process.
 If you follow these contributing guidelines your patch will likely make it into a release a little more quickly.
 
-### Release Notes
+### Authors and Module History
 
-Details in `CHANGELOG.md`. Key points :
+`adullact-freeipa` was forked John Puskar's version (https://github.com/jpuskar/puppet-freeipa). John Puskar's version was a fork of Harvard University Information Technology, mainly written by Rob Ruma (https://github.com/huit/puppet-ipa.
 
- * release 1.6.1 : the fist release under `adullact` name space. nothing special.
-
- * releases 2.x : use code ready for Puppet 4.10 and 5.x, uses pdk as guidance, enable acceptance tests, rename classes from `easy_ipa` to `freeipa`.
-
- * releases 3.x : use public and private classes, enable Puppet 6 tests, drop Puppet 4 tests, refactor module to permit management of administrator accounts.
-
- * releases 4.x : some cleanup of unused code, updates depencies and install CA on replica by default.
-
- * releases 5.x : managment of admin accounts are moved from manifests to tasks.
-
-### Contributors
-
-Original work from Harvard University Information Technology, mainly written by Rob Ruma (https://github.com/huit/puppet-ipa)
-
-then forked by John Puskar (https://github.com/jpuskar/puppet-freeipa)
-
-then forked by ADULLACT (https://gitlab.adullact.net/adullact/puppet-freeipa) written by :
-  * ADULLACT with Fabien Combernous
-  * PHOSPHORE.si with Scott Barthelemy and Bertrand RETIF
+`adullact-freeipa` is maintained by [Adullact and contributors](https://gitlab.adullact.net/adullact/puppet-freeipa/blob/master/CHANGELOG.md) since version 1.6.1. 
 
 ### License
 

@@ -1,5 +1,24 @@
 # puppet-freeipa
 
+## 7.0.0 :
+
+** Closed MR **
+
+ * drop support CentOS7, add CentOS9 !145
+ * add Gems for vagrant requirement !144
+ * allow puppetlabs-stdlib 10.x !143
+ * drop Puppet 6 EOL !142
+ * use pdk 3.2.0 and Ruby 3.2.0 !141
+ * update epel dependency !140 (Patrick Brideau)
+ * add allow-zone-overlap option during install !139 (Patrick Brideau)
+ * add random-serial-numbers option during install !138 (Patrick Brideau)
+ * support for external CA !137 (Patrick Brideau)
+ * add ca_subject option !135 (Patrick Brideau)
+
+** Known Issues **
+
+ * change puppet_admin_password does not trigger password update #107
+
 ## 6.0.0 :
 
 ** Closed Issues **
